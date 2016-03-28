@@ -1,0 +1,5 @@
+Chaitanya Penumetsa (penumets@usc.edu)
+Isumi Lan (isumilan@usc.edu)
+Kevin Shi (kevincsh@usc.edu)
+Nathan Mathew Wong Lim (nathanml@usc.edu)
+Samuel Wang (simuwang@usc.edu)
