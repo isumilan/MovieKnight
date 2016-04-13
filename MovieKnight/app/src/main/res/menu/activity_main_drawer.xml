@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home"
+        android:title="Home" />
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/glass"
+            android:title="Search" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/profile"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_movies"
+            android:icon="@drawable/movie"
+            android:title="Movies" />
+
+    </group>
+
+    <item android:title="Soical">
+        <menu>
+            <item
+                android:id="@+id/nav_events"
+                android:icon="@drawable/event"
+                android:title="Events" />
+            <item
+                android:id="@+id/nav_make_event"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Make Event" />
+        </menu>
+    </item>
+
+</menu>
