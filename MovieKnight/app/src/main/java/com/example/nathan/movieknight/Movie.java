@@ -1,12 +1,31 @@
+import java.util.Comparator;
 import java.util.Vector;
 
+
+
 public class Movie {
+	
+	public static class TitleComparator implements Comparator<Movie>{
+		public int compare(Movie arg0, Movie arg1) {
+			return arg0.getTitle().compareTo(arg1.getTitle());
+		}		
+	}
+
+	public static class RatingComparator implements Comparator<Movie>{
+		public int compare(Movie arg0, Movie arg1) {
+			return (int)(arg0.getRating() - arg1.getRating());
+		}		
+	}
 	
 	private String title, poster, synopsis;
 	private int rateScore, rated; //rateScore is total, rated is the amount of ppl
 	private Double rating; //the average
 	private Vector<String> genre, casts, directors, trailers;
+	private TitleComparator titlecomp = new TitleComparator();
+	private RatingComparator ratecomp = new RatingComparator();
 	
+	
+
 	//Constructor for movie with no info
 	public Movie(){
 		title = "*Untitled";
@@ -81,6 +100,14 @@ public class Movie {
 		return trailers;
 	}
 	
+	public TitleComparator getTitleComparator() {
+		return titlecomp;
+	}
+
+	public RatingComparator getRatingComparator() {
+		return ratecomp;
+	}
+	
 	//Mutators
 	public void setTitle(String title) {
 		this.title = title;
@@ -143,4 +170,6 @@ public class Movie {
 	public void addTrailer(String element){
 		this.trailers.add(element);
 	}
+	
+
 }
