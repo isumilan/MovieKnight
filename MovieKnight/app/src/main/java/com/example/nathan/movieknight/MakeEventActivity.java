@@ -58,8 +58,6 @@ public class MakeEventActivity extends NavigationDrawer {
 
             if (adapter != null) {
                 list.setAdapter(adapter);
-
-                System.out.println("hi");
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override

@@ -11,22 +11,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by Nathan on 3/17/2016.
  */
 public class BluRayFragment  extends Fragment  {
     ListView list;
-    String[] movieList = {"Title: Mad Samuel \nGenre: Samuel",
-            "Inside Out", "Star Wars", "The Martian", "Dango", "Deadpool"};
+    ArrayList<String> movieList;
     Integer[] imageId = {
             R.drawable.sampai,
-            R.drawable.sampai,
-            R.drawable.sampai,
-            R.drawable.sampai,
-            R.drawable.sampai,
-            R.drawable.sampai,
-            R.drawable.sampai
-
+            R.drawable.event,
+            R.drawable.dango,
+            R.drawable.glass,
+            R.drawable.home,
+            R.drawable.movie
     };
     final MoviesActivity moviesActivity;
     @SuppressLint("ValidFragment")
@@ -43,25 +42,34 @@ public class BluRayFragment  extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.blu_ray_layout,null);
+        movieList = new ArrayList<String>();
+
+        movieList.add("Mad Samuel");
+        movieList.add("Inside Out");
+        movieList.add("Star Wars");
+        movieList.add("The Martian");
+        movieList.add("Dango");
+        movieList.add("Deadpool");
+
+         
+
         MovieList adapter = new
                 MovieList(moviesActivity, movieList, imageId);
 
 
         list=(ListView)view.findViewById(R.id.bluraylistView);
+        moviesActivity.setBluAdapter((adapter));
         //list not showing
         //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {
-
             if (adapter != null) {
                 list.setAdapter(adapter);
-
-                System.out.println("hi");
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Toast.makeText(moviesActivity, "You Clicked at " + movieList[+position], Toast.LENGTH_SHORT).show();
+                        Toast.makeText(moviesActivity, "You Clicked at " + movieList.get(+position), Toast.LENGTH_SHORT).show();
 
                     }
                 });

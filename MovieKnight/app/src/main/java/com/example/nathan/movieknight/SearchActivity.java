@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+
 /**
  * Created by natha on 4/6/2016.
  */
@@ -16,8 +17,9 @@ public class SearchActivity extends NavigationDrawer {
     SearchView sv;
     String[] movies = {"Max Max", "Inside Out", "Star Wars", "The Martian", "Dango", "Deadpool"};
     String[] friends = {"Chaitanya", "Isumi", "Kevin", "Nathan", "Lim"};
-    ArrayAdapter<String> movieAdapater;
-    ArrayAdapter<String> friendAdapater;
+
+    ArrayAdapter<String> movieAdapter;
+    ArrayAdapter<String> friendAdapter;
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +27,9 @@ public class SearchActivity extends NavigationDrawer {
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
 
-        movieAdapater = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, movies);
-        friendAdapater = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
-        lv.setAdapter(movieAdapater);
+        movieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, movies);
+        friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
+        lv.setAdapter(movieAdapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -38,17 +40,17 @@ public class SearchActivity extends NavigationDrawer {
             @Override
             public boolean onQueryTextChange(String text) {
                 if(movieMode && text.length() > 0 && text.substring(0,1).equals("@")){
-                    lv.setAdapter(friendAdapater);
+                    lv.setAdapter(friendAdapter);
                     movieMode = false;
                 } else if(!movieMode &&  text.length() > 0 && !text.substring(0,1).equals("@")){
-                    lv.setAdapter(movieAdapater);
+                    lv.setAdapter(movieAdapter);
                     movieMode = true;
                 }
                 if(movieMode){
-                    movieAdapater.getFilter().filter(text);
+                    movieAdapter.getFilter().filter(text);
                 } else{
                     if(text.length() > 0) {
-                        friendAdapater.getFilter().filter(text.substring(1,text.length()));
+                        friendAdapter.getFilter().filter(text.substring(1,text.length()));
                     }
                 }
 
