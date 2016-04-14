@@ -1,7 +1,7 @@
-package com.example.nathan.movieknight;
-
 import java.util.Comparator;
 import java.util.Vector;
+
+
 
 public class Movie {
 	
@@ -170,6 +170,4 @@ public class Movie {
 	public void addTrailer(String element){
 		this.trailers.add(element);
 	}
-	
-
 }
