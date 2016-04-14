@@ -1,31 +1,33 @@
 package com.example.nathan.movieknight;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by natha on 4/6/2016.
  */
 public class MakeEventActivity extends NavigationDrawer {
     ListView list;
-    String[] friendList = {"Title: Mad Samuel \nGenre: Samuel",
-            "Inside Out", "Star Wars", "The Martian", "Dango", "Deadpool"};
+    ArrayList<String> friendList;
     Integer[] imageId = {
             R.drawable.sampai,
-            R.drawable.sampai,
-            R.drawable.sampai,
-            R.drawable.sampai,
-            R.drawable.sampai,
-            R.drawable.sampai,
-            R.drawable.sampai
-
+            R.drawable.event,
+            R.drawable.dango,
+            R.drawable.glass,
+            R.drawable.home,
+            R.drawable.movie
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,15 @@ public class MakeEventActivity extends NavigationDrawer {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FriendList adapter = new
+        friendList = new ArrayList<String>();
+
+        friendList.add("Mad Samuel");
+        friendList.add("Inside Out");
+        friendList.add("Star Wars");
+        friendList.add("The Martian");
+        friendList.add("Dango");
+        friendList.add("Deadpool");
+        final FriendList adapter = new
                 FriendList(this, friendList, imageId);
 
 
@@ -63,7 +73,7 @@ public class MakeEventActivity extends NavigationDrawer {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Toast.makeText(MakeEventActivity.this, "You Clicked at " + friendList[+position], Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MakeEventActivity.this, "You Clicked at " + friendList.get(+position), Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -72,5 +82,25 @@ public class MakeEventActivity extends NavigationDrawer {
             System.out.println("null");
         }
 
+
+        SearchManager searchManager = (SearchManager) MakeEventActivity.this.getSystemService(Context.SEARCH_SERVICE);
+
+        SearchView searchView = (SearchView) findViewById(R.id.friendSearchView);
+
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(MakeEventActivity.this.getComponentName()));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String text) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String text) {
+                    adapter.getFilter().filter(text);
+                    return false;
+                }
+            });
+        }
     }
 }

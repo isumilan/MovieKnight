@@ -42,7 +42,7 @@ public class SearchActivity extends NavigationDrawer {
                 if(movieMode && text.length() > 0 && text.substring(0,1).equals("@")){
                     lv.setAdapter(friendAdapter);
                     movieMode = false;
-                } else if(!movieMode &&  text.length() > 0 && !text.substring(0,1).equals("@")){
+                } else if(text.length() == 0 || (!movieMode &&  text.length() > 0 && !text.substring(0,1).equals("@"))){
                     lv.setAdapter(movieAdapter);
                     movieMode = true;
                 }
