@@ -1,4 +1,3 @@
-package com.example.nathan.movieknight;
 import java.util.Comparator;
 import java.util.Vector;
 
@@ -15,14 +14,37 @@ public class MovieEvent {
 		}		
 	}
 	
+	private Profile owner;
 	private Movie goingToWatch;
 	private Vector<Profile> participants, invited;
 	private String description, movieTime, theater;
 	private MovieComparator mc = new MovieComparator();
 	private MovieTimeComparator mtc = new MovieTimeComparator();
 	
+	public MovieEvent(){
+		owner = new Profile();
+		goingToWatch = new Movie();
+		participants = new Vector<Profile>();
+		invited = new Vector<Profile>();
+		description = "No description";
+		movieTime = "To be decided";
+		theater = "To be decided";
+	}
+	
+	public MovieEvent(Profile owner, Movie goingToWatch){
+		this.owner = owner;
+		this.goingToWatch = new Movie();
+		participants = new Vector<Profile>();
+		invited = new Vector<Profile>();
+		description = "No description";
+		movieTime = "To be decided";
+		theater = "To be decided";
+	}
 	
 	//Getters
+	public Profile getOwner() {
+		return owner;
+	}
 	public Movie getGoingToWatch() {
 		return goingToWatch;
 	}
@@ -49,6 +71,9 @@ public class MovieEvent {
 	}
 	
 	//Mutators
+	public void setOwner(Profile owner) {
+		this.owner = owner;
+	}
 	public void setGoingToWatch(Movie goingToWatch) {
 		this.goingToWatch = goingToWatch;
 	}
