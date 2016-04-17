@@ -9,23 +9,38 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import java.util.ArrayList;
+
 /**
  * Created by natha on 4/6/2016.
  */
 public class FriendRequestsActivity extends NavigationDrawer {
     ListView lv;
     SearchView sv;
-    String[] friends = {"Chaitanya", "Isumi", "Kevin", "Nathan", "Lim"};
-
+    ArrayList<String> friends;
+    Integer[] imageId = {
+            R.drawable.event,
+            R.drawable.dango,
+            R.drawable.glass,
+            R.drawable.home,
+            R.drawable.movie
+    };
     ArrayAdapter<String> friendAdapter;
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_requests);
         lv = (ListView)findViewById(R.id.listView);
+        sv = (SearchView)findViewById(R.id.searchView2);
+        friends = new ArrayList<String>();
+        friends.add("Chaitanya");
+        friends.add("Isumi");
+        friends.add("Kevin");
+        friends.add("Nathan");
+        friends.add("Samuel");
+        final FriendRequestsList friendAdapter = new
+                FriendRequestsList(this, friends, imageId);
 
-
-        friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
         lv.setAdapter(friendAdapter);
 
 
