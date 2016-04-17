@@ -51,7 +51,7 @@ public class BluRayFragment  extends Fragment  {
         movieList.add("Dango");
         movieList.add("Deadpool");
 
-
+         
 
         MovieList adapter = new
                 MovieList(movieListActivity, movieList, imageId);
