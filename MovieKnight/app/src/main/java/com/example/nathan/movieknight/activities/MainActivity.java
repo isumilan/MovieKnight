@@ -6,8 +6,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 
+<<<<<<< HEAD:MovieKnight/app/src/main/java/com/example/nathan/movieknight/MainActivity.java
+import java.io.IOException;
+import java.net.Socket;
+=======
 import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
+>>>>>>> remotes/movieknights/201-group-22-project-movie-knight/master:MovieKnight/app/src/main/java/com/example/nathan/movieknight/activities/MainActivity.java
 
 public class MainActivity extends NavigationDrawer
        {
@@ -27,6 +32,13 @@ public class MainActivity extends NavigationDrawer
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /*try {
+            Socket socket = new Socket("localhost", 5554);
+            ClientListener listener = new ClientListener(socket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 
 
