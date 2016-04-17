@@ -1,6 +1,7 @@
 package com.example.nathan.movieknight;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -66,8 +67,12 @@ public class ComingSoonFragment  extends Fragment  {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Toast.makeText(moviesActivity, "You Clicked at " + movieList.get(+position), Toast.LENGTH_SHORT).show();
-
+                        Intent in = new Intent(moviesActivity.getApplicationContext(), MovieActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("key", movieList.get(position));
+                        in.putExtras(b);
+                        startActivity(in);
+                        moviesActivity.finish();
                     }
                 });
             }
