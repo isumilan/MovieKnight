@@ -17,7 +17,7 @@ public class Profile {
 	
 	private String username, profilePicture, description;
 	private Vector<Profile> friends, friendRequests;
-	private Vector<Movie> toWatch, watched, liked;
+	private Vector<Integer> toWatch, watched, liked;
 	private Vector<MovieEvent> events, eventRequests;
 	private int zipcode;
 	private UsernameComparator ucomp = new UsernameComparator();
@@ -30,9 +30,9 @@ public class Profile {
 		description = "no description";
 		friends = new Vector<Profile>();
 		friendRequests = new Vector<Profile>();
-		toWatch = new Vector<Movie>();
-		watched = new Vector<Movie>();
-		liked = new Vector<Movie>();
+		toWatch = new Vector<Integer>();
+		watched = new Vector<Integer>();
+		liked = new Vector<Integer>();
 		events = new Vector<MovieEvent>();
 		eventRequests = new Vector<MovieEvent>();
 		zipcode = 0;
@@ -44,9 +44,9 @@ public class Profile {
 		description = "no description";
 		friends = new Vector<Profile>();
 		friendRequests = new Vector<Profile>();
-		toWatch = new Vector<Movie>();
-		watched = new Vector<Movie>();
-		liked = new Vector<Movie>();
+		toWatch = new Vector<Integer>();
+		watched = new Vector<Integer>();
+		liked = new Vector<Integer>();
 		events = new Vector<MovieEvent>();
 		eventRequests = new Vector<MovieEvent>();
 		zipcode = zip;
@@ -67,13 +67,13 @@ public class Profile {
 	public Vector<Profile> getFriendRequests() {
 		return friendRequests;
 	}
-	public Vector<Movie> getToWatch() {
+	public Vector<Integer> getToWatch() {
 		return toWatch;
 	}
-	public Vector<Movie> getWatched() {
+	public Vector<Integer> getWatched() {
 		return watched;
 	}
-	public Vector<Movie> getLiked() {
+	public Vector<Integer> getLiked() {
 		return liked;
 	}
 	public Vector<MovieEvent> getEvents() {
@@ -105,13 +105,13 @@ public class Profile {
 	public void setFriendRequests(Vector<Profile> friendRequests) {
 		this.friendRequests = friendRequests;
 	}
-	public void setToWatch(Vector<Movie> toWatch) {
+	public void setToWatch(Vector<Integer> toWatch) {
 		this.toWatch = toWatch;
 	}
-	public void setWatched(Vector<Movie> watched) {
+	public void setWatched(Vector<Integer> watched) {
 		this.watched = watched;
 	}
-	public void setLiked(Vector<Movie> liked) {
+	public void setLiked(Vector<Integer> liked) {
 		this.liked = liked;
 	}
 	public void setEvents(Vector<MovieEvent> events) {
