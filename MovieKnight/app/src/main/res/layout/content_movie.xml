@@ -39,15 +39,17 @@
             android:id="@+id/movieTitle"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"/>
-            <TextView
+
+            <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="2016"
-                android:id="@+id/movieYear"
-                android:layout_gravity="center_vertical"
-                android:textSize="18dp"
+                android:id="@+id/ratingBar"
+                android:rating="1"
+                android:numStars="5"
+                android:stepSize="1"
+                style="?android:attr/ratingBarStyleIndicator"
                 android:layout_marginLeft="20dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,15 +60,7 @@
                 android:textSize="18dp"
                 android:textIsSelectable="false"
                 android:layout_marginLeft="20dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="2 hr. 4 min"
-                android:id="@+id/movieTime"
-                android:layout_gravity="center_vertical"
-                android:textSize="18dp"
-                android:layout_marginLeft="20dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,16 +88,16 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="18dp"
                 android:layout_marginLeft="20dp"/>
-            <RatingBar
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ratingBar"
-                android:layout_gravity="bottom"
-                android:rating="1"
-                android:numStars="5"
-                android:stepSize="1"
-                style="?android:attr/ratingBarStyleIndicator"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Trailer"
+                android:id="@+id/movieTrailer"
+                android:layout_gravity="center_vertical"
+                android:textSize="18dp"
                 android:layout_marginLeft="20dp"/>
+
         </LinearLayout>
 
     </LinearLayout>
