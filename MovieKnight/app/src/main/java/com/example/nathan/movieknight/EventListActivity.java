@@ -16,21 +16,20 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
 
-public class MoviesActivity extends  NavigationDrawer {
+public class EventListActivity extends  NavigationDrawer {
 
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
 
-    ArrayAdapter<String> bluAdapter;
-    ArrayAdapter<String> comingAdapter;
-    ArrayAdapter<String> theatersAdapter;
+    ArrayAdapter<String> goingAdapter;
+    ArrayAdapter<String> invitedAdapter;
 
     String filterText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_movies);
+        setContentView(R.layout.activity_event_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -42,7 +41,7 @@ public class MoviesActivity extends  NavigationDrawer {
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView,new TabFragment(this)).commit();
+        mFragmentTransaction.replace(R.id.containerView,new EventTabFragment(this)).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -54,14 +53,11 @@ public class MoviesActivity extends  NavigationDrawer {
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void setBluAdapter(ArrayAdapter<String> adpater){
-        bluAdapter = adpater;
+    public void setGoingAdapter(ArrayAdapter<String> adpater){
+        goingAdapter = adpater;
     }
-    public void setComingAdapter(ArrayAdapter<String> adpater){
-        comingAdapter = adpater;
-    }
-    public void setTheatersAdapter(ArrayAdapter<String> adpater){
-        theatersAdapter = adpater;
+    public void setInvitedAdapter(ArrayAdapter<String> adpater){
+        invitedAdapter = adpater;
     }
 
     @Override
@@ -71,14 +67,14 @@ public class MoviesActivity extends  NavigationDrawer {
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
-        SearchManager searchManager = (SearchManager) MoviesActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) EventListActivity.this.getSystemService(Context.SEARCH_SERVICE);
 
         SearchView searchView = null;
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
         }
         if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(MoviesActivity.this.getComponentName()));
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(EventListActivity.this.getComponentName()));
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String text) {
@@ -97,12 +93,11 @@ public class MoviesActivity extends  NavigationDrawer {
         return super.onCreateOptionsMenu(menu);
     }
     public void updateAdapters(){
-        if(bluAdapter != null)
-            bluAdapter.getFilter().filter(filterText);
-        if(comingAdapter != null)
-            comingAdapter.getFilter().filter(filterText);
-        if(theatersAdapter != null)
-            theatersAdapter.getFilter().filter(filterText);
+        if(goingAdapter != null)
+            goingAdapter.getFilter().filter(filterText);
+        if(invitedAdapter != null)
+            invitedAdapter.getFilter().filter(filterText);
+
     }
 }
 

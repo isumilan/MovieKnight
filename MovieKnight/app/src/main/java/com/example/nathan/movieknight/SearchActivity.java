@@ -1,10 +1,13 @@
 package com.example.nathan.movieknight;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -53,15 +56,33 @@ public class SearchActivity extends NavigationDrawer {
                         friendAdapter.getFilter().filter(text.substring(1,text.length()));
                     }
                 }
-
                 return false;
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Bundle b = new Bundle();
+                Intent in;
+                if (movieMode) {
+                    in = new Intent(getApplicationContext(), MovieActivity.class);
+                    b.putString("key", movieAdapter.getItem(position));
+                }
+                else {
+                    in = new Intent(getApplicationContext(), ProfileActivity.class);
+                    b.putString("key", friendAdapter.getItem(position));
+                    b.putBoolean("friend", true);
+                }
+                in.putExtras(b);
+                startActivity(in);
+                finish();
             }
         });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

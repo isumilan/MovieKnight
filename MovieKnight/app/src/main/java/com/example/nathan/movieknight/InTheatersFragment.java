@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,15 +27,15 @@ public class InTheatersFragment  extends Fragment  {
             R.drawable.home,
             R.drawable.movie
     };
-    final MoviesActivity moviesActivity;
+    final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public InTheatersFragment(MoviesActivity ma){
+    public InTheatersFragment(MovieListActivity ma){
         super();
-        moviesActivity = ma;
+        movieListActivity = ma;
     }
     public InTheatersFragment(){
         super();
-        moviesActivity = null;
+        movieListActivity = null;
     }
     @Nullable
     @Override
@@ -51,11 +50,11 @@ public class InTheatersFragment  extends Fragment  {
         movieList.add("Dango");
         movieList.add("Deadpool");
         MovieList adapter = new
-                MovieList(moviesActivity, movieList, imageId);
+                MovieList(movieListActivity, movieList, imageId);
 
 
         list=(ListView)view.findViewById(R.id.intheaterslistView);
-        moviesActivity.setTheatersAdapter((adapter));
+        movieListActivity.setTheatersAdapter((adapter));
         //list not showing
         //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {
@@ -67,12 +66,12 @@ public class InTheatersFragment  extends Fragment  {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Intent in = new Intent(moviesActivity.getApplicationContext(), MovieActivity.class);
+                        Intent in = new Intent(movieListActivity.getApplicationContext(), MovieActivity.class);
                         Bundle b = new Bundle();
                         b.putString("key", movieList.get(position));
                         in.putExtras(b);
                         startActivity(in);
-                        moviesActivity.finish();
+                        movieListActivity.finish();
                     }
                 });
             }
