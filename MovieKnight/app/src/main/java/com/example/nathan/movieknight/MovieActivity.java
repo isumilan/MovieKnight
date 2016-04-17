@@ -16,7 +16,8 @@ public class MovieActivity extends NavigationDrawer {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        Bundle b = getIntent().getExtras();
+        String name = b.getString("key");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
