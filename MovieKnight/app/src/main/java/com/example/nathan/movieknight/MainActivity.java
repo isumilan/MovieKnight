@@ -6,6 +6,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 
+import java.io.IOException;
+import java.net.Socket;
+
 public class MainActivity extends NavigationDrawer
        {
 
@@ -24,6 +27,13 @@ public class MainActivity extends NavigationDrawer
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /*try {
+            Socket socket = new Socket("localhost", 5554);
+            ClientListener listener = new ClientListener(socket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 
 

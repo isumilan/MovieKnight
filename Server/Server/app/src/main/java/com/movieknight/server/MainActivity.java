@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
     private ServerSocket serverSocket = null;
     private Lock portLock;
     private Condition portCondition;
-    public int SERVER_PORT = 5000;
+    public int SERVER_PORT = -1;
     private static ServerListener serverListener;
 
     private TextView text;
@@ -39,10 +39,25 @@ public class MainActivity extends Activity {
         portLock = new ReentrantLock();
         portCondition = portLock.newCondition();
 
+        try {
+            FileReader fr = new FileReader("server.config");
+            BufferedReader br = new BufferedReader(fr);
+            String line = br.readLine();
+            if (line != null) {
+                SERVER_PORT = Integer.parseInt(line.substring(6));
+            }
+            br.close();
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if (SERVER_PORT > 0 && SERVER_PORT < 65535) {
             try {
+                ServerSocket tempss = new ServerSocket(SERVER_PORT);
                 portLock.lock();
-                serverSocket = new ServerSocket(SERVER_PORT);
+                serverSocket = tempss;
                 serverListener = new ServerListener(serverSocket, text);
                 serverListener.start();
                 portCondition.signal();
@@ -51,7 +66,7 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             }
         } else {
-            serverListener.writeToLog("Port out of range");
+            //Given port outside valid port range
         }
     }
 

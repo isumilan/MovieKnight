@@ -27,7 +27,7 @@ public class ServerListener extends Thread {
         sccVector.remove(scc);
     }
 
-    public void writeToLog(String str) { log.setText(log.getText().toString() + str + '\n'); }
+    public TextView getLog() { return log; }
 
     public void run() {
         try {

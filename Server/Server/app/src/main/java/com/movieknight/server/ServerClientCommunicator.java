@@ -34,12 +34,11 @@ public class ServerClientCommunicator extends Thread {
     }
 
     public void run() {
-        FirebaseDriver fbd = new FirebaseDriver(serverListener);
 		try {
-            Object obj = ois.readObject();
-            while (obj != null) {
-                if (obj instanceof String)
-                    serverListener.writeToLog("Client says: " + (String) obj);
+            String line = (String) ois.readObject();
+            while (line != null) {
+                TextView text = serverListener.getLog();
+                text.setText(text.getText().toString() + "Client Says: " + line + "\n");
             }
 		} catch (IOException ioe) {
 			serverListener.removeServerClientCommunicator(this);
