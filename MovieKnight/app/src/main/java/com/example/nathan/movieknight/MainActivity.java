@@ -6,7 +6,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> remotes/kevincsh/201-group-22-project-movie-knight/master
 public class MainActivity extends NavigationDrawer
        {
 
@@ -14,8 +17,11 @@ public class MainActivity extends NavigationDrawer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> remotes/kevincsh/201-group-22-project-movie-knight/master
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
