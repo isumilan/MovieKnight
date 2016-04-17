@@ -24,8 +24,6 @@
         android:src="@drawable/sampai"
          />
 
-
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

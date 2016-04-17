@@ -138,8 +138,4 @@ public class MovieList extends ArrayAdapter<String> implements Filterable {
         }
 
     }
-
-
-
-
 }
