@@ -12,6 +12,7 @@
     <string name="title_activity_make_event">Make Event</string>
     <string name="title_activity_search">Search</string>
     <string name="title_activity_movie">Movie</string>
+    <string name="title_activity_event_list">Event List</string>
 
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>

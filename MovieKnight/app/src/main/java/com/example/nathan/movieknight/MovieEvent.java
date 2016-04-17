@@ -1,4 +1,9 @@
+package com.example.nathan.movieknight;
+
+
+
 import java.util.Comparator;
+import java.util.UUID;
 import java.util.Vector;
 
 public class MovieEvent {
@@ -20,6 +25,7 @@ public class MovieEvent {
 	private String description, movieTime, theater;
 	private MovieComparator mc = new MovieComparator();
 	private MovieTimeComparator mtc = new MovieTimeComparator();
+	private String eventID;
 	
 	public MovieEvent(){
 		owner = new Profile();
@@ -29,6 +35,8 @@ public class MovieEvent {
 		description = "No description";
 		movieTime = "To be decided";
 		theater = "To be decided";
+		UUID eid = UUID.randomUUID();
+		eventID = eid.toString();
 	}
 	
 	public MovieEvent(Profile owner, Movie goingToWatch){
@@ -39,8 +47,10 @@ public class MovieEvent {
 		description = "No description";
 		movieTime = "To be decided";
 		theater = "To be decided";
+		UUID eid = UUID.randomUUID();
+		eventID = eid.toString();
 	}
-	
+
 	//Getters
 	public Profile getOwner() {
 		return owner;
@@ -62,6 +72,9 @@ public class MovieEvent {
 	}
 	public String getDescription() {
 		return description;
+	}
+	public String getEventID() {
+		return eventID;
 	}
 	public MovieComparator getMovieComparator() {
 		return mc;
@@ -91,6 +104,9 @@ public class MovieEvent {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public void setEventID(String eventID) {
+		this.eventID = eventID;
 	}
 	public void addParticipant(Profile newParticipant){
 		participants.add(newParticipant);
