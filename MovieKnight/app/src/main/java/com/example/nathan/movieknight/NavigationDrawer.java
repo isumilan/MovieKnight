@@ -67,7 +67,7 @@ public class NavigationDrawer extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(), MoviesActivity.class));
             finish();
         } else if (id == R.id.nav_events) {
-            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+            startActivity(new Intent(getApplicationContext(), EventListActivity.class));
             finish();
         } else if (id == R.id.nav_make_event) {
             startActivity(new Intent(getApplicationContext(), MakeEventActivity.class));

@@ -12,18 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TabFragment extends Fragment {
+public class MovieTabFragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
     public static int int_items = 3 ;
     MoviesActivity moviesActivity;
     @SuppressLint("ValidFragment")
-    public TabFragment(MoviesActivity ma){
+    public MovieTabFragment(MoviesActivity ma){
         super();
         moviesActivity = ma;
     }
-    public TabFragment(){
+    public MovieTabFragment(){
         super();
     }
     @Nullable

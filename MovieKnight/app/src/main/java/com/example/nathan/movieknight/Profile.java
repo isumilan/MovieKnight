@@ -1,3 +1,6 @@
+package com.example.nathan.movieknight;
+import android.graphics.Movie;
+
 import java.util.Comparator;
 import java.util.Vector;
 
