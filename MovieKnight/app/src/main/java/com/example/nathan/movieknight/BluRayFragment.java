@@ -27,15 +27,15 @@ public class BluRayFragment  extends Fragment  {
             R.drawable.home,
             R.drawable.movie
     };
-    final MoviesActivity moviesActivity;
+    final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public BluRayFragment (MoviesActivity ma){
+    public BluRayFragment (MovieListActivity ma){
         super();
-        moviesActivity = ma;
+        movieListActivity = ma;
     }
     public BluRayFragment (){
         super();
-        moviesActivity = null;
+        movieListActivity = null;
     }
     @Nullable
     @Override
@@ -54,11 +54,11 @@ public class BluRayFragment  extends Fragment  {
          
 
         MovieList adapter = new
-                MovieList(moviesActivity, movieList, imageId);
+                MovieList(movieListActivity, movieList, imageId);
 
 
         list=(ListView)view.findViewById(R.id.bluraylistView);
-        moviesActivity.setBluAdapter((adapter));
+        movieListActivity.setBluAdapter((adapter));
         //list not showing
         //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {
@@ -69,7 +69,7 @@ public class BluRayFragment  extends Fragment  {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Toast.makeText(moviesActivity, "You Clicked at " + movieList.get(+position), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(movieListActivity, "You Clicked at " + movieList.get(+position), Toast.LENGTH_SHORT).show();
 
                     }
                 });

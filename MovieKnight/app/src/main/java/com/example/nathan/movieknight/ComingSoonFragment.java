@@ -27,15 +27,15 @@ public class ComingSoonFragment  extends Fragment  {
             R.drawable.home,
             R.drawable.movie
     };
-   final MoviesActivity moviesActivity;
+   final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public ComingSoonFragment(MoviesActivity ma){
+    public ComingSoonFragment(MovieListActivity ma){
         super();
-        moviesActivity = ma;
+        movieListActivity = ma;
     }
     public ComingSoonFragment(){
         super();
-        moviesActivity = null;
+        movieListActivity = null;
     }
     @Nullable
     @Override
@@ -50,11 +50,11 @@ public class ComingSoonFragment  extends Fragment  {
         movieList.add("Dango");
         movieList.add("Deadpool");
         MovieList adapter = new
-                MovieList(moviesActivity, movieList, imageId);
+                MovieList(movieListActivity, movieList, imageId);
 
 
         list=(ListView)view.findViewById(R.id.comingsoonlistView);
-        moviesActivity.setComingAdapter((adapter));
+        movieListActivity.setComingAdapter((adapter));
         //list not showing
         //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {
@@ -66,7 +66,7 @@ public class ComingSoonFragment  extends Fragment  {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Toast.makeText(moviesActivity, "You Clicked at " + movieList.get(+position), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(movieListActivity, "You Clicked at " + movieList.get(+position), Toast.LENGTH_SHORT).show();
 
                     }
                 });

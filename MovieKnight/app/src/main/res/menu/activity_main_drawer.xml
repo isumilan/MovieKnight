@@ -31,6 +31,10 @@
                 android:id="@+id/nav_make_event"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Make Event" />
+            <item
+                android:id="@+id/nav_friend_requests"
+                android:icon="@drawable/friendrequest"
+                android:title="Friend Requests" />
         </menu>
     </item>
 

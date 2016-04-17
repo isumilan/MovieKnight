@@ -17,11 +17,11 @@ public class MovieTabFragment extends Fragment {
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
     public static int int_items = 3 ;
-    MoviesActivity moviesActivity;
+    MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public MovieTabFragment(MoviesActivity ma){
+    public MovieTabFragment(MovieListActivity ma){
         super();
-        moviesActivity = ma;
+        movieListActivity = ma;
     }
     public MovieTabFragment(){
         super();
@@ -39,7 +39,7 @@ public class MovieTabFragment extends Fragment {
         /**
          *Set an Apater for the View Pager
          */
-        viewPager.setAdapter(new MyAdapter(getChildFragmentManager(), moviesActivity));
+        viewPager.setAdapter(new MyAdapter(getChildFragmentManager(), movieListActivity));
 
         /**
          * Now , this is a workaround ,
@@ -59,10 +59,10 @@ public class MovieTabFragment extends Fragment {
     }
 
     class MyAdapter extends FragmentPagerAdapter {
-        MoviesActivity moviesActivity;
-        public MyAdapter(FragmentManager fm, MoviesActivity ma) {
+        MovieListActivity movieListActivity;
+        public MyAdapter(FragmentManager fm, MovieListActivity ma) {
             super(fm);
-            moviesActivity = ma;
+            movieListActivity = ma;
         }
 
         /**
@@ -73,9 +73,9 @@ public class MovieTabFragment extends Fragment {
         public Fragment getItem(int position)
         {
             switch (position){
-                case 0 : return new InTheatersFragment(moviesActivity);
-                case 1 : return new ComingSoonFragment(moviesActivity);
-                case 2 : return new BluRayFragment(moviesActivity);
+                case 0 : return new InTheatersFragment(movieListActivity);
+                case 1 : return new ComingSoonFragment(movieListActivity);
+                case 2 : return new BluRayFragment(movieListActivity);
             }
             return null;
         }

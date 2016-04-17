@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
 
-public class MoviesActivity extends  NavigationDrawer {
+public class MovieListActivity extends  NavigationDrawer {
 
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
@@ -30,7 +30,7 @@ public class MoviesActivity extends  NavigationDrawer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_movies);
+        setContentView(R.layout.activity_movie_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -71,14 +71,14 @@ public class MoviesActivity extends  NavigationDrawer {
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
-        SearchManager searchManager = (SearchManager) MoviesActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) MovieListActivity.this.getSystemService(Context.SEARCH_SERVICE);
 
         SearchView searchView = null;
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
         }
         if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(MoviesActivity.this.getComponentName()));
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(MovieListActivity.this.getComponentName()));
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String text) {
