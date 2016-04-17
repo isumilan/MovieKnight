@@ -27,6 +27,13 @@ public class MainActivity extends NavigationDrawer
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /*try {
+            Socket socket = new Socket("localhost", 5554);
+            ClientListener listener = new ClientListener(socket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 
 
