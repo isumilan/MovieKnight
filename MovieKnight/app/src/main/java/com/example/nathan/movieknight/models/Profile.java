@@ -1,3 +1,6 @@
+package com.example.nathan.movieknight.models;
+import android.graphics.Movie;
+
 import java.util.Comparator;
 import java.util.Vector;
 
@@ -20,7 +23,7 @@ public class Profile {
 	private UsernameComparator ucomp = new UsernameComparator();
 	
 	
-	//constructor for generic Profile
+	//constructor for generic com.example.nathan.movieknight.models.Profile
 	public Profile(){
 		username = "*Name unavailable";
 		profilePicture = "NoImageAvailable.png"; //This needs to be changed

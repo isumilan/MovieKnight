@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,18 +12,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TabFragment extends Fragment {
+import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.activities.EventListActivity;
+
+public class EventTabFragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    public static int int_items = 3 ;
-    MoviesActivity moviesActivity;
+    public static int int_items = 2 ;
+    EventListActivity eventListActivity;
     @SuppressLint("ValidFragment")
-    public TabFragment(MoviesActivity ma){
+    public EventTabFragment(EventListActivity ea){
         super();
-        moviesActivity = ma;
+        eventListActivity = ea;
     }
-    public TabFragment(){
+    public EventTabFragment(){
         super();
     }
     @Nullable
@@ -39,7 +42,7 @@ public class TabFragment extends Fragment {
         /**
          *Set an Apater for the View Pager
          */
-        viewPager.setAdapter(new MyAdapter(getChildFragmentManager(), moviesActivity));
+        viewPager.setAdapter(new MyAdapter(getChildFragmentManager(), eventListActivity));
 
         /**
          * Now , this is a workaround ,
@@ -59,10 +62,10 @@ public class TabFragment extends Fragment {
     }
 
     class MyAdapter extends FragmentPagerAdapter {
-        MoviesActivity moviesActivity;
-        public MyAdapter(FragmentManager fm, MoviesActivity ma) {
+        EventListActivity eventListActivity;
+        public MyAdapter(FragmentManager fm, EventListActivity ea) {
             super(fm);
-            moviesActivity = ma;
+            eventListActivity = ea;
         }
 
         /**
@@ -73,9 +76,8 @@ public class TabFragment extends Fragment {
         public Fragment getItem(int position)
         {
             switch (position){
-                case 0 : return new InTheatersFragment(moviesActivity);
-                case 1 : return new ComingSoonFragment(moviesActivity);
-                case 2 : return new BluRayFragment(moviesActivity);
+                case 0 : return new GoingFragment(eventListActivity);
+                case 1 : return new InvitedFragment(eventListActivity);
             }
             return null;
         }
@@ -96,11 +98,10 @@ public class TabFragment extends Fragment {
 
             switch (position){
                 case 0 :
-                    return "In Theaters";
+                    return "Going";
                 case 1 :
-                    return "Coming Soon";
-                case 2 :
-                    return "New On \nBlu-Ray";
+                    return "Invited";
+
             }
             return null;
         }

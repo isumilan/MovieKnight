@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -11,12 +11,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.nathan.movieknight.models.MovieList;
+import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.activities.MovieListActivity;
+
 import java.util.ArrayList;
 
 /**
  * Created by Nathan on 3/17/2016.
  */
-public class ComingSoonFragment  extends Fragment  {
+public class BluRayFragment  extends Fragment  {
     ListView list;
     ArrayList<String> movieList;
     Integer[] imageId = {
@@ -27,38 +31,41 @@ public class ComingSoonFragment  extends Fragment  {
             R.drawable.home,
             R.drawable.movie
     };
-   final MoviesActivity moviesActivity;
+    final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public ComingSoonFragment(MoviesActivity ma){
+    public BluRayFragment (MovieListActivity ma){
         super();
-        moviesActivity = ma;
+        movieListActivity = ma;
     }
-    public ComingSoonFragment(){
+    public BluRayFragment (){
         super();
-        moviesActivity = null;
+        movieListActivity = null;
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.coming_soon_layout,null);
+        View view =  inflater.inflate(R.layout.blu_ray_layout,null);
         movieList = new ArrayList<String>();
+
         movieList.add("Mad Samuel");
         movieList.add("Inside Out");
         movieList.add("Star Wars");
         movieList.add("The Martian");
         movieList.add("Dango");
         movieList.add("Deadpool");
+
+         
+
         MovieList adapter = new
-                MovieList(moviesActivity, movieList, imageId);
+                MovieList(movieListActivity, movieList, imageId);
 
 
-        list=(ListView)view.findViewById(R.id.comingsoonlistView);
-        moviesActivity.setComingAdapter((adapter));
+        list=(ListView)view.findViewById(R.id.bluraylistView);
+        movieListActivity.setBluAdapter((adapter));
         //list not showing
         //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {
-
             if (adapter != null) {
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,7 +73,7 @@ public class ComingSoonFragment  extends Fragment  {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Toast.makeText(moviesActivity, "You Clicked at " + movieList.get(+position), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(movieListActivity, "You Clicked at " + movieList.get(+position), Toast.LENGTH_SHORT).show();
 
                     }
                 });
