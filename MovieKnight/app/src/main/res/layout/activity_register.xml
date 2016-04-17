@@ -111,7 +111,7 @@
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:text="Login as Guest"
-            android:id="@+id/button2"
+            android:id="@+id/guest_button"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp" />
 
@@ -119,7 +119,7 @@
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:text="Existing Account"
-            android:id="@+id/button3"
+            android:id="@+id/existing_button"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp" />
 
@@ -127,7 +127,7 @@
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:text="Register"
-            android:id="@+id/button4"
+            android:id="@+id/register_button"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp" />
 

@@ -5,6 +5,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -19,7 +21,17 @@ public class RegisterActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        Button guestbutton = (Button)findViewById(R.id.guest_button);
+        guestbutton.setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+
+                    }
+                }
+        );
+
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
