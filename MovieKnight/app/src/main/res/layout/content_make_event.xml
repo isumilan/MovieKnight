@@ -12,11 +12,11 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginTop="60dp">
         <TextView
             android:layout_width="113dp"
-            android:layout_height="60dp"
+            android:layout_height="35dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="\t Event Title"
 
@@ -26,8 +26,8 @@
 
         <EditText
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/EventTitle"
+            android:layout_height="35dp"
+            android:id="@+id/eventTitle"
             android:maxLines="1"
             android:singleLine="true"
  />
@@ -35,12 +35,34 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp">
+        <TextView
+            android:layout_width="113dp"
+            android:layout_height="35dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="\t Date/Time"
+
+            android:textSize="20dp" />
+
+
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:id="@+id/dateTime"
+            android:maxLines="1"
+            android:singleLine="true"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         >
 
         <TextView
             android:layout_width="113dp"
-            android:layout_height="60dp"
+            android:layout_height="35dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="\t Movie"
             android:id="@+id/textView"
@@ -50,7 +72,7 @@
 
         <SearchView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:id="@+id/searchView"
             android:maxLines="1"
             android:singleLine="true"

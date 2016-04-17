@@ -1,7 +1,6 @@
 package com.example.nathan.movieknight;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,15 +27,15 @@ public class BluRayFragment  extends Fragment  {
             R.drawable.home,
             R.drawable.movie
     };
-    final MoviesActivity moviesActivity;
+    final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public BluRayFragment (MoviesActivity ma){
+    public BluRayFragment (MovieListActivity ma){
         super();
-        moviesActivity = ma;
+        movieListActivity = ma;
     }
     public BluRayFragment (){
         super();
-        moviesActivity = null;
+        movieListActivity = null;
     }
     @Nullable
     @Override
@@ -55,15 +54,14 @@ public class BluRayFragment  extends Fragment  {
          
 
         MovieList adapter = new
-                MovieList(moviesActivity, movieList, imageId);
+                MovieList(movieListActivity, movieList, imageId);
 
 
         list=(ListView)view.findViewById(R.id.bluraylistView);
-        moviesActivity.setBluAdapter((adapter));
+        movieListActivity.setBluAdapter((adapter));
         //list not showing
         //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {
-
             if (adapter != null) {
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,12 +69,8 @@ public class BluRayFragment  extends Fragment  {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Intent in = new Intent(moviesActivity.getApplicationContext(), MovieActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("key", movieList.get(position));
-                        in.putExtras(b);
-                        startActivity(in);
-                        moviesActivity.finish();
+                        Toast.makeText(movieListActivity, "You Clicked at " + movieList.get(+position), Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
