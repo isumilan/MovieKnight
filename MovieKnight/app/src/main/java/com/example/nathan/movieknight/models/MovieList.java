@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.models;
 
 /**
  * Created by nathan on 4/6/2016.
@@ -13,6 +13,8 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.nathan.movieknight.R;
 
 import java.util.ArrayList;
 
@@ -138,8 +140,4 @@ public class MovieList extends ArrayAdapter<String> implements Filterable {
         }
 
     }
-
-
-
-
 }

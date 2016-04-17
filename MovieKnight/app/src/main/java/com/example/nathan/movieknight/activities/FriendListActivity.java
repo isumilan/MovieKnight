@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,27 +9,27 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.example.nathan.movieknight.NavigationDrawer;
+import com.example.nathan.movieknight.R;
+
 /**
  * Created by natha on 4/6/2016.
  */
-public class SearchActivity extends NavigationDrawer {
+public class FriendListActivity extends NavigationDrawer {
     ListView lv;
     SearchView sv;
-    String[] movies = {"Max Max", "Inside Out", "Star Wars", "The Martian", "Dango", "Deadpool"};
     String[] friends = {"Chaitanya", "Isumi", "Kevin", "Nathan", "Lim"};
 
-    ArrayAdapter<String> movieAdapter;
     ArrayAdapter<String> friendAdapter;
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_friend_list);
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
 
-        movieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, movies);
         friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
-        lv.setAdapter(movieAdapter);
+        lv.setAdapter(friendAdapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -39,21 +39,7 @@ public class SearchActivity extends NavigationDrawer {
 
             @Override
             public boolean onQueryTextChange(String text) {
-                if(movieMode && text.length() > 0 && text.substring(0,1).equals("@")){
-                    lv.setAdapter(friendAdapter);
-                    movieMode = false;
-                } else if(text.length() == 0 || (!movieMode &&  text.length() > 0 && !text.substring(0,1).equals("@"))){
-                    lv.setAdapter(movieAdapter);
-                    movieMode = true;
-                }
-                if(movieMode){
-                    movieAdapter.getFilter().filter(text);
-                } else{
-                    if(text.length() > 0) {
-                        friendAdapter.getFilter().filter(text.substring(1,text.length()));
-                    }
-                }
-
+                friendAdapter.getFilter().filter(text);
                 return false;
             }
         });

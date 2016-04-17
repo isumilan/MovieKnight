@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -12,6 +12,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.nathan.movieknight.models.FriendList;
+import com.example.nathan.movieknight.NavigationDrawer;
+import com.example.nathan.movieknight.R;
 
 import java.util.ArrayList;
 
