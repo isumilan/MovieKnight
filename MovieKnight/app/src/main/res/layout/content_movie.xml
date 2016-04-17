@@ -12,7 +12,7 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_movie"
-    tools:context="com.example.nathan.movieknight.MovieActivity"
+    tools:context=".activities.MovieActivity"
     android:weightSum="1">
     <LinearLayout
         android:orientation="horizontal"

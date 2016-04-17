@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.models;
 
 import com.google.gson.annotations.SerializedName;
 

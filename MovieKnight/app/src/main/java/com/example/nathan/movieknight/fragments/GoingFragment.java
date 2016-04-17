@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,7 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.example.nathan.movieknight.models.EventList;
+import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.activities.EventActivity;
+import com.example.nathan.movieknight.activities.EventListActivity;
 
 import java.util.ArrayList;
 
