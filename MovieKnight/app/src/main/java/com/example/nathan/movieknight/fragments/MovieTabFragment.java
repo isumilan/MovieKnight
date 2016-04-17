@@ -1,7 +1,6 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -13,18 +12,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class EventTabFragment extends Fragment {
+import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.activities.MovieListActivity;
+
+public class MovieTabFragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    public static int int_items = 2 ;
-    EventListActivity eventListActivity;
+    public static int int_items = 3 ;
+    MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public EventTabFragment(EventListActivity ea){
+    public MovieTabFragment(MovieListActivity ma){
         super();
-        eventListActivity = ea;
+        movieListActivity = ma;
     }
-    public EventTabFragment(){
+    public MovieTabFragment(){
         super();
     }
     @Nullable
@@ -40,7 +42,7 @@ public class EventTabFragment extends Fragment {
         /**
          *Set an Apater for the View Pager
          */
-        viewPager.setAdapter(new MyAdapter(getChildFragmentManager(), eventListActivity));
+        viewPager.setAdapter(new MyAdapter(getChildFragmentManager(), movieListActivity));
 
         /**
          * Now , this is a workaround ,
@@ -60,10 +62,10 @@ public class EventTabFragment extends Fragment {
     }
 
     class MyAdapter extends FragmentPagerAdapter {
-        EventListActivity eventListActivity;
-        public MyAdapter(FragmentManager fm, EventListActivity ea) {
+        MovieListActivity movieListActivity;
+        public MyAdapter(FragmentManager fm, MovieListActivity ma) {
             super(fm);
-            eventListActivity = ea;
+            movieListActivity = ma;
         }
 
         /**
@@ -74,8 +76,9 @@ public class EventTabFragment extends Fragment {
         public Fragment getItem(int position)
         {
             switch (position){
-                case 0 : return new GoingFragment(eventListActivity);
-                case 1 : return new InvitedFragment(eventListActivity);
+                case 0 : return new InTheatersFragment(movieListActivity);
+                case 1 : return new ComingSoonFragment(movieListActivity);
+                case 2 : return new BluRayFragment(movieListActivity);
             }
             return null;
         }
@@ -96,10 +99,11 @@ public class EventTabFragment extends Fragment {
 
             switch (position){
                 case 0 :
-                    return "Going";
+                    return "In Theaters";
                 case 1 :
-                    return "Invited";
-
+                    return "Coming Soon";
+                case 2 :
+                    return "New On \nBlu-Ray";
             }
             return null;
         }

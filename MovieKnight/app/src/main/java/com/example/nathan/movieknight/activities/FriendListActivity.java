@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -8,6 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+
+import com.example.nathan.movieknight.NavigationDrawer;
+import com.example.nathan.movieknight.R;
 
 /**
  * Created by natha on 4/6/2016.

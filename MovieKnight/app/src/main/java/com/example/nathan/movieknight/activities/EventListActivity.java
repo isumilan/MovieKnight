@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -15,8 +15,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
+import com.example.nathan.movieknight.fragments.EventTabFragment;
+import com.example.nathan.movieknight.NavigationDrawer;
+import com.example.nathan.movieknight.R;
 
-public class EventListActivity extends  NavigationDrawer {
+
+public class EventListActivity extends NavigationDrawer {
 
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;

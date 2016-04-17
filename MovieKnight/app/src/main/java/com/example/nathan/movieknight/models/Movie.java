@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.models;
 import java.util.Comparator;
 import java.util.Vector;
 

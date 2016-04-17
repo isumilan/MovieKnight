@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.models;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -14,9 +14,9 @@ public class MovieResults {
 
 
     @SerializedName("results")
-    private List<Movie> movieResults;
+    private List<MovieBox> movieResults;
 
-    public List<Movie> getMovies() {
+    public List<MovieBox> getMovies() {
         return movieResults;
     }
 }

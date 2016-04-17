@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.models;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,6 +8,8 @@ import java.util.List;
  * Created by chaitanyap7 on 4/15/16.
  */
 public class MovieInfo {
+
+    private String IMAGE_PATH = "http://image.tmdb.org/t/p/w342";
 
     @SerializedName("original_title")
     private String movieTitle;
@@ -46,9 +48,8 @@ public class MovieInfo {
         return movieTagline;
     }
 
-
     public String getPosterPath() {
-        return moviePosterPath;
+        return IMAGE_PATH + moviePosterPath;
     }
 
     public String getRuntime() {
@@ -67,7 +68,7 @@ public class MovieInfo {
         return movieGenres;
     }
 
-    public static class Genre{
+    public static class Genre {
         @SerializedName("name")
         private String movieName;
 
