@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import com.example.nathan.movieknight.activities.EventListActivity;
 import com.example.nathan.movieknight.activities.FriendRequestsActivity;
 import com.example.nathan.movieknight.activities.MainActivity;
-import com.example.nathan.movieknight.activities.MakeEventActivity;
 import com.example.nathan.movieknight.activities.MovieListActivity;
 import com.example.nathan.movieknight.activities.ProfileActivity;
 import com.example.nathan.movieknight.activities.SearchActivity;
@@ -73,10 +72,7 @@ public class NavigationDrawer extends AppCompatActivity
         } else if (id == R.id.nav_events) {
             startActivity(new Intent(getApplicationContext(), EventListActivity.class));
             finish();
-        } else if (id == R.id.nav_make_event) {
-            startActivity(new Intent(getApplicationContext(), MakeEventActivity.class));
-            finish();
-        } else if(id == R.id.nav_friend_requests){
+        }  else if(id == R.id.nav_friend_requests){
             startActivity(new Intent(getApplicationContext(), FriendRequestsActivity.class));
             finish();
         }

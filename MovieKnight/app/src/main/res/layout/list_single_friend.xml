@@ -12,7 +12,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/listfriendimg"
-            android:src="@drawable/sampai" />
+            android:src="@drawable/dango" />
 
         <TextView
             android:layout_width="200dp"

@@ -8,7 +8,7 @@
                 android:id = "@+id/listmovieimg"
                 android:layout_width = "100dp"
                 android:layout_height = "100dp"
-                android:src = "@drawable/sampai"
+                android:src = "@drawable/dango"
                 />
             <TextView
                 android:id = "@+id/listmovietxt"
