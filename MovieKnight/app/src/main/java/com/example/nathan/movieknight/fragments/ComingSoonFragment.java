@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.nathan.movieknight.activities.MovieActivity;
-import com.example.nathan.movieknight.models.MovieList;
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.activities.MovieActivity;
 import com.example.nathan.movieknight.activities.MovieListActivity;
+import com.example.nathan.movieknight.models.MovieList;
+import com.example.nathan.movieknight.tmdb.TmdbConnector;
 
 import java.util.ArrayList;
 
@@ -23,46 +23,47 @@ import java.util.ArrayList;
  * Created by Nathan on 3/17/2016.
  */
 public class ComingSoonFragment  extends Fragment  {
+    MovieList adapter;
     ListView list;
     ArrayList<String> movieList;
-    Integer[] imageId = {
-            R.drawable.sampai,
-            R.drawable.event,
-            R.drawable.dango,
-            R.drawable.glass,
-            R.drawable.home,
-            R.drawable.movie
-    };
-   final MovieListActivity movieListActivity;
+    ArrayList<String> movieImages;
+    ArrayList<Integer> movieID;
+    TmdbConnector tmdbConnector;
+    final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public ComingSoonFragment(MovieListActivity ma){
+    public ComingSoonFragment(MovieListActivity ma, ArrayList<String> movieList, ArrayList<String> movieImages,ArrayList<Integer> movieID,  TmdbConnector tmdbConnector){
         super();
         movieListActivity = ma;
+        this.movieList = movieList;
+        this.movieImages = movieImages;
+        this.movieID = movieID;
+        this.tmdbConnector = tmdbConnector;
+        tmdbConnector.setComingSoonFragment(this);
     }
     public ComingSoonFragment(){
         super();
         movieListActivity = null;
+    }
+    public ArrayList<String> getMovieList(){
+        return movieList;
+    }
+    public ArrayList<String> getMovieImages(){
+        return movieImages;
+    }
+    public ArrayList<Integer> getMovieID(){
+        return movieID;
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.coming_soon_layout,null);
-        movieList = new ArrayList<String>();
-        movieList.add("Mad Samuel");
-        movieList.add("Inside Out");
-        movieList.add("Star Wars");
-        movieList.add("The Martian");
-        movieList.add("Dango");
-        movieList.add("Deadpool");
-        MovieList adapter = new
-                MovieList(movieListActivity, movieList, imageId);
 
 
-        list=(ListView)view.findViewById(R.id.comingsoonlistView);
+        list=(ListView) view.findViewById(R.id.comingsoonlistView);
+        adapter = new
+                MovieList(movieListActivity, movieList, movieImages);
         movieListActivity.setComingAdapter((adapter));
-        //list not showing
-        //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {
 
             if (adapter != null) {
