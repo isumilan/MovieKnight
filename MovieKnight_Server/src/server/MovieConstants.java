@@ -1,4 +1,5 @@
-//package com.movieknight.server;
+package server;
+
 public class MovieConstants {
 	public static int MovieRequest = 1;
 	public static int ProfileRequest = 2;
