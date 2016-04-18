@@ -1,5 +1,5 @@
-//package com.example.nathan.movieknight.models;
-//import android.graphics.Movie;
+package com.example.nathan.movieknight.models;
+import android.graphics.Movie;
 
 import java.util.Comparator;
 import java.util.Vector;
