@@ -4,6 +4,7 @@ import android.app.Application;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Samuel Wang on 4/17/2016.
@@ -22,8 +23,16 @@ public class MovieKnightAppli extends Application {
         application = this;
         cts = new ConnectToServer();
         cts.execute();
-        clisten = cts.getClientListener();
+        try {
+            clisten = cts.get();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        } catch (ExecutionException ee) {
+            ee.printStackTrace();
+        }
     }
+
+    public ClientListener getClisten() { return clisten; }
 
     public boolean isGuest() {
         return isGuest;

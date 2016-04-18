@@ -1,28 +1,32 @@
 package com.example.nathan.movieknight.models;
-import android.graphics.Movie;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Vector;
 
-public class Profile {
-	
-	public static class UsernameComparator implements Comparator<Profile>{
+public class Profile implements Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	public static class UsernameComparator implements Comparator<Profile>, Serializable {
+		/**
+		 *
+		 */
+		private static final long serialVersionUID = 1L;
 		public int compare(Profile arg0, Profile arg1) {
 			return arg0.getUsername().compareTo(arg1.getUsername());
-		}		
+		}
 	}
-	
-	
 
-	
 	private String username, profilePicture, description;
 	private Vector<String> friends, friendRequests;
 	private Vector<Integer> toWatch, watched, liked;
 	private Vector<String> events, eventRequests;
 	private int zipcode;
 	private UsernameComparator ucomp = new UsernameComparator();
-	
-	
+
 	//constructor for generic com.example.nathan.movieknight.models.Profile
 	public Profile(){
 		username = "*Name unavailable";
@@ -37,7 +41,7 @@ public class Profile {
 		eventRequests = new Vector<String>();
 		zipcode = 0;
 	}
-	
+
 	public Profile(String name, String pic, int zip){
 		username = name;
 		profilePicture = pic;
@@ -88,7 +92,7 @@ public class Profile {
 	public UsernameComparator getUsernameComparator() {
 		return ucomp;
 	}
-	
+
 	//Mutators
 	public void setUsername(String username) {
 		this.username = username;
@@ -123,7 +127,7 @@ public class Profile {
 	public void setZipcode(int zipcode) {
 		this.zipcode = zipcode;
 	}
-	
-	
-	
+
+
+
 }
