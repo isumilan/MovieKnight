@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
+import com.example.nathan.movieknight.models.*;
 
 /**
  * Created by Kevin on 4/16/2016.
@@ -60,58 +61,58 @@ public class ClientListener extends Thread {
         }
     }
     
-    public Profile ProfileRequest(String username)throws IOException, ClassNotFoundException{
+    public Profile ProfileRequest(String username) throws IOException, ClassNotFoundException{
     	oos.writeObject(ProfileRequestDialogue(username));
     	return (Profile)ois.readObject();
     }
-    public MovieEvent MovieEventRequest(String eventID)throws IOException, ClassNotFoundException{
+    public MovieEvent MovieEventRequest(String eventID) throws IOException, ClassNotFoundException{
     	oos.writeObject(MovieEventRequestDialogue(eventID));
     	return (MovieEvent)ois.readObject();
     }
-    public boolean LoginRequest(String username, String password)throws IOException, ClassNotFoundException{
+    public boolean LoginRequest(String username, String password) throws IOException, ClassNotFoundException{
     	oos.writeObject(LoginRequestDialogue(username, password));
     	return (boolean)ois.readObject();
     }
-    public boolean RegisterRequest(String username, String password, int zip)throws IOException, ClassNotFoundException{
+    public boolean RegisterRequest(String username, String password, int zip) throws IOException, ClassNotFoundException{
     	oos.writeObject(RegisterRequestDialogue(username, password, zip));
     	return (boolean)ois.readObject();
     }
     public boolean MakeEventRequest(String owner, int goingToWatch
     		, boolean public_private, String EventTitle, String time
-    		, String location, Vector<String> invitations)throws IOException, ClassNotFoundException{
+    		, String location, Vector<String> invitations) throws IOException, ClassNotFoundException{
     	oos.writeObject(MakeEventRequestDialogue(owner, goingToWatch
     			, public_private, EventTitle, time, location, invitations));
     	return (boolean)ois.readObject();
     }
-    public boolean FriendRequestRequest(String subject, String object)throws IOException, ClassNotFoundException{
+    public boolean FriendRequestRequest(String subject, String object) throws IOException, ClassNotFoundException{
     	oos.writeObject(FriendRequestRequestDialogue(subject, object));
     	return (boolean)ois.readObject();
     }
-    public boolean FriendRequestReplyRequest(String subject, String object, boolean reply)throws IOException, ClassNotFoundException{
+    public boolean FriendRequestReplyRequest(String subject, String object, boolean reply) throws IOException, ClassNotFoundException{
     	oos.writeObject(FriendRequestReplyRequestDialogue(subject, object, reply));
     	return (boolean)ois.readObject();
     }
-    public boolean EventReplyRequest(String eventID, String username, boolean reply)throws IOException, ClassNotFoundException{
+    public boolean EventReplyRequest(String eventID, String username, boolean reply) throws IOException, ClassNotFoundException{
     	oos.writeObject(EventReplyRequestDialogue(eventID, username, reply));
     	return (boolean)ois.readObject();
     }
-    public boolean AddToToWatchListRequest(int movieID, String username)throws IOException, ClassNotFoundException{
+    public boolean AddToToWatchListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
     	oos.writeObject(AddToToWatchListRequestDialogue(movieID, username));
     	return (boolean)ois.readObject();
     }
-    public boolean AddToLikedListRequest(int movieID, String username)throws IOException, ClassNotFoundException{
+    public boolean AddToLikedListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
     	oos.writeObject(AddToLikedListRequestDialogue(movieID, username));
     	return (boolean)ois.readObject();
     }
-    public boolean AddToWatchListRequest(int movieID, String username)throws IOException, ClassNotFoundException{
+    public boolean AddToWatchListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
     	oos.writeObject(AddToWatchedListRequestDialogue(movieID, username));
     	return (boolean)ois.readObject();
     }
-    public boolean UpdatePersonalDescriptionRequest(String description, String username)throws IOException, ClassNotFoundException{
+    public boolean UpdatePersonalDescriptionRequest(String description, String username) throws IOException, ClassNotFoundException{
     	oos.writeObject(UpdatePersonalDescriptionRequestDialogue(description, username));
     	return (boolean)ois.readObject();
     }
-    public boolean  EditMovieEventRequest(MovieEvent me)throws IOException, ClassNotFoundException{
+    public boolean  EditMovieEventRequest(MovieEvent me) throws IOException, ClassNotFoundException{
     	oos.writeObject(EditMovieEventRequestDialogue(me));
     	return (boolean)ois.readObject();
     }
