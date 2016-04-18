@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.MovieActivity;
 import com.example.nathan.movieknight.activities.MovieListActivity;
 import com.example.nathan.movieknight.models.MovieList;
-import com.example.nathan.movieknight.tmdb.TmdbConnector;
 
 import java.util.ArrayList;
 
@@ -28,31 +28,21 @@ public class InTheatersFragment  extends Fragment  {
     ArrayList<String> movieList;
     ArrayList<String> movieImages;
     ArrayList<Integer> movieID;
-    TmdbConnector tmdbConnector;
     final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public InTheatersFragment(MovieListActivity ma, ArrayList<String> movieList, ArrayList<String> movieImages,ArrayList<Integer> movieID,  TmdbConnector tmdbConnector){
+    public InTheatersFragment(MovieListActivity ma){
         super();
         movieListActivity = ma;
-        this.movieList = movieList;
-        this.movieImages = movieImages;
-        this.movieID = movieID;
-        this.tmdbConnector = tmdbConnector;
-        tmdbConnector.setTheatersFragment(this);
+        MovieKnightAppli application = (MovieKnightAppli)ma.getApplication();
+        movieList = application.getMovieListIn();
+        movieImages = application.getMovieImagesIn();
+        movieID = application.getMovieIDIn();
     }
     public InTheatersFragment(){
         super();
         movieListActivity = null;
     }
-    public ArrayList<String> getMovieList(){
-        return movieList;
-    }
-    public ArrayList<String> getMovieImages(){
-        return movieImages;
-    }
-    public ArrayList<Integer> getMovieID(){
-        return movieID;
-    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
