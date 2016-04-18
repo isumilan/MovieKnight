@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -12,81 +13,86 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_profile"
     tools:context=".activities.ProfileActivity">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" >
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/profile_pic"
+            android:src="@drawable/sampai"
+       />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" >
+            <TextView
+                android:text="Samuel Wang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
 
-    <TextView
-        android:text="Samuel Wang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/profile_name" />
+                android:id="@+id/profile_name" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/profile_pic"
-        android:src="@drawable/sampai"
-        android:layout_marginBottom="400dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/profile_name"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Profile description"
-        android:id="@+id/textView12"
-        android:layout_below="@+id/profile_name"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/profile_pic"
-        android:layout_toEndOf="@+id/profile_pic"
-        android:layout_alignBottom="@+id/profile_pic" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="110dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Profile description"
+                android:focusable="false"
+                android:id="@+id/profile_description"
+
+                android:layout_below="@+id/profile_name" />
+    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add as friend"
+            android:id="@+id/addFriendButton"
+         />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:id="@+id/editButton"
+            android:layout_marginLeft="150dp" />
+    </LinearLayout>
+
+
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add as friend"
-        android:id="@+id/addFriendButton"
-        android:layout_below="@+id/textView12"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        android:id="@+id/editButton"
-        android:layout_alignTop="@+id/addFriendButton"
-        android:layout_alignRight="@+id/textView12"
-        android:layout_alignEnd="@+id/textView12" />
-
-    <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Friend List"
         android:id="@+id/friendListButton"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editButton"
-        android:layout_alignEnd="@+id/editButton" />
+        android:layout_alignRight="@+id/movieListButton"
+        android:layout_alignEnd="@+id/movieListButton"
+        android:layout_marginTop="50dp" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="My Movie List"
         android:id="@+id/movieListButton"
-        android:layout_below="@+id/friendListButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/friendListButton"
-        android:layout_alignEnd="@+id/friendListButton" />
+        android:layout_marginTop="40dp" />
 
 
-</RelativeLayout>
+</LinearLayout>
