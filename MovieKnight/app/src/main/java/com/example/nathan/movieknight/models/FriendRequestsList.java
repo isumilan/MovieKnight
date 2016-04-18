@@ -1,4 +1,4 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.models;
 
 /**
  * Created by nathan on 4/6/2016.
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.nathan.movieknight.R;
 
 import java.util.ArrayList;
 
