@@ -69,13 +69,13 @@ public class ClientListener extends Thread {
     	oos.writeObject(MovieEventRequestDialogue(eventID));
     	return (MovieEvent)ois.readObject();
     }
-    public boolean LoginRequest(String username, String password) throws IOException, ClassNotFoundException{
+    public Profile LoginRequest(String username, String password) throws IOException, ClassNotFoundException{
     	oos.writeObject(LoginRequestDialogue(username, password));
-    	return (boolean)ois.readObject();
+    	return (Profile)ois.readObject();
     }
-    public boolean RegisterRequest(String username, String password, int zip) throws IOException, ClassNotFoundException{
+    public Profile RegisterRequest(String username, String password, int zip) throws IOException, ClassNotFoundException{
     	oos.writeObject(RegisterRequestDialogue(username, password, zip));
-    	return (boolean)ois.readObject();
+    	return (Profile)ois.readObject();
     }
     public boolean MakeEventRequest(String owner, int goingToWatch
     		, boolean public_private, String EventTitle, String time

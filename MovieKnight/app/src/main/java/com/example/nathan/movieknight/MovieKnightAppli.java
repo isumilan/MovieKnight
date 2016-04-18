@@ -13,6 +13,9 @@ public class MovieKnightAppli extends Application {
     private static ConnectToServer cts;
     private static ClientListener clisten;
 
+    private boolean isGuest;
+    private String userName;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -20,5 +23,21 @@ public class MovieKnightAppli extends Application {
         cts = new ConnectToServer();
         cts.execute();
         clisten = cts.getClientListener();
+    }
+
+    public boolean isGuest() {
+        return isGuest;
+    }
+
+    public void setIsGuest(boolean b) {
+        isGuest = b;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String s) {
+        userName = s;
     }
 }
