@@ -22,6 +22,7 @@ import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.MovieEvent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -45,11 +46,11 @@ public class MakeEventActivity extends NavigationDrawer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_event);
 
+        Bundle b = getIntent().getExtras();
+        final int movieID = b.getInt("movieID");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -119,17 +120,24 @@ public class MakeEventActivity extends NavigationDrawer {
                     @Override
                     public void onClick(View v) {
                         String owner = ((MovieKnightAppli)getApplication()).getUserName();
-                        int movieID = 1;
                         boolean public_private = ((RadioGroup)findViewById(R.id.privacy_radio_group)).indexOfChild(((RadioGroup)findViewById(R.id.privacy_radio_group)).findViewById(((RadioGroup)findViewById(R.id.privacy_radio_group)).getCheckedRadioButtonId())) == 0;
                         String EventTitle = ((EditText)findViewById(R.id.eventTitle)).getText().toString();
                         String time = ((EditText)findViewById(R.id.dateTime)).getText().toString();
                         String location = "The Universe";
                         Vector<String> invitations = new Vector<String>(checkedList);
-                        if (((MovieKnightAppli)getApplication()).getClisten().MakeEventRequest(owner, movieID, public_private, EventTitle, time, location, invitations)) {
-                            MovieEvent me = new MovieEvent();
+                        MovieEvent me = null;
+                        try {
+                            me = ((MovieKnightAppli) getApplication()).getClisten().MakeEventRequest(owner, movieID, public_private, EventTitle, time, location, invitations);
+                        } catch (ClassNotFoundException cnfe) {
+                            cnfe.printStackTrace();
+                        } catch (IOException ioe) {
+                            ioe.printStackTrace();
+                        }
+                        if (me != null) {
+                            String eid = me.getEventID();
                             Bundle b = new Bundle();
                             Intent in = new Intent(getApplicationContext(), EventActivity.class);
-                            b.putString("key", EventTitle);
+                            b.putString("key", eid);
                             startActivity(in);
                             finish();
                         }

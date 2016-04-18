@@ -38,7 +38,11 @@ public class MovieActivity extends NavigationDrawer {
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         //open up the movie list activity
-                        startActivity(new Intent(getApplicationContext(), MakeEventActivity.class));
+                        Bundle b = new Bundle();
+                        b.putInt("movieID", 1);
+                        Intent in = new Intent(getApplicationContext(), MakeEventActivity.class);
+                        in.putExtras(b);
+                        startActivity(in);
                         finish();
                     }
                 }
