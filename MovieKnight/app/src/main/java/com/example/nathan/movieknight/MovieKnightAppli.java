@@ -2,13 +2,10 @@ package com.example.nathan.movieknight;
 
 import android.app.Application;
 
-<<<<<<< HEAD
-=======
 import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.ExecutionException;
 
->>>>>>> 85513ac2f18b350ab9b60e438a53908dae908f70
 /**
  * Created by Samuel Wang on 4/17/2016.
  */

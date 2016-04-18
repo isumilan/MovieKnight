@@ -132,6 +132,8 @@ public class MakeEventActivity extends NavigationDrawer {
                             cnfe.printStackTrace();
                         } catch (IOException ioe) {
                             ioe.printStackTrace();
+                        } catch (NullPointerException npe) {
+                            npe.printStackTrace();
                         }
                         if (me != null) {
                             String eid = me.getEventID();
