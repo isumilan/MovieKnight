@@ -29,6 +29,8 @@ public class ServerClientCommunicator extends Thread {
 	}
 	
 	public void run() {
+		SQLDriver driver = new SQLDriver();
+		driver.connect();
 		try {
             String line = (String) ois.readObject();
             while (line != null) {
@@ -44,37 +46,6 @@ public class ServerClientCommunicator extends Thread {
 		} catch (ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
+		driver.stop();
 	}
-	
-	/*private Movie getMovie(String title){
-    	//get movie from firebase using title
-    }
-    private Profile getProfile(String username){
-    	//get user profile from firebase using username
-    }
-    private MovieEvent getMovieEvent(String eventID){
-    	//get movie event from firebase using eventID
-    }
-    private boolean LoginRequest(String username, String password){
-    	//request login using username and password
-    }
-    private boolean RegisterRequest(String email, String username
-    		, String password, int zipcode){
-    	//request to create new user
-    }
-    private boolean MakeMovieEvent(MovieEvent){
-    	//create such event
-    }
-    private boolean FriendRequest(String username){
-    	//send friend request to user with such username
-    }
-    private boolean AcceptFriend(String username){
-    	//accept the friend request from the user with such username
-    }
-    private boolean EventInvite(String eventID, String username){
-    	//invite the user to the event
-    }
-    private boolean EventReply(String eventID, String username){
-    	//the reply of the user to the event
-    }*/
 }
