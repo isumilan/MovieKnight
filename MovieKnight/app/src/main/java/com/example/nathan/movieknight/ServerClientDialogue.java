@@ -1,6 +1,10 @@
-package com.example.nathan.movieknight;
+import java.io.Serializable;
 
-public class ServerClientDialogue {
+public class ServerClientDialogue implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int requestType;
 	private Object DialogueContent;
 	
