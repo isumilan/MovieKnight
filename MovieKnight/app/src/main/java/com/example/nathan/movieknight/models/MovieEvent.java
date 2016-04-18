@@ -19,9 +19,9 @@ public class MovieEvent {
 		}		
 	}
 	
-	private Profile owner;
+	private String owner;
 	private int goingToWatch;
-	private Vector<Profile> participants, invited;
+	private Vector<String> participants, invited;
 	private String description, movieTime, theater;
 	private MovieComparator mc = new MovieComparator();
 	private MovieTimeComparator mtc = new MovieTimeComparator();
@@ -29,10 +29,10 @@ public class MovieEvent {
 	private boolean public_private; //true for public 
 	
 	public MovieEvent(){
-		owner = new Profile();
+		owner = "";
 		goingToWatch = -1;
-		participants = new Vector<Profile>();
-		invited = new Vector<Profile>();
+		participants = new Vector<String>();
+		invited = new Vector<String>();
 		description = "No description";
 		movieTime = "To be decided";
 		theater = "To be decided";
@@ -41,11 +41,11 @@ public class MovieEvent {
 		public_private = true;
 	}
 	
-	public MovieEvent(Profile owner, int goingToWatch){
+	public MovieEvent(String owner, int goingToWatch){
 		this.owner = owner;
 		this.goingToWatch = goingToWatch;
-		participants = new Vector<Profile>();
-		invited = new Vector<Profile>();
+		participants = new Vector<String>();
+		invited = new Vector<String>();
 		description = "No description";
 		movieTime = "To be decided";
 		theater = "To be decided";
@@ -59,16 +59,16 @@ public class MovieEvent {
 	
 
 	//Getters
-	public Profile getOwner() {
+	public String getOwner() {
 		return owner;
 	}
 	public int getGoingToWatch() {
 		return goingToWatch;
 	}
-	public Vector<Profile> getParticipants() {
+	public Vector<String> getParticipants() {
 		return participants;
 	}
-	public Vector<Profile> getInvited() {
+	public Vector<String> getInvited() {
 		return invited;
 	}
 	public String getMovieTime() {
@@ -94,16 +94,16 @@ public class MovieEvent {
 	}
 	
 	//Mutators
-	public void setOwner(Profile owner) {
+	public void setOwner(String owner) {
 		this.owner = owner;
 	}
 	public void setGoingToWatch(int goingToWatch) {
 		this.goingToWatch = goingToWatch;
 	}
-	public void setParticipants(Vector<Profile> participants) {
+	public void setParticipants(Vector<String> participants) {
 		this.participants = participants;
 	}
-	public void setInvited(Vector<Profile> invited) {
+	public void setInvited(Vector<String> invited) {
 		this.invited = invited;
 	}
 	public void setMovieTime(String movieTime) {
@@ -118,10 +118,10 @@ public class MovieEvent {
 	public void setEventID(String eventID) {
 		this.eventID = eventID;
 	}
-	public void addParticipant(Profile newParticipant){
+	public void addParticipant(String newParticipant){
 		participants.add(newParticipant);
 	}
-	public void addInvited(Profile newInvitee){
+	public void addInvited(String newInvitee){
 		invited.add(newInvitee);
 	}
 	public void removeParticipant(Profile quitter){

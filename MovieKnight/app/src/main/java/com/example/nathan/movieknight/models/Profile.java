@@ -16,9 +16,9 @@ public class Profile {
 
 	
 	private String username, profilePicture, description;
-	private Vector<Profile> friends, friendRequests;
+	private Vector<String> friends, friendRequests;
 	private Vector<Integer> toWatch, watched, liked;
-	private Vector<MovieEvent> events, eventRequests;
+	private Vector<String> events, eventRequests;
 	private int zipcode;
 	private UsernameComparator ucomp = new UsernameComparator();
 	
@@ -28,13 +28,13 @@ public class Profile {
 		username = "*Name unavailable";
 		profilePicture = "NoImageAvailable.png"; //This needs to be changed
 		description = "no description";
-		friends = new Vector<Profile>();
-		friendRequests = new Vector<Profile>();
+		friends = new Vector<String>();
+		friendRequests = new Vector<String>();
 		toWatch = new Vector<Integer>();
 		watched = new Vector<Integer>();
 		liked = new Vector<Integer>();
-		events = new Vector<MovieEvent>();
-		eventRequests = new Vector<MovieEvent>();
+		events = new Vector<String>();
+		eventRequests = new Vector<String>();
 		zipcode = 0;
 	}
 	
@@ -42,13 +42,13 @@ public class Profile {
 		username = name;
 		profilePicture = pic;
 		description = "no description";
-		friends = new Vector<Profile>();
-		friendRequests = new Vector<Profile>();
+		friends = new Vector<String>();
+		friendRequests = new Vector<String>();
 		toWatch = new Vector<Integer>();
 		watched = new Vector<Integer>();
 		liked = new Vector<Integer>();
-		events = new Vector<MovieEvent>();
-		eventRequests = new Vector<MovieEvent>();
+		events = new Vector<String>();
+		eventRequests = new Vector<String>();
 		zipcode = zip;
 	}
 	//Getters
@@ -61,10 +61,10 @@ public class Profile {
 	public String getDescription() {
 		return description;
 	}
-	public Vector<Profile> getFriends() {
+	public Vector<String> getFriends() {
 		return friends;
 	}
-	public Vector<Profile> getFriendRequests() {
+	public Vector<String> getFriendRequests() {
 		return friendRequests;
 	}
 	public Vector<Integer> getToWatch() {
@@ -76,10 +76,10 @@ public class Profile {
 	public Vector<Integer> getLiked() {
 		return liked;
 	}
-	public Vector<MovieEvent> getEvents() {
+	public Vector<String> getEvents() {
 		return events;
 	}
-	public Vector<MovieEvent> getEventRequests() {
+	public Vector<String> getEventRequests() {
 		return eventRequests;
 	}
 	public int getZipcode() {
@@ -99,10 +99,10 @@ public class Profile {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public void setFriends(Vector<Profile> friends) {
+	public void setFriends(Vector<String> friends) {
 		this.friends = friends;
 	}
-	public void setFriendRequests(Vector<Profile> friendRequests) {
+	public void setFriendRequests(Vector<String> friendRequests) {
 		this.friendRequests = friendRequests;
 	}
 	public void setToWatch(Vector<Integer> toWatch) {
@@ -114,10 +114,10 @@ public class Profile {
 	public void setLiked(Vector<Integer> liked) {
 		this.liked = liked;
 	}
-	public void setEvents(Vector<MovieEvent> events) {
+	public void setEvents(Vector<String> events) {
 		this.events = events;
 	}
-	public void setEventRequests(Vector<MovieEvent> eventRequests) {
+	public void setEventRequests(Vector<String> eventRequests) {
 		this.eventRequests = eventRequests;
 	}
 	public void setZipcode(int zipcode) {
