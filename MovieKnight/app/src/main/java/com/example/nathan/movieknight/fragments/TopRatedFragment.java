@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by Nathan on 3/17/2016.
  */
-public class ComingSoonFragment  extends Fragment  {
+public class TopRatedFragment  extends Fragment  {
     MovieList adapter;
     ListView list;
     ArrayList<String> movieList;
@@ -31,16 +31,16 @@ public class ComingSoonFragment  extends Fragment  {
     TmdbConnector tmdbConnector;
     final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public ComingSoonFragment(MovieListActivity ma, ArrayList<String> movieList, ArrayList<String> movieImages,ArrayList<Integer> movieID,  TmdbConnector tmdbConnector){
+    public TopRatedFragment(MovieListActivity ma, ArrayList<String> movieList, ArrayList<String> movieImages,ArrayList<Integer> movieID,  TmdbConnector tmdbConnector){
         super();
         movieListActivity = ma;
         this.movieList = movieList;
         this.movieImages = movieImages;
         this.movieID = movieID;
         this.tmdbConnector = tmdbConnector;
-        tmdbConnector.setComingSoonFragment(this);
+        tmdbConnector.setTopRatedFragment(this);
     }
-    public ComingSoonFragment(){
+    public TopRatedFragment(){
         super();
         movieListActivity = null;
     }
@@ -57,13 +57,16 @@ public class ComingSoonFragment  extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.coming_soon_layout,null);
+        View view =  inflater.inflate(R.layout.top_rated_layout,null);
 
 
-        list=(ListView) view.findViewById(R.id.comingsoonlistView);
-        adapter = new
-                MovieList(movieListActivity, movieList, movieImages);
-        movieListActivity.setComingAdapter((adapter));
+        adapter = new MovieList(movieListActivity, movieList, movieImages);
+
+
+        list=(ListView)view.findViewById(R.id.topratedlistView);
+        movieListActivity.setBluAdapter((adapter));
+        //list not showing
+        //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {
 
             if (adapter != null) {

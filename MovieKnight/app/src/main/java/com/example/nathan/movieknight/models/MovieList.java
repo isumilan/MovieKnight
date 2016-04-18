@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nathan.movieknight.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -23,23 +24,27 @@ public class MovieList extends ArrayAdapter<String> implements Filterable {
     private final Activity context;
     private ArrayList<String> movieNames;
     private ArrayList<String> oldMovieNames;
-    private  Integer[] movieImage;
-    private  Integer[] oldMovieImage;
+    private  ArrayList<String> movieImages;
+    private  ArrayList<String> oldMovieImages;
     public MovieList(Activity context,
-                     ArrayList<String>  movieNames, Integer[] movieImage) {
+                     ArrayList<String>  movieNames, ArrayList<String> movieImages) {
 
         super(context, R.layout.list_single_movie, movieNames);
 
         this.context = context;
+
         this.movieNames = movieNames;
+
         oldMovieNames = new ArrayList<String>();
         for(String movie : movieNames){
             oldMovieNames.add(movie);
         }
-        oldMovieImage = new Integer[movieImage.length];
-        this.movieImage = movieImage;
-        for(int i = 0; i < movieImage.length;i++){
-            oldMovieImage[i] = movieImage[i];
+
+        this.movieImages = movieImages;
+
+        oldMovieImages = new ArrayList<String>();
+        for(String movieimg : movieImages){
+            oldMovieImages.add(movieimg);
         }
     }
 
@@ -53,12 +58,15 @@ public class MovieList extends ArrayAdapter<String> implements Filterable {
 
         if(position<movieNames.size())
             txtTitle.setText(movieNames.get(position));
-        if(position < movieImage.length)
-            imageView.setImageResource(movieImage[position]);
+        if(position < movieImages.size())
+            Picasso.with(context)
+                    .load(movieImages.get(position))
+                    .into(imageView);
+
         return rowView;
     }
 
- @Override
+    @Override
     public Filter getFilter() {
         if (movieFilter == null)
             movieFilter = new MovieFilter();
@@ -80,8 +88,10 @@ public class MovieList extends ArrayAdapter<String> implements Filterable {
                 // No filter implemented we return all the list
                 results.values = oldMovieNames;
                 results.count = oldMovieNames.size();
-                for(int i = 0; i < oldMovieImage.length; i++){
-                    movieImage[i] = oldMovieImage[i];
+                movieImages.clear();
+
+                for(int i = 0; i < oldMovieImages.size(); i++){
+                    movieImages.add(oldMovieImages.get(i));
                 }
 
             }
@@ -114,9 +124,11 @@ public class MovieList extends ArrayAdapter<String> implements Filterable {
                 if(!noMatch){
                     addAll(oldMovieNames);
                     movieNames = oldMovieNames;
-                    movieImage = new Integer[oldMovieImage.length];
-                    for(int i = 0; i < oldMovieImage.length; i++){
-                        movieImage[i] = oldMovieImage[i];
+
+                    movieImages.clear();
+
+                    for(int i = 0; i < oldMovieImages.size(); i++){
+                        movieImages.add(oldMovieImages.get(i));
                     }
                 }
 
@@ -126,10 +138,12 @@ public class MovieList extends ArrayAdapter<String> implements Filterable {
                 movieNames = (ArrayList<String>) results.values;
 
                 addAll(movieNames);
+
                 if(positions.size() > 0){
-                    movieImage = new Integer[positions.size()];
-                    for(int i = 0; i < positions.size(); i++){
-                        movieImage[i] = oldMovieImage[positions.get(i)];
+                    movieImages.clear();
+
+                    for(int i = 0; i < oldMovieImages.size(); i++){
+                        movieImages.add(oldMovieImages.get(i));
                     }
                 }
 

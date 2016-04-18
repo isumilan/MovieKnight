@@ -3,6 +3,7 @@ package com.example.nathan.movieknight.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 
 import java.util.ArrayList;
@@ -70,7 +72,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        //populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -92,10 +94,29 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
+        Button registerbutton = (Button)findViewById(R.id.register_button);
+        registerbutton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                finish();
+            }
+        });
+
+        Button guestbutton = (Button)findViewById(R.id.guest_button);
+        guestbutton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MovieKnightAppli)getApplication()).setIsGuest(true);
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
-
+/*
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
@@ -125,10 +146,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
         return false;
     }
+*/
 
     /**
      * Callback received when a permissions request has been completed.
-     */
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -138,8 +160,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         }
     }
-
-
+*/
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the

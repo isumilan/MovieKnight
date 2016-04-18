@@ -1,5 +1,4 @@
-package com.example.nathan.movieknight.models;
-import android.graphics.Movie;
+package models;
 
 import java.util.Comparator;
 import java.util.Vector;
@@ -12,16 +11,12 @@ public class Profile {
 		}		
 	}
 	
-	
-
-	
 	private String username, profilePicture, description;
 	private Vector<String> friends, friendRequests;
 	private Vector<Integer> toWatch, watched, liked;
 	private Vector<String> events, eventRequests;
 	private int zipcode;
 	private UsernameComparator ucomp = new UsernameComparator();
-	
 	
 	//constructor for generic com.example.nathan.movieknight.models.Profile
 	public Profile(){

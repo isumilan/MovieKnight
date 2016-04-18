@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -53,6 +55,16 @@ public class MakeEventActivity extends NavigationDrawer {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Button makeeventbutton = (Button)findViewById(R.id.make_event);
+        makeeventbutton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //create an event
+                    }
+                }
+        );
+
         friendList = new ArrayList<String>();
 
         friendList.add("Mad Samuel");
@@ -77,8 +89,16 @@ public class MakeEventActivity extends NavigationDrawer {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Toast.makeText(MakeEventActivity.this, "You Clicked at " + friendList.get(+position), Toast.LENGTH_SHORT).show();
-
+                        /*
+                        String owner = getApplication().getUsername();
+                        int goingToWatch =
+                        boolean public_private
+                        String EventTitle
+                        String time
+                        String location
+                        Vector<String> invitations
+                        */
+                        //Toast.makeText(MakeEventActivity.this, "You Clicked at " + friendList.get(+position), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

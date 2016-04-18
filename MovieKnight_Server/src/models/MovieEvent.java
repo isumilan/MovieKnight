@@ -1,6 +1,4 @@
-package com.example.nathan.movieknight.models;
-
-
+package models;
 
 import java.util.Comparator;
 import java.util.UUID;

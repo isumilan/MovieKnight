@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Friend List"
-        android:id="@+id/button5"
+        android:id="@+id/friendListButton"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -82,11 +82,11 @@
         android:layout_height="wrap_content"
         android:text="My Movie List"
         android:id="@+id/movieListButton"
-        android:layout_below="@+id/button5"
-        android:layout_marginTop="49dp"
+        android:layout_below="@+id/friendListButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button5"
-        android:layout_alignEnd="@+id/button5" />
+        android:layout_alignRight="@+id/friendListButton"
+        android:layout_alignEnd="@+id/friendListButton" />
+
 
 </RelativeLayout>
