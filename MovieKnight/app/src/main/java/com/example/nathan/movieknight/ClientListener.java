@@ -104,4 +104,24 @@ public class ClientListener extends Thread {
     	return new ServerClientDialogue(MovieConstants.EventReplyRequest
     			, eventID+"|"+name+"|"+reply);
     }
+    public ServerClientDialogue AddToToWatchListRequest(int movieID, String name){
+    	return new ServerClientDialogue(MovieConstants.AddToToWatchListRequest
+    			, movieID+"|"+name);
+    }
+    public ServerClientDialogue AddToLikedListRequest(int movieID, String name){
+    	return new ServerClientDialogue(MovieConstants.AddToLikedListRequest
+    			, movieID+"|"+name);
+    }
+    public ServerClientDialogue AddToWatchedListRequest(int movieID, String name){
+    	return new ServerClientDialogue(MovieConstants.AddToWatchedListRequest
+    			, movieID+"|"+name);
+    }
+    public ServerClientDialogue UpdatePersonalDescriptionRequest(String description, String name){
+    	return new ServerClientDialogue(MovieConstants.UpdatePersonalDescriptionRequest
+    			, description+"|"+name);
+    }
+    public ServerClientDialogue EditMovieEventRequest(MovieEvent me){
+    	return new ServerClientDialogue(MovieConstants.EditMovieEventRequest
+    			, me);
+    }
 }
