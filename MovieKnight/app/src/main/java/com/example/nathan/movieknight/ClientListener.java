@@ -59,24 +59,81 @@ public class ClientListener extends Thread {
         }
     }
     
+    public Profile ProfileRequest(String username){
+    	oos.writeObject(ProfileRequestDialogue(username));
+    	return (Profile)ois.readObject();
+    }
+    public MovieEvent MovieEventRequest(String eventID){
+    	oos.writeObject(MovieEventRequestDialogue(eventID));
+    	return (MovieEvent)ois.readObject();
+    }
+    public boolean LoginRequest(String username, String password){
+    	oos.writeObject(LoginRequestDialogue(username, password));
+    	return (boolean)ois.readObject();
+    }
+    public boolean RegisterRequest(String username, String password, int zip){
+    	oos.writeObject(RegisterRequestDialogue(username, password, zip));
+    	return (boolean)ois.readObject();
+    }
+    public boolean MakeEventRequest(String owner, int goingToWatch
+    		, boolean public_private, String EventTitle, String time
+    		, String location, Vector<String> invitations){
+    	oos.writeObject(MakeEventRequestDialogue(owner, goingToWatch
+    			, public_private, EventTitle, time, location, invitations));
+    	return (boolean)ois.readObject();
+    }
+    public boolean FriendRequestRequest(String subject, String object){
+    	oos.writeObject(FriendRequestRequestDialogue(subject, object));
+    	return (boolean)ois.readObject();
+    }
+    public boolean FriendRequestReplyRequest(String subject, String object, boolean reply){
+    	oos.writeObject(FriendRequestReplyRequestDialogue(subject, object, reply));
+    	return (boolean)ois.readObject();
+    }
+    public boolean EventReplyRequest(String eventID, String username, boolean reply){
+    	oos.writeObject(EventReplyRequestDialogue(eventID, username, reply));
+    	return (boolean)ois.readObject();
+    }
+    public boolean AddToToWatchListRequest(int movieID, String username){
+    	oos.writeObject(AddToToWatchListRequestDialogue(movieID, username));
+    	return (boolean)ois.readObject();
+    }
+    public boolean AddToLikedListRequest(int movieID, String username){
+    	oos.writeObject(AddToLikedListRequestDialogue(movieID, username));
+    	return (boolean)ois.readObject();
+    }
+    public boolean AddToWatchListRequest(int movieID, String username){
+    	oos.writeObject(AddToWatchedListRequestDialogue(movieID, username));
+    	return (boolean)ois.readObject();
+    }
+    public boolean UpdatePersonalDescriptionRequest(String description, String username){
+    	oos.writeObject(UpdatePersonalDescriptionRequestDialogue(description, username));
+    	return (boolean)ois.readObject();
+    }
+    public boolean  EditMovieEventRequest(MovieEvent me){
+    	oos.writeObject(EditMovieEventRequestDialogue(me));
+    	return (boolean)ois.readObject();
+    }
+    
+    
    /* public ServerClientDialogue MovieRequest(String title){
     	return new ServerClientDialogue(MovieConstants.MovieRequest, title);
     }*/
-    public ServerClientDialogue ProfileRequest(String name){
+    private ServerClientDialogue ProfileRequestDialogue(String name){
     	return new ServerClientDialogue(MovieConstants.ProfileRequest, name);
     }
-    public ServerClientDialogue MovieEventRequest(String eventID){
+    private ServerClientDialogue MovieEventRequestDialogue(String eventID){
     	return new ServerClientDialogue(MovieConstants.MovieEventRequest, eventID);
     }
-    public ServerClientDialogue LoginRequest(String name, String password){
+    private ServerClientDialogue LoginRequestDialogue(String name, String password){
     	return new ServerClientDialogue(MovieConstants.LoginRequest
     			, name + "|" + password);
     }
-    public ServerClientDialogue RegisterRequest(String name, String password, int zip){
+    private ServerClientDialogue RegisterRequestDialogue(String name, String password, int zip){
     	return new ServerClientDialogue(MovieConstants.RegisterRequest
     			, name + "|" + password + "|" + zip);
     }
-    public ServerClientDialogue MakeEventRequest(String owner, int goingToWatch
+    private ServerClientDialogue MakeEventRequestDialogue(String owner, int goingToWatch
     		, boolean public_private, String EventTitle, String time
     		, String location, Vector<String> invitations){
     	MovieEvent me = new MovieEvent(owner, goingToWatch);
@@ -87,12 +144,12 @@ public class ClientListener extends Thread {
     	me.setInvited(invitations);
     	return new ServerClientDialogue(MovieConstants.MakeEventRequest, me);
     }
-    public ServerClientDialogue FriendRequestRequest(String subject, String object){
+    private ServerClientDialogue FriendRequestRequestDialogue(String subject, String object){
     	return new ServerClientDialogue(MovieConstants.FriendRequestRequest
     			, subject + "|" + object);
     	//subject sends friend request to object
     }
-    public ServerClientDialogue FriendRequestReplyRequest(String subject, String object, boolean reply){
+    private ServerClientDialogue FriendRequestReplyRequestDialogue(String subject, String object, boolean reply){
     	return new ServerClientDialogue(MovieConstants.FriendRequestReplyRequest
     			, subject+"|"+object+"|"+reply);
     	//subject replies to object's friend request with reply(true = yes)
@@ -100,8 +157,28 @@ public class ClientListener extends Thread {
     /*public ServerClientDialogue EventInviteRequest(String eventID, String name){
     	return new ServerClientDialogue(MovieConstants.MovieRequest, title);
     }*/
-    public ServerClientDialogue EventReplyRequest(String eventID, String name, boolean reply){
+    private ServerClientDialogue EventReplyRequestDialogue(String eventID, String name, boolean reply){
     	return new ServerClientDialogue(MovieConstants.EventReplyRequest
     			, eventID+"|"+name+"|"+reply);
+    }
+    private ServerClientDialogue AddToToWatchListRequestDialogue(int movieID, String name){
+    	return new ServerClientDialogue(MovieConstants.AddToToWatchListRequest
+    			, movieID+"|"+name);
+    }
+    private ServerClientDialogue AddToLikedListRequestDialogue(int movieID, String name){
+    	return new ServerClientDialogue(MovieConstants.AddToLikedListRequest
+    			, movieID+"|"+name);
+    }
+    private ServerClientDialogue AddToWatchedListRequestDialogue(int movieID, String name){
+    	return new ServerClientDialogue(MovieConstants.AddToWatchedListRequest
+    			, movieID+"|"+name);
+    }
+    private ServerClientDialogue UpdatePersonalDescriptionRequestDialogue(String description, String name){
+    	return new ServerClientDialogue(MovieConstants.UpdatePersonalDescriptionRequest
+    			, description+"|"+name);
+    }
+    private ServerClientDialogue EditMovieEventRequestDialogue(MovieEvent me){
+    	return new ServerClientDialogue(MovieConstants.EditMovieEventRequest
+    			, me);
     }
 }
