@@ -83,7 +83,6 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
                 for(int i = 0; i < oldFriendImage.length; i++){
                     friendImage[i] = oldFriendImage[i];
                 }
-
             }
             else {
                 noMatch = true;
@@ -96,10 +95,8 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
                     }
                     count++;
                 }
-
                 results.values = mFriendList;
                 results.count = mFriendList.size();
-
             }
             return results;
         }
@@ -119,7 +116,6 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
                         friendImage[i] = oldFriendImage[i];
                     }
                 }
-
             }
             else {
                 clear();
