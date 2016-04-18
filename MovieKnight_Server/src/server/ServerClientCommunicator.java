@@ -5,7 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import models.MovieEvent;
+import com.example.nathan.movieknight.ServerClientDialogue;
+import com.example.nathan.movieknight.models.MovieEvent;
 
 public class ServerClientCommunicator extends Thread {
 
@@ -78,8 +79,9 @@ public class ServerClientCommunicator extends Thread {
 				String input = (String) scd.getDialogueContent();
 				String[] inArray = input.split("|");
 				sendObject(driver.EditDescription(inArray[0], inArray[1]));
-			}
+			}	
 		} catch (IOException ioe) {
+			ioe.printStackTrace();
 			serverListener.removeServerClientCommunicator(this);
 			try {
 				socket.close();

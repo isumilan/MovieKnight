@@ -8,10 +8,9 @@ import java.sql.SQLException;
 import java.util.UUID;
 import java.util.Vector;
 
+import com.example.nathan.movieknight.models.MovieEvent;
+import com.example.nathan.movieknight.models.Profile;
 import com.mysql.jdbc.Driver;
-
-import models.MovieEvent;
-import models.Profile;
 
 public class SQLDriver {
 	
@@ -74,7 +73,7 @@ public class SQLDriver {
 		return true;
 	}
 	
-	public boolean RegisterRequest(String username, String password, int zipcode) {
+	public Profile RegisterRequest(String username, String password, int zipcode) {
 		if (!doesExist(username)) {
 			try {
 				PreparedStatement ps = con.prepareStatement(addUser);
@@ -83,30 +82,30 @@ public class SQLDriver {
 				ps.setInt(3, zipcode);
 				ps.executeUpdate();
 				log.write("Registered " + username);
-				return true;
+				return LoginRequest(username, password);
 			} catch (SQLException e) {
 				log.write("Registration failed");
-				return false;
+				return null;
 			}
 		} else {
 			log.write(username + " is taken");
-			return false;
+			return null;
 		}
 	}
 	
-	public boolean LoginRequest(String username, String password) {
+	public Profile LoginRequest(String username, String password) {
 		try {
 			PreparedStatement ps = con.prepareStatement(findPassword);
 			ps.setString(1, username);
 			ResultSet result = ps.executeQuery();
 			if (result.next() && result.getString(1).equals(password)) {
 				log.write("Logged in " + username);
-				return true;
+				return getProfile(username);
 			}
 		} catch (SQLException e) {
 			log.write(username + " failed to log in");
 		}
-		return false;
+		return null;
 	}
 	
 	public Profile getProfile(String username) {
@@ -167,7 +166,7 @@ public class SQLDriver {
 		return participants;
 	}
 	
-	public boolean MakeMovieEvent(MovieEvent event){
+	public MovieEvent MakeMovieEvent(MovieEvent event){
 		try {
 			PreparedStatement ps = con.prepareStatement(addEvent);
 			ps.setString(1, event.getEventID());
@@ -197,10 +196,10 @@ public class SQLDriver {
 			}
 			
 			log.write("Made event with ID: " + event.getEventID());
-			return true;
+			return event;
 		} catch (SQLException e) {
 			log.write("Failed to make event with ID: " + event.getEventID());
-			return false;
+			return null;
 		}
 	}
 
