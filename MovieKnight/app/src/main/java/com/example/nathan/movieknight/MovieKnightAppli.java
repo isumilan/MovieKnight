@@ -2,8 +2,9 @@ package com.example.nathan.movieknight;
 
 import android.app.Application;
 
-import java.io.IOException;
-import java.net.Socket;
+import com.example.nathan.movieknight.tmdb.TmdbConnector;
+
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -16,7 +17,19 @@ public class MovieKnightAppli extends Application {
 
     private boolean isGuest;
     private String userName;
+    ArrayList<String> movieList_top;
+    ArrayList<String> movieImages_top;
+    ArrayList<Integer> movieID_top;
 
+    //In theaters
+    ArrayList<String> movieList_in;
+    ArrayList<String> movieImages_in;
+    ArrayList<Integer> movieID_in;
+
+    ArrayList<String> movieList_upcoming;
+    ArrayList<String> movieImages_upcoming;
+    ArrayList<Integer> movieID_upcoming;
+    TmdbConnector tmdbConnector;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,6 +43,20 @@ public class MovieKnightAppli extends Application {
         } catch (ExecutionException ee) {
             ee.printStackTrace();
         }
+        movieList_top = new ArrayList<String>();
+        movieImages_top = new ArrayList<String>();
+        movieID_top = new ArrayList<Integer>();
+
+        movieList_in = new ArrayList<String>();
+        movieImages_in = new ArrayList<String>();
+        movieID_in = new ArrayList<Integer>();
+
+        movieList_upcoming = new ArrayList<String>();
+        movieImages_upcoming = new ArrayList<String>();
+        movieID_upcoming = new ArrayList<Integer>();
+
+        //getting the information for different class objects
+
     }
 
     public ClientListener getClisten() { return clisten; }
@@ -48,5 +75,32 @@ public class MovieKnightAppli extends Application {
 
     public void setUserName(String s) {
         userName = s;
+    }
+    public ArrayList<String> getMovieListTop(){
+        return movieList_top;
+    }
+    public ArrayList<String> getMovieImagesTop(){
+        return movieImages_top;
+    }
+    public ArrayList<Integer> getMovieIDTop(){
+        return movieID_top;
+    }
+    public ArrayList<String> getMovieListIn(){
+        return movieList_in;
+    }
+    public ArrayList<String> getMovieImagesIn(){
+        return movieImages_in;
+    }
+    public ArrayList<Integer> getMovieIDIn(){
+        return movieID_in;
+    }
+    public ArrayList<String> getMovieListUpcoming(){
+        return movieList_upcoming;
+    }
+    public ArrayList<String> getMovieImagesUpcoming(){
+        return movieImages_upcoming;
+    }
+    public ArrayList<Integer> getMovieIDUpcoming(){
+        return movieID_upcoming;
     }
 }
