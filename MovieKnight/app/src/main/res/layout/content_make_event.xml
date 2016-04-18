@@ -153,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Make Event"
-                    android:id="@+id/button"
+                    android:id="@+id/make_event"
                     android:layout_marginLeft="30dp" />
             </LinearLayout>
 
