@@ -77,12 +77,12 @@ public class ClientListener extends Thread {
         sendObject(RegisterRequestDialogue(username, password, zip));
         return (Profile)ois.readObject();
     }
-    public boolean MakeEventRequest(String owner, int goingToWatch
+    public MovieEvent MakeEventRequest(String owner, int goingToWatch
             , boolean public_private, String EventTitle, String time
             , String location, Vector<String> invitations) throws IOException, ClassNotFoundException{
         sendObject(MakeEventRequestDialogue(owner, goingToWatch
                 , public_private, EventTitle, time, location, invitations));
-        return (boolean)ois.readObject();
+        return (MovieEvent)ois.readObject();
     }
     public boolean FriendRequestRequest(String subject, String object) throws IOException, ClassNotFoundException{
         sendObject(FriendRequestRequestDialogue(subject, object));
