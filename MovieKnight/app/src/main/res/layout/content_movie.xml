@@ -97,6 +97,13 @@
                 style="?android:attr/ratingBarStyleIndicator"
                 android:layout_marginLeft="10dp"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Make Event"
+                android:id="@+id/makeEventButton"
+                android:layout_gravity="center_horizontal" />
+
 
         </LinearLayout>
 

@@ -76,6 +76,7 @@ public class ProfileActivity extends NavigationDrawer {
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         //open up the movie list activity
+                        startActivity(new Intent(getApplicationContext(), ProfileMovieListActivity.class));
                     }
                 }
         );
