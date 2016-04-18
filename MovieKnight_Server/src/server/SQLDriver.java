@@ -19,14 +19,14 @@ public class SQLDriver {
 	private final static String addUser = "INSERT INTO USERS(USERNAME,PASSWORD,ZIPCODE) VALUES(?,?,?)";
 	private final static String findPassword = "SELECT PASSWORD FROM USERS WHERE USERNAME=?";
 	private final static String selectEvent = "SELECT * FROM MOVIEEVENTS WHERE EVENTID=?";
-	private final static String selectParticipants = "SELECT USERNAME FROM MOVIEEVENTS WHERE EVENTID=? AND ACCEPTED=?";
+	private final static String selectParticipants = "SELECT USERNAME FROM EVENTPARTICIPANTS WHERE EVENTID=? AND ACCEPTED=?";
 	private final static String addEvent = "INSERT INTO MOVIEEVENTS(EVENTID,OWNER,MOVIEID,DESCRIPTION,MOVIETIME,THEATER) VALUES(?,?,?,?,?,?)";
 	private final static String addParticipants = "INSERT INTO EVENTPARTICIPANTS(P_ID,EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?,?)";
-	private final static String sendFriendRequest = "INSERT INTO FRIENDS(P_ID,ISREQUEST,SENDER,RECEIVER) VALUES(?,TRUE,?,?)";
-	private final static String acceptFriendRequest = "UPDATE FRIENDS SET ACCEPTED=TRUE WHERE SENDER=? AND RECEIVER=?";
+	private final static String sendFriendRequest = "INSERT INTO FRIENDS(P_ID,ACCEPTED,SENDER,RECEIVER) VALUES(?,?,?,?)";
+	private final static String acceptFriendRequest = "UPDATE FRIENDS SET ACCEPTED=? WHERE SENDER=? AND RECEIVER=?";
 	private final static String denyFriendRequest = "DELETE FROM FRIENDS WHERE SENDER=? AND RECEIVER=?";
-	private final static String sendEventInvite = "INSERT INTO EVENTPARTICIPANTS(P_ID,EVENTID,ACCEPTED,USERNAME) VALUES(?,?,FALSE,?)";
-	private final static String acceptEventInvite = "UPDATE EVENTPARTICIPANTS SET ACCEPTED=TRUE WHERE EVENTID=? AND USERNAME=?";
+	private final static String sendEventInvite = "INSERT INTO EVENTPARTICIPANTS(P_ID,EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?,?)";
+	private final static String acceptEventInvite = "UPDATE EVENTPARTICIPANTS SET ACCEPTED=? WHERE EVENTID=? AND USERNAME=?";
 	private final static String denyEventInvite = "DELETE FROM EVENTPARTICIPANTS WHERE EVENTID=? AND USERNAME=?";
 	private final static String addMovieToList = "INSERT INTO MOVIELISTS(P_ID,LIST_TYPE,USERNAME,MOVIEID) VALUES=(?,?,?,?)";
 	private final static String editDescription = "UPDATE USERS SET DESCRIPTION=? WHERE USERNAME=?";
@@ -159,7 +159,7 @@ public class SQLDriver {
 			ps.setBoolean(2, accepted);
 			ResultSet result = ps.executeQuery();
 			while (result.next()) {
-				participants.add(result.getString(1));
+				participants.add(result.getString("username"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -208,8 +208,9 @@ public class SQLDriver {
 		try {
 			PreparedStatement ps = con.prepareStatement(sendFriendRequest);
 			ps.setString(1, UUID.randomUUID().toString());
-			ps.setString(2, sender);
-			ps.setString(3, receiver);
+			ps.setBoolean(2, true);
+			ps.setString(3, sender);
+			ps.setString(4, receiver);
 			ps.executeUpdate();
 			log.write("Sent friend request from " + sender + " to " + receiver);
 			return true;
@@ -222,16 +223,21 @@ public class SQLDriver {
 	public boolean AcceptFriend(String sender, String receiver, boolean reply){
 		try {
 			PreparedStatement ps;
-			if (reply)
+			if (reply) {
 				ps = con.prepareStatement(acceptFriendRequest);
-			else
+				ps.setBoolean(1, true);
+				ps.setString(2, sender);
+				ps.setString(3, receiver);
+			} else {
 				ps = con.prepareStatement(denyFriendRequest);
-			ps.setString(1, sender);
-			ps.setString(2, receiver);
+				ps.setString(1, sender);
+				ps.setString(2, receiver);
+			}
 			ps.executeUpdate();
 			log.write(receiver + " replied to friend request");
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			log.write("Failed to reply to friend request");
 			return false;
 		}
@@ -242,7 +248,8 @@ public class SQLDriver {
 			PreparedStatement ps = con.prepareStatement(sendEventInvite);
 			ps.setString(1, UUID.randomUUID().toString());
 			ps.setString(2, eventID);
-			ps.setString(3, username);
+			ps.setBoolean(3, false);
+			ps.setString(4, username);
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -254,12 +261,16 @@ public class SQLDriver {
 	public boolean EventReply(String eventID, String username, boolean reply){
 		try {
 			PreparedStatement ps;
-			if (reply)
+			if (reply) {
 				ps = con.prepareStatement(acceptEventInvite);
-			else
+				ps.setBoolean(1, true);
+				ps.setString(2, eventID);
+				ps.setString(3, username);
+			} else {
 				ps = con.prepareStatement(denyEventInvite);
-			ps.setString(1, eventID);
-			ps.setString(2, username);
+				ps.setString(1, eventID);
+				ps.setString(2, username);
+			}
 			ps.executeUpdate();
 			log.write(username + " replied to event invite");
 			return true;
