@@ -43,6 +43,8 @@ public class EventActivity extends NavigationDrawer {
                             //Date/Time
                             //Theater
                             //Friends Invited
+
+                            //the editing interface also has to keep track of the event ID
                         //else
                             //open up a choice betweeen "going" and "interested" and "not going"
                     }
