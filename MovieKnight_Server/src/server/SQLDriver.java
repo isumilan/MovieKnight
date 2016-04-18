@@ -24,11 +24,18 @@ public class SQLDriver {
 	private final static String addParticipants = "INSERT INTO EVENTPARTICIPANTS(P_ID,EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?,?)";
 	private final static String sendFriendRequest = "INSERT INTO FRIENDS(P_ID,ISREQUEST,SENDER,RECEIVER) VALUES(?,TRUE,?,?)";
 	private final static String acceptFriendRequest = "UPDATE FRIENDS SET ACCEPTED=TRUE WHERE SENDER=? AND RECEIVER=?";
+	private final static String denyFriendRequest = "DELETE FROM FRIENDS WHERE SENDER=? AND RECEIVER=?";
 	private final static String sendEventInvite = "INSERT INTO EVENTPARTICIPANTS(P_ID,EVENTID,ACCEPTED,USERNAME) VALUES(?,?,FALSE,?)";
 	private final static String acceptEventInvite = "UPDATE EVENTPARTICIPANTS SET ACCEPTED=TRUE WHERE EVENTID=? AND USERNAME=?";
-	private Connection con;
+	private final static String denyEventInvite = "DELETE FROM EVENTPARTICIPANTS WHERE EVENTID=? AND USERNAME=?";
+	private final static String addMovieToList = "INSERT INTO MOVIELISTS(P_ID,LIST_TYPE,USERNAME,MOVIEID) VALUES=(?,?,?,?)";
+	private final static String editDescription = "UPDATE USERS SET DESCRIPTION=? WHERE USERNAME=?";
 	
-	public SQLDriver() {
+	private Connection con;
+	private ServerLog log;
+	
+	public SQLDriver(ServerLog inLog) {
+		log = inLog;
 		try {
 			new Driver();
 		} catch (SQLException e){
@@ -44,7 +51,7 @@ public class SQLDriver {
 		}
 	}
 	
-	public Connection getConnection() {return con;}
+	public Connection getConnection() { return con; }
 	
 	public void stop() {
 		try {
@@ -75,12 +82,14 @@ public class SQLDriver {
 				ps.setString(2, password);
 				ps.setInt(3, zipcode);
 				ps.executeUpdate();
+				log.write("Registered " + username);
 				return true;
 			} catch (SQLException e) {
-				e.printStackTrace();
+				log.write("Registration failed");
 				return false;
 			}
 		} else {
+			log.write(username + " is taken");
 			return false;
 		}
 	}
@@ -90,10 +99,12 @@ public class SQLDriver {
 			PreparedStatement ps = con.prepareStatement(findPassword);
 			ps.setString(1, username);
 			ResultSet result = ps.executeQuery();
-			if (result.next() && result.getString(1).equals(password))
+			if (result.next() && result.getString(1).equals(password)) {
+				log.write("Logged in " + username);
 				return true;
+			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.write(username + " failed to log in");
 		}
 		return false;
 	}
@@ -111,8 +122,9 @@ public class SQLDriver {
 				user.setZipcode(result.getInt(5));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.write("Failed to send profile with: " + username);
 		}
+		log.write("Sent profile with: " + username);
 		return user;
 	}
 	
@@ -133,8 +145,9 @@ public class SQLDriver {
 				event.setParticipants(getEventParticipants(eventID, true));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.write("Failed to send event with ID: " + eventID);
 		}
+		log.write("Sent event with ID: " + eventID);
 		return event;
 	}
 	
@@ -183,9 +196,10 @@ public class SQLDriver {
 				ps3.executeUpdate();
 			}
 			
+			log.write("Made event with ID: " + event.getEventID());
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.write("Failed to make event with ID: " + event.getEventID());
 			return false;
 		}
 	}
@@ -197,22 +211,28 @@ public class SQLDriver {
 			ps.setString(2, sender);
 			ps.setString(3, receiver);
 			ps.executeUpdate();
+			log.write("Sent friend request from " + sender + " to " + receiver);
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.write("Failed to send friend request");
 			return false;
 		}
 	}
 	
-	public boolean AcceptFriend(String sender, String receiver){
+	public boolean AcceptFriend(String sender, String receiver, boolean reply){
 		try {
-			PreparedStatement ps = con.prepareStatement(acceptFriendRequest);
+			PreparedStatement ps;
+			if (reply)
+				ps = con.prepareStatement(acceptFriendRequest);
+			else
+				ps = con.prepareStatement(denyFriendRequest);
 			ps.setString(1, sender);
 			ps.setString(2, receiver);
 			ps.executeUpdate();
+			log.write(receiver + " replied to friend request");
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.write("Failed to reply to friend request");
 			return false;
 		}
 	}
@@ -231,15 +251,50 @@ public class SQLDriver {
 		}
 	}
 	
-	public boolean EventReply(String eventID, String username){
+	public boolean EventReply(String eventID, String username, boolean reply){
 		try {
-			PreparedStatement ps = con.prepareStatement(acceptEventInvite);
+			PreparedStatement ps;
+			if (reply)
+				ps = con.prepareStatement(acceptEventInvite);
+			else
+				ps = con.prepareStatement(denyEventInvite);
 			ps.setString(1, eventID);
 			ps.setString(2, username);
 			ps.executeUpdate();
+			log.write(username + " replied to event invite");
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.write("Failed to reply to event invite");
+			return false;
+		}
+	}
+	
+	public boolean AddToList(String list_type, int movieID, String name) {
+		try {
+			PreparedStatement ps= con.prepareStatement(addMovieToList);
+			ps.setString(1, UUID.randomUUID().toString());
+			ps.setString(2, list_type);
+			ps.setString(3, name);
+			ps.setInt(4, movieID);
+			ps.executeUpdate();
+			log.write(movieID + " added to " + list_type + " list of " + name);
+			return true;
+		} catch (SQLException e) {
+			log.write("Failed to add movie to list");
+			return false;
+		}
+	}
+	
+	public boolean EditDescription(String description, String username) {
+		try {
+			PreparedStatement ps= con.prepareStatement(editDescription);
+			ps.setString(1, description);
+			ps.setString(2, username);
+			ps.executeUpdate();
+			log.write(username + " edited description");
+			return true;
+		} catch (SQLException e) {
+			log.write("Failed to edit description");
 			return false;
 		}
 	}
