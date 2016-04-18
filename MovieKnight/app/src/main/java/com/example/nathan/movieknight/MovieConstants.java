@@ -1,4 +1,5 @@
-//package com.movieknight.server;
+package com.example.nathan.movieknight;
+
 public class MovieConstants {
 	public static int MovieRequest = 1;
 	public static int ProfileRequest = 2;
@@ -10,4 +11,9 @@ public class MovieConstants {
 	public static int FriendRequestReplyRequest = 8;
 	public static int EventInviteRequest = 9;
 	public static int EventReplyRequest = 10;
+	public static int AddToToWatchListRequest = 11;
+	public static int AddToLikedListRequest = 12;
+	public static int AddToWatchedListRequest = 13;
+	public static int UpdatePersonalDescriptionRequest = 14;
+	public static int EditMovieEventRequest = 15;
 }
