@@ -16,11 +16,6 @@ public class MovieKnightAppli extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-
-        try {
-            clisten = new ClientListener(new Socket("10.0.2.2", 5000));
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+        new ConnectToServer().execute();
     }
 }
