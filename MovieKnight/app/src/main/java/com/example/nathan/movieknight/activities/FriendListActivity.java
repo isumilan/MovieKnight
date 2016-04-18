@@ -11,6 +11,9 @@ import android.widget.SearchView;
 
 import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.models.FriendList;
+
+import java.util.ArrayList;
 
 /**
  * Created by natha on 4/6/2016.
@@ -18,8 +21,14 @@ import com.example.nathan.movieknight.R;
 public class FriendListActivity extends NavigationDrawer {
     ListView lv;
     SearchView sv;
-    String[] friends = {"Chaitanya", "Isumi", "Kevin", "Nathan", "Lim"};
-
+    ArrayList<String> friendsList;
+    Integer[] imageId = {
+            R.drawable.sampai,
+            R.drawable.event,
+            R.drawable.dango,
+            R.drawable.glass,
+            R.drawable.home,
+    };
     ArrayAdapter<String> friendAdapter;
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +36,15 @@ public class FriendListActivity extends NavigationDrawer {
         setContentView(R.layout.activity_friend_list);
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
+        friendsList = new ArrayList<String>();
+        friendsList.add("A");
+        friendsList.add("B");
+        friendsList.add("C");
+        friendsList.add("D");
+        friendsList.add("E");
+        FriendList adapter = new FriendList(this, friendsList, imageId);
 
-        friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
+        friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friendsList);
         lv.setAdapter(friendAdapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
