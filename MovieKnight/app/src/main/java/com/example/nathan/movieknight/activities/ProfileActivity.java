@@ -1,6 +1,7 @@
 package com.example.nathan.movieknight.activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -53,6 +54,9 @@ public class ProfileActivity extends NavigationDrawer {
                         //Profile Description
                         //Favorite Movies
                         //Profile Image
+                     //   ((EditText) findViewById(R.id.profile_description)).setFocusable(true);
+                   //     ((EditText) findViewById(R.id.profile_description)).setTextIsSelectable(true);
+
                     }
                 }
         );
@@ -61,10 +65,11 @@ public class ProfileActivity extends NavigationDrawer {
         friendlistbutton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        //opens up the friend list activity
+                        startActivity(new Intent(getApplicationContext(), FriendListActivity.class));
                     }
                 }
         );
+
 
         Button movielistbutton = (Button)findViewById(R.id.movieListButton);
         movielistbutton.setOnClickListener(
