@@ -1,24 +1,31 @@
 package com.example.nathan.movieknight.models;
 
-
-
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.UUID;
 import java.util.Vector;
 
-public class MovieEvent {
-	
-	public static class MovieComparator implements Comparator<MovieEvent>{
+public class MovieEvent implements Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	public static class MovieComparator implements Comparator<MovieEvent>, Serializable {
+		/**
+		 *
+		 */
+		private static final long serialVersionUID = 1L;
 		public int compare(MovieEvent arg0, MovieEvent arg1) {
 			return arg0.getGoingToWatch() - arg1.getGoingToWatch();
-		}		
+		}
 	}
 	public static class MovieTimeComparator implements Comparator<MovieEvent>{
 		public int compare(MovieEvent arg0, MovieEvent arg1) {
 			return arg0.getMovieTime().compareTo(arg1.getMovieTime());
-		}		
+		}
 	}
-	
+
 	private String owner;
 	private int goingToWatch;
 	private Vector<String> participants, invited;
@@ -27,7 +34,7 @@ public class MovieEvent {
 	private MovieTimeComparator mtc = new MovieTimeComparator();
 	private String eventID;
 	private boolean public_private; //true for public 
-	
+
 	public MovieEvent(){
 		owner = "";
 		goingToWatch = -1;
@@ -40,7 +47,7 @@ public class MovieEvent {
 		eventID = eid.toString();
 		public_private = true;
 	}
-	
+
 	public MovieEvent(String owner, int goingToWatch){
 		this.owner = owner;
 		this.goingToWatch = goingToWatch;
@@ -54,9 +61,9 @@ public class MovieEvent {
 		public_private = true;
 	}
 
-	
 
-	
+
+
 
 	//Getters
 	public String getOwner() {
@@ -92,7 +99,7 @@ public class MovieEvent {
 	public boolean isPublic_private() {
 		return public_private;
 	}
-	
+
 	//Mutators
 	public void setOwner(String owner) {
 		this.owner = owner;
