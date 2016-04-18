@@ -70,7 +70,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        //populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -95,7 +95,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
-
+/*
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
@@ -125,10 +125,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
         return false;
     }
+*/
 
     /**
      * Callback received when a permissions request has been completed.
-     */
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -138,8 +139,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         }
     }
-
-
+*/
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the

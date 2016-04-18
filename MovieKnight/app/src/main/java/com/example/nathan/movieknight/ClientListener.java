@@ -1,5 +1,7 @@
 package com.example.nathan.movieknight;
 
+import com.example.nathan.movieknight.models.MovieEvent;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
