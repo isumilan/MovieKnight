@@ -3,9 +3,9 @@ package com.example.nathan.movieknight;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Vector;
+import com.example.nathan.movieknight.models.*;
 
 /**
  * Created by Kevin on 4/16/2016.
