@@ -1,3 +1,4 @@
+package com.example.nathan.movieknight;
 
 public class ServerClientDialogue {
 	private int requestType;
