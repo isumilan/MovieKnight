@@ -13,14 +13,14 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Friends (
-	P_Id int primary key not null,
-	isRequest bool not null,
+	P_Id varchar(50) primary key not null,
+	accepted bool not null,
     sender varchar(50) not null,
     receiver varchar(50) not null
 );
 
 CREATE TABLE MovieLists (
-	P_Id int primary key not null,
+	P_Id varchar(50) primary key not null,
 	list_type varchar(50) not null,
     username varchar(50) not null,
     movieID int not null
@@ -36,7 +36,7 @@ CREATE TABLE MovieEvents (
 );
 
 CREATE TABLE EventParticipants (
-	P_Id int primary key not null,
+	P_Id varchar(50) primary key not null,
 	eventID varchar(50) not null,
     accepted bool not null,
     username varchar(50) not null
