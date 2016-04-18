@@ -5,7 +5,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -29,7 +28,7 @@ public class FriendListActivity extends NavigationDrawer {
             R.drawable.glass,
             R.drawable.home,
     };
-    ArrayAdapter<String> friendAdapter;
+    FriendList friendAdapter;
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +41,8 @@ public class FriendListActivity extends NavigationDrawer {
         friendsList.add("C");
         friendsList.add("D");
         friendsList.add("E");
-        FriendList adapter = new FriendList(this, friendsList, imageId);
 
-        friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friendsList);
+       friendAdapter = new FriendList(this, friendsList, imageId);
         lv.setAdapter(friendAdapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

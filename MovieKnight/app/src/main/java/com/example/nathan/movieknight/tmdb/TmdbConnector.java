@@ -3,6 +3,9 @@ package com.example.nathan.movieknight.tmdb;
 
 import android.util.Log;
 
+import com.example.nathan.movieknight.fragments.ComingSoonFragment;
+import com.example.nathan.movieknight.fragments.InTheatersFragment;
+import com.example.nathan.movieknight.fragments.TopRatedFragment;
 import com.example.nathan.movieknight.models.MovieBox;
 import com.example.nathan.movieknight.models.MovieInfo;
 import com.example.nathan.movieknight.models.MovieResults;
@@ -24,17 +27,13 @@ public class TmdbConnector {
     private static String TAG = "TmdbConnector";
     private static final String API_KEY = "85380ca322256320bbf2c30c06d6c080";
     public static final String API_URL = "http://api.themoviedb.org";
-
-    public interface MovieListener {
-        void updateFilmsList(List<MovieBox> movies);
-        void updateMovieInfo(MovieInfo movieInfo);
-    }
-
-    List<MovieListener> movieListeners = new ArrayList<>();
-    public void addMovieListener (MovieListener ml) {
-        movieListeners.add(ml);
-    }
-
+    List<MovieBox> moviesReceived;
+    List<MovieBox> theatersReceivedList;
+    List<MovieBox> topRatedReceivedList;
+    List<MovieBox> comingSoonReceivedList;
+    InTheatersFragment theatersFragment;
+    ComingSoonFragment comingSoonFragment;
+    TopRatedFragment topRatedFragment;
     TmdbService movieService;
 
     public TmdbConnector() {
@@ -43,8 +42,84 @@ public class TmdbConnector {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         movieService = retro.create(TmdbService.class);
-    }
 
+        Runnable theaters = new Runnable() {
+            public void run() {
+
+                while(theatersReceivedList == null ){
+
+                }
+                while(theatersFragment == null){
+
+                }
+
+
+                for(int i = 0; i < theatersReceivedList.size(); i++) {
+                    theatersFragment.getMovieList().add(theatersReceivedList.get(i).getTitle());
+                    theatersFragment.getMovieID().add(theatersReceivedList.get(i).getId());
+                    theatersFragment.getMovieImages().add(theatersReceivedList.get(i).getPosterPath());
+
+                }
+
+            }
+        };
+        Runnable comingSoon = new Runnable() {
+            public void run() {
+
+                while(comingSoonReceivedList == null){
+
+                }
+                while(comingSoonFragment == null){
+
+                }
+
+
+                for(int i = 0; i < comingSoonReceivedList.size(); i++) {
+                    comingSoonFragment.getMovieList().add(comingSoonReceivedList.get(i).getTitle());
+                    comingSoonFragment.getMovieID().add(comingSoonReceivedList.get(i).getId());
+                    comingSoonFragment.getMovieImages().add(comingSoonReceivedList.get(i).getPosterPath());
+
+                }
+            }
+        };
+        Runnable topRated = new Runnable() {
+            public void run() {
+
+                while(topRatedReceivedList == null ){
+
+                }
+                while(topRatedFragment == null ){
+
+                }
+
+
+
+
+                for(int i = 0; i < topRatedReceivedList.size(); i++) {
+                    topRatedFragment.getMovieList().add(topRatedReceivedList.get(i).getTitle());
+                    topRatedFragment.getMovieID().add(topRatedReceivedList.get(i).getId());
+                    topRatedFragment.getMovieImages().add(topRatedReceivedList.get(i).getPosterPath());
+                }
+
+
+            }
+        };
+        Thread theaterThread = new Thread(theaters);
+        Thread comingSoonThread = new Thread(comingSoon);
+        Thread topRatedThread = new Thread(topRated);
+        theaterThread.start();
+        comingSoonThread.start();
+        topRatedThread.start();
+    }
+    public void setTopRatedFragment(TopRatedFragment tRF){
+        topRatedFragment = tRF;
+    }
+    public void setComingSoonFragment(ComingSoonFragment cSF){
+        comingSoonFragment = cSF;
+    }
+    public void setTheatersFragment(InTheatersFragment iTF){
+        theatersFragment = iTF;
+    }
 
     //getting information for a single movie class
     public void getMovieDetails(Integer id){
@@ -55,13 +130,11 @@ public class TmdbConnector {
                 MovieInfo model = response.body();
                 if (model == null)
                     return;
-                for (MovieListener ml: movieListeners)
-                    ml.updateMovieInfo(model);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.d(TAG, t.getMessage());
+
             }
         });
     }
@@ -70,17 +143,20 @@ public class TmdbConnector {
     public void searchMovies(String movieName){
         try{
             Call moviesCall = movieService.searchMovies(API_KEY, movieName);
-            enqueueMovieResults(moviesCall);
+            //       enqueueMovieResults(moviesCall);
         }catch (Exception e){
             String exception = e.getMessage();
         }
     }
 
     //getting information for a list of movies
-    public void getMovies(String requestType){
+    public void getMovies(String requestType,ArrayList<String> movieList, ArrayList<String> movieImages,ArrayList<Integer> movieID){
         try{
             //default set to movies now in theaters
             Call moviesCall = movieService.getNowPlayingMovies(API_KEY);
+
+
+
 
             //getting the appropriate results from the TMDB API
             if(requestType.equals("Upcoming")) {
@@ -91,30 +167,54 @@ public class TmdbConnector {
                 moviesCall = movieService.getNowPlayingMovies(API_KEY);
             }
 
-            enqueueMovieResults(moviesCall);
+            enqueueMovieResults(moviesCall, movieList, movieImages, movieID, requestType);
+
+
+
+
+
+
         } catch (Exception e){
+
+
+
             String exception = e.getMessage();
         }
     }
 
     //helper function to populate movie results
-    private void enqueueMovieResults(Call moviesCall){
-        moviesCall.enqueue(new Callback<MovieResults>() {
+    private void enqueueMovieResults(Call moviesCall, ArrayList<String> movieList, ArrayList<String> movieImages, ArrayList<Integer> movieID,final String requestType ){
+        Callback<MovieResults> callBack = new Callback<MovieResults>(){
             @Override
             public void onResponse(Response<MovieResults> response) {
                 MovieResults mResults = response.body();
                 if (mResults != null) {
                     //updating the movie results where it was originally called
-                    List<MovieBox> myMovies = mResults.getMovies();
-                    for (MovieListener ml : movieListeners)
-                        ml.updateFilmsList(myMovies);
+                    if(requestType.equals("Upcoming")) {
+                        comingSoonReceivedList = mResults.getMovies();
+                    } else if(requestType.equals("TopRated")) {
+                        topRatedReceivedList = mResults.getMovies();
+                    } else if(requestType.equals("NowPlaying")) {
+                        theatersReceivedList = mResults.getMovies();
+                    }
+                    //  moviesReceived = mResults.getMovies();
+
+
                 }
+
             }
 
             @Override
             public void onFailure(Throwable thr) {
                 Log.d(TAG, thr.getMessage());
+
             }
-        });
+        };
+        moviesCall.enqueue(callBack);
+
+
+
+
+
     }
 }
