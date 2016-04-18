@@ -1,0 +1,9 @@
+diff a/MovieKnight/app/src/main/java/com/example/nathan/movieknight/activities/LoginActivity.java b/MovieKnight/app/src/main/java/com/example/nathan/movieknight/activities/LoginActivity.java	(rejected hunks)
+@@ -309,6 +309,7 @@
+         @Override
+         protected Boolean doInBackground(Void... params) {
+             // TODO: attempt authentication against a network service.
++            //if (((MovieKnightAppli) getApplication()).getClisten().LoginRequest())
+ 
+             try {
+                 // Simulate network access.
