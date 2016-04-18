@@ -43,8 +43,6 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
         }
     }
 
-
-
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();

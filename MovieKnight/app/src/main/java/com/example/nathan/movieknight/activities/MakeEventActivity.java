@@ -2,24 +2,28 @@ package com.example.nathan.movieknight.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.models.FriendList;
 import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.models.MovieEvent;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Created by natha on 4/6/2016.
@@ -27,6 +31,7 @@ import java.util.ArrayList;
 public class MakeEventActivity extends NavigationDrawer {
     ListView list;
     ArrayList<String> friendList;
+    ArrayList<String> checkedList;
     Integer[] imageId = {
             R.drawable.sampai,
             R.drawable.event,
@@ -55,17 +60,9 @@ public class MakeEventActivity extends NavigationDrawer {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Button makeeventbutton = (Button)findViewById(R.id.make_event);
-        makeeventbutton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //create an event
-                    }
-                }
-        );
-
         friendList = new ArrayList<String>();
+        checkedList = new ArrayList<String>();
+        checkedList.add(((MovieKnightAppli)getApplication()).getUserName());
 
         friendList.add("Mad Samuel");
         friendList.add("Inside Out");
@@ -75,7 +72,6 @@ public class MakeEventActivity extends NavigationDrawer {
         friendList.add("Deadpool");
         final FriendList adapter = new
                 FriendList(this, friendList, imageId);
-
 
         list=(ListView)findViewById(R.id.friendlistView);
         //list not showing
@@ -89,23 +85,13 @@ public class MakeEventActivity extends NavigationDrawer {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        /*
-                        String owner = getApplication().getUsername();
-                        int goingToWatch =
-                        boolean public_private
-                        String EventTitle
-                        String time
-                        String location
-                        Vector<String> invitations
-                        */
-                        //Toast.makeText(MakeEventActivity.this, "You Clicked at " + friendList.get(+position), Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
         } else{
             System.out.println("null");
         }
-
 
         SearchManager searchManager = (SearchManager) MakeEventActivity.this.getSystemService(Context.SEARCH_SERVICE);
 
@@ -126,5 +112,29 @@ public class MakeEventActivity extends NavigationDrawer {
                 }
             });
         }
+
+        Button makeeventbutton = (Button)findViewById(R.id.make_event);
+        makeeventbutton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String owner = ((MovieKnightAppli)getApplication()).getUserName();
+                        int movieID = 1;
+                        boolean public_private = ((RadioGroup)findViewById(R.id.privacy_radio_group)).indexOfChild(((RadioGroup)findViewById(R.id.privacy_radio_group)).findViewById(((RadioGroup)findViewById(R.id.privacy_radio_group)).getCheckedRadioButtonId())) == 0;
+                        String EventTitle = ((EditText)findViewById(R.id.eventTitle)).getText().toString();
+                        String time = ((EditText)findViewById(R.id.dateTime)).getText().toString();
+                        String location = "The Universe";
+                        Vector<String> invitations = new Vector<String>(checkedList);
+                        if (((MovieKnightAppli)getApplication()).getClisten().MakeEventRequest(owner, movieID, public_private, EventTitle, time, location, invitations)) {
+                            MovieEvent me = new MovieEvent();
+                            Bundle b = new Bundle();
+                            Intent in = new Intent(getApplicationContext(), EventActivity.class);
+                            b.putString("key", EventTitle);
+                            startActivity(in);
+                            finish();
+                        }
+                    }
+                }
+        );
     }
 }

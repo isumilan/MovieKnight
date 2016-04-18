@@ -25,6 +25,8 @@ public class MovieKnightAppli extends Application {
         clisten = cts.getClientListener();
     }
 
+    public ClientListener getClisten() { return clisten; }
+
     public boolean isGuest() {
         return isGuest;
     }
