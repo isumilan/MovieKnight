@@ -3,14 +3,11 @@ package com.example.nathan.movieknight.tmdb;
 
 import android.util.Log;
 
-import com.example.nathan.movieknight.fragments.ComingSoonFragment;
-import com.example.nathan.movieknight.fragments.InTheatersFragment;
-import com.example.nathan.movieknight.fragments.TopRatedFragment;
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.models.MovieBox;
 import com.example.nathan.movieknight.models.MovieInfo;
 import com.example.nathan.movieknight.models.MovieResults;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
@@ -31,11 +28,9 @@ public class TmdbConnector {
     List<MovieBox> theatersReceivedList;
     List<MovieBox> topRatedReceivedList;
     List<MovieBox> comingSoonReceivedList;
-    InTheatersFragment theatersFragment;
-    ComingSoonFragment comingSoonFragment;
-    TopRatedFragment topRatedFragment;
-    TmdbService movieService;
 
+    TmdbService movieService;
+    MovieKnightAppli application;
     public TmdbConnector() {
         Retrofit retro = new Retrofit.Builder()
                 .baseUrl(API_URL)
@@ -49,15 +44,13 @@ public class TmdbConnector {
                 while(theatersReceivedList == null ){
 
                 }
-                while(theatersFragment == null){
 
-                }
 
 
                 for(int i = 0; i < theatersReceivedList.size(); i++) {
-                    theatersFragment.getMovieList().add(theatersReceivedList.get(i).getTitle());
-                    theatersFragment.getMovieID().add(theatersReceivedList.get(i).getId());
-                    theatersFragment.getMovieImages().add(theatersReceivedList.get(i).getPosterPath());
+                    application.getMovieListIn().add(theatersReceivedList.get(i).getTitle());
+                    application.getMovieIDIn().add(theatersReceivedList.get(i).getId());
+                    application.getMovieImagesIn().add(theatersReceivedList.get(i).getPosterPath());
 
                 }
 
@@ -69,15 +62,12 @@ public class TmdbConnector {
                 while(comingSoonReceivedList == null){
 
                 }
-                while(comingSoonFragment == null){
-
-                }
 
 
                 for(int i = 0; i < comingSoonReceivedList.size(); i++) {
-                    comingSoonFragment.getMovieList().add(comingSoonReceivedList.get(i).getTitle());
-                    comingSoonFragment.getMovieID().add(comingSoonReceivedList.get(i).getId());
-                    comingSoonFragment.getMovieImages().add(comingSoonReceivedList.get(i).getPosterPath());
+                  application.getMovieListUpcoming().add(comingSoonReceivedList.get(i).getTitle());
+                   application.getMovieIDUpcoming().add(comingSoonReceivedList.get(i).getId());
+                    application.getMovieImagesUpcoming().add(comingSoonReceivedList.get(i).getPosterPath());
 
                 }
             }
@@ -88,17 +78,15 @@ public class TmdbConnector {
                 while(topRatedReceivedList == null ){
 
                 }
-                while(topRatedFragment == null ){
-
-                }
 
 
 
 
                 for(int i = 0; i < topRatedReceivedList.size(); i++) {
-                    topRatedFragment.getMovieList().add(topRatedReceivedList.get(i).getTitle());
-                    topRatedFragment.getMovieID().add(topRatedReceivedList.get(i).getId());
-                    topRatedFragment.getMovieImages().add(topRatedReceivedList.get(i).getPosterPath());
+                   application.getMovieListTop().add(topRatedReceivedList.get(i).getTitle());
+                   application.getMovieIDTop().add(topRatedReceivedList.get(i).getId());
+                   application.getMovieImagesTop().add(topRatedReceivedList.get(i).getPosterPath());
+
                 }
 
 
@@ -111,16 +99,10 @@ public class TmdbConnector {
         comingSoonThread.start();
         topRatedThread.start();
     }
-    public void setTopRatedFragment(TopRatedFragment tRF){
-        topRatedFragment = tRF;
-    }
-    public void setComingSoonFragment(ComingSoonFragment cSF){
-        comingSoonFragment = cSF;
-    }
-    public void setTheatersFragment(InTheatersFragment iTF){
-        theatersFragment = iTF;
-    }
 
+    public void setApplication(MovieKnightAppli app){
+        application = app;
+    }
     //getting information for a single movie class
     public void getMovieDetails(Integer id){
         Call movieInfoCall = movieService.getMovieDetails(id, API_KEY);
@@ -150,7 +132,7 @@ public class TmdbConnector {
     }
 
     //getting information for a list of movies
-    public void getMovies(String requestType,ArrayList<String> movieList, ArrayList<String> movieImages,ArrayList<Integer> movieID){
+    public void getMovies(String requestType){
         try{
             //default set to movies now in theaters
             Call moviesCall = movieService.getNowPlayingMovies(API_KEY);
@@ -167,7 +149,7 @@ public class TmdbConnector {
                 moviesCall = movieService.getNowPlayingMovies(API_KEY);
             }
 
-            enqueueMovieResults(moviesCall, movieList, movieImages, movieID, requestType);
+            enqueueMovieResults(moviesCall, requestType);
 
 
 
@@ -183,7 +165,7 @@ public class TmdbConnector {
     }
 
     //helper function to populate movie results
-    private void enqueueMovieResults(Call moviesCall, ArrayList<String> movieList, ArrayList<String> movieImages, ArrayList<Integer> movieID,final String requestType ){
+    private void enqueueMovieResults(Call moviesCall,final String requestType ){
         Callback<MovieResults> callBack = new Callback<MovieResults>(){
             @Override
             public void onResponse(Response<MovieResults> response) {
@@ -192,11 +174,15 @@ public class TmdbConnector {
                     //updating the movie results where it was originally called
                     if(requestType.equals("Upcoming")) {
                         comingSoonReceivedList = mResults.getMovies();
+
                     } else if(requestType.equals("TopRated")) {
                         topRatedReceivedList = mResults.getMovies();
+
                     } else if(requestType.equals("NowPlaying")) {
                         theatersReceivedList = mResults.getMovies();
+
                     }
+
                     //  moviesReceived = mResults.getMovies();
 
 

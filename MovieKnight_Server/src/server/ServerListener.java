@@ -19,6 +19,7 @@ public class ServerListener extends Thread {
 	}
 	
 	public void removeServerClientCommunicator(ServerClientCommunicator scc) {
+		mLog.write("SCC removed");
 		sccVector.remove(scc);
 	}
 	
@@ -34,6 +35,7 @@ public class ServerListener extends Thread {
 					ServerClientCommunicator scc = new ServerClientCommunicator(s, this);
 					scc.start();
 					sccVector.add(scc);
+					mLog.write("SCC added");
 				} catch (IOException ioe) {
 					ioe.printStackTrace();
 				}

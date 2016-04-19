@@ -1,3 +1,5 @@
+package com.example.nathan.movieknight;
+
 import java.io.Serializable;
 
 public class ServerClientDialogue implements Serializable{
