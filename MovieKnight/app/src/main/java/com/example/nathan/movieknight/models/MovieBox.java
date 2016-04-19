@@ -27,6 +27,13 @@ public class MovieBox {
     @SerializedName("id")
     private Integer movieId;
 
+    @SerializedName("overview")
+    private String movieOverview;
+
+    public String getOverview() {
+        return movieOverview;
+    }
+
     public String getTitle() {
         return movieTitle;
     }

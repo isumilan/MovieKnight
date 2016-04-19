@@ -3,6 +3,7 @@ package com.example.nathan.movieknight;
 import android.app.Application;
 
 import com.example.nathan.movieknight.tmdb.TmdbConnector;
+import com.example.nathan.movieknight.tmdb.TmdbService;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -11,6 +12,7 @@ import java.util.concurrent.ExecutionException;
  * Created by Samuel Wang on 4/17/2016.
  */
 public class MovieKnightAppli extends Application {
+
     private static MovieKnightAppli application;
     private static ConnectToServer cts;
     private static ClientListener clisten;
@@ -29,7 +31,10 @@ public class MovieKnightAppli extends Application {
     ArrayList<String> movieList_upcoming;
     ArrayList<String> movieImages_upcoming;
     ArrayList<Integer> movieID_upcoming;
+
     TmdbConnector tmdbConnector;
+    TmdbService tmdbService;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -103,4 +108,12 @@ public class MovieKnightAppli extends Application {
     public ArrayList<Integer> getMovieIDUpcoming(){
         return movieID_upcoming;
     }
+
+    //for use by MovieActivity
+    public void setMovieService(TmdbService service) {tmdbService = service;}
+
+    public TmdbService getMovieService() {
+        return tmdbService;
+    }
+
 }

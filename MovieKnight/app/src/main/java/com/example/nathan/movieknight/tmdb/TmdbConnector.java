@@ -22,7 +22,7 @@ import retrofit.Retrofit;
 public class TmdbConnector {
 
     private static String TAG = "TmdbConnector";
-    private static final String API_KEY = "85380ca322256320bbf2c30c06d6c080";
+    public static final String API_KEY = "85380ca322256320bbf2c30c06d6c080";
     public static final String API_URL = "http://api.themoviedb.org";
     List<MovieBox> moviesReceived;
     List<MovieBox> theatersReceivedList;
@@ -30,13 +30,17 @@ public class TmdbConnector {
     List<MovieBox> comingSoonReceivedList;
 
     TmdbService movieService;
+
     MovieKnightAppli application;
-    public TmdbConnector() {
+
+    public TmdbConnector(MovieKnightAppli app) {
+        application = app;
         Retrofit retro = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         movieService = retro.create(TmdbService.class);
+        setService();
 
         Runnable theaters = new Runnable() {
             public void run() {
@@ -44,8 +48,6 @@ public class TmdbConnector {
                 while(theatersReceivedList == null ){
 
                 }
-
-
 
                 for(int i = 0; i < theatersReceivedList.size(); i++) {
                     application.getMovieListIn().add(theatersReceivedList.get(i).getTitle());
@@ -63,7 +65,6 @@ public class TmdbConnector {
 
                 }
 
-
                 for(int i = 0; i < comingSoonReceivedList.size(); i++) {
                   application.getMovieListUpcoming().add(comingSoonReceivedList.get(i).getTitle());
                    application.getMovieIDUpcoming().add(comingSoonReceivedList.get(i).getId());
@@ -79,16 +80,12 @@ public class TmdbConnector {
 
                 }
 
-
-
-
                 for(int i = 0; i < topRatedReceivedList.size(); i++) {
                    application.getMovieListTop().add(topRatedReceivedList.get(i).getTitle());
                    application.getMovieIDTop().add(topRatedReceivedList.get(i).getId());
                    application.getMovieImagesTop().add(topRatedReceivedList.get(i).getPosterPath());
 
                 }
-
 
             }
         };
@@ -99,10 +96,8 @@ public class TmdbConnector {
         comingSoonThread.start();
         topRatedThread.start();
     }
+    
 
-    public void setApplication(MovieKnightAppli app){
-        application = app;
-    }
     //getting information for a single movie class
     public void getMovieDetails(Integer id){
         Call movieInfoCall = movieService.getMovieDetails(id, API_KEY);
@@ -138,8 +133,6 @@ public class TmdbConnector {
             Call moviesCall = movieService.getNowPlayingMovies(API_KEY);
 
 
-
-
             //getting the appropriate results from the TMDB API
             if(requestType.equals("Upcoming")) {
                 moviesCall = movieService.getUpcomingMovies(API_KEY);
@@ -151,14 +144,7 @@ public class TmdbConnector {
 
             enqueueMovieResults(moviesCall, requestType);
 
-
-
-
-
-
         } catch (Exception e){
-
-
 
             String exception = e.getMessage();
         }
@@ -167,6 +153,7 @@ public class TmdbConnector {
     //helper function to populate movie results
     private void enqueueMovieResults(Call moviesCall,final String requestType ){
         Callback<MovieResults> callBack = new Callback<MovieResults>(){
+
             @Override
             public void onResponse(Response<MovieResults> response) {
                 MovieResults mResults = response.body();
@@ -185,9 +172,7 @@ public class TmdbConnector {
 
                     //  moviesReceived = mResults.getMovies();
 
-
                 }
-
             }
 
             @Override
@@ -198,9 +183,10 @@ public class TmdbConnector {
         };
         moviesCall.enqueue(callBack);
 
-
-
-
-
     }
+
+    public void setService() {
+        application.setMovieService(movieService);
+    }
+
 }
