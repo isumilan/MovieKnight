@@ -17,18 +17,18 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="232dp" >
     <ImageView
-        android:layout_width="140dp"
-        android:layout_height="250dp"
-        android:id="@+id/profile_pic"
+        android:layout_width="144dp"
+        android:layout_height="257dp"
+        android:id="@+id/moviePoster"
         android:src="@drawable/sampai"
          />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,72 +37,44 @@
             android:text="Movie Title"
             android:id="@+id/movieTitle"
             android:layout_gravity="center_vertical"
+            android:textSize="30dp"
+            android:layout_marginBottom = "10dp"
             android:layout_marginLeft="20dp"/>
+
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="PG"
+                android:text="Rating: 7.5/10"
                 android:id="@+id/movieRated"
                 android:layout_gravity="center_vertical"
                 android:textSize="18dp"
                 android:textIsSelectable="false"
+                android:layout_marginBottom = "10dp"
                 android:layout_marginLeft="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Action, Adventure, Science Fiction"
-                android:id="@+id/movieGenre"
-                android:layout_gravity="center_vertical"
+                android:text="Release: 04/21/16"
+                android:id="@+id/movieReleaseDate"
                 android:textSize="18dp"
+                android:layout_marginBottom = "10dp"
                 android:layout_marginLeft="20dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Cast: Samuel Wang"
-                android:id="@+id/movieCast"
-                android:layout_gravity="center_vertical"
-                android:textSize="18dp"
-                android:layout_marginLeft="20dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Director: Samuel Wang"
-                android:id="@+id/movieDirector"
-                android:layout_gravity="center_vertical"
-                android:textSize="18dp"
-                android:layout_marginLeft="20dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Trailer"
-                android:id="@+id/movieTrailer"
-                android:layout_gravity="center_vertical"
-                android:textSize="18dp"
-                android:layout_marginLeft="20dp"/>
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ratingBar"
-                android:rating="1"
-                android:numStars="5"
-                android:stepSize="1"
-                style="?android:attr/ratingBarStyleIndicator"
-                android:layout_marginLeft="10dp"/>
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Make Event"
-                android:id="@+id/makeEventButton"
-                android:layout_gravity="center_horizontal" />
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Runtime: 90 min"
+                android:id="@+id/movieRuntime"
+                android:layout_gravity="center_vertical"
+                android:textSize="18dp"
+                android:layout_marginBottom = "10dp"
+                android:layout_marginLeft="20dp" />
 
 
         </LinearLayout>
@@ -111,17 +83,39 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Synopsis"
-        android:id="@+id/movieSynopsis" />
+        android:textSize="18dp"
+        android:text="Synopsis:"
+        android:id="@+id/labelSynopsis" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView13"
-        android:layout_weight="0.84" />
+        android:textSize="15dp"
+        android:id="@+id/movieSynopsis"
+        android:layout_weight="0.37"
+        android:text="Best movie ever." />
+
+    <Button
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:text="Add to Favorites"
+        android:id="@+id/addFavoritesButton"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:text="Add to Watchlist"
+        android:id="@+id/addWatchlistButton"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="318dp"
+        android:layout_height="wrap_content"
+        android:text="Make Event"
+        android:id="@+id/makeEventButton"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>
