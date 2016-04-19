@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,19 +20,7 @@ import java.util.ArrayList;
 
 public class MovieTabFragment extends Fragment {
 
-    ArrayList<String> movieList_top;
-    ArrayList<String> movieImages_top;
-    ArrayList<Integer> movieID_top;
 
-    //In theaters
-    ArrayList<String> movieList_in;
-    ArrayList<String> movieImages_in;
-    ArrayList<Integer> movieID_in;
-
-    ArrayList<String> movieList_upcoming;
-    ArrayList<String> movieImages_upcoming;
-    ArrayList<Integer> movieID_upcoming;
-    TmdbConnector tmdbConnector;
 
 
 
@@ -48,27 +35,8 @@ public class MovieTabFragment extends Fragment {
         movieListActivity = ma;
 
 
-        //getting the information for different class objects
-        movieList_top = new ArrayList<String>();
-        movieImages_top = new ArrayList<String>();
-        movieID_top = new ArrayList<Integer>();
 
-        movieList_in = new ArrayList<String>();
-        movieImages_in = new ArrayList<String>();
-        movieID_in = new ArrayList<Integer>();
 
-        movieList_upcoming = new ArrayList<String>();
-        movieImages_upcoming = new ArrayList<String>();
-        movieID_upcoming = new ArrayList<Integer>();
-
-        tmdbConnector = new TmdbConnector();
-        tmdbConnector.getMovies("TopRated",movieList_top,movieImages_top,movieID_top);
-        tmdbConnector.getMovies("Upcoming",movieList_upcoming,movieImages_upcoming,movieID_upcoming);
-        tmdbConnector.getMovies("NowPlaying", movieList_in, movieImages_in, movieID_in);
-
-        Log.d("Top", "" + movieList_top.size());
-        Log.d("Upcoming",""+movieList_upcoming.size());
-        Log.d("Now",""+movieList_in.size());
 
 
 
@@ -128,9 +96,9 @@ public class MovieTabFragment extends Fragment {
         {
 
             switch (position){
-                case 0 : return new InTheatersFragment(movieListActivity,movieList_in,movieImages_in,movieID_in, tmdbConnector);
-                case 1 : return new ComingSoonFragment(movieListActivity, movieList_upcoming, movieImages_upcoming, movieID_upcoming, tmdbConnector);
-                case 2 : return new TopRatedFragment(movieListActivity, movieList_top, movieImages_top, movieID_top, tmdbConnector);
+                case 0 : return new InTheatersFragment(movieListActivity);
+                case 1 : return new ComingSoonFragment(movieListActivity);
+                case 2 : return new TopRatedFragment(movieListActivity);
             }
             return null;
         }
