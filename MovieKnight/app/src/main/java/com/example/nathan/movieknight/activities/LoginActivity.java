@@ -112,12 +112,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mProgressView = findViewById(R.id.login_progress);
 
 
-        tmdbConnector = new TmdbConnector();
+        tmdbConnector = new TmdbConnector((MovieKnightAppli)getApplication());
 
-        tmdbConnector.setApplication((MovieKnightAppli)getApplication());
         tmdbConnector.getMovies("TopRated");
         tmdbConnector.getMovies("Upcoming");
         tmdbConnector.getMovies("NowPlaying");
+
     }
 /*
     private void populateAutoComplete() {
@@ -372,5 +372,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
         }
     }
+
 }
 
