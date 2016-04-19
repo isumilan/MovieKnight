@@ -13,39 +13,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nathan.movieknight.R;
-import com.example.nathan.movieknight.activities.MovieListActivity;
-import com.example.nathan.movieknight.tmdb.TmdbConnector;
+import com.example.nathan.movieknight.activities.EventListActivity;
+import com.example.nathan.movieknight.activities.ProfileMovieListActivity;
 
-import java.util.ArrayList;
-
-public class MovieTabFragment extends Fragment {
-
-
-
-
-
+public class ProfileMovieListTabFragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    public static int int_items = 3;
-    MovieListActivity movieListActivity;
+    public static int int_items = 2 ;
+    ProfileMovieListActivity profileMovieListActivity;
     @SuppressLint("ValidFragment")
-    public MovieTabFragment(MovieListActivity ma){
+    public ProfileMovieListTabFragment(ProfileMovieListActivity pa){
         super();
-        movieListActivity = ma;
-
-
-
-
-
-
-
-
-
+        profileMovieListActivity = pa;
     }
-    public MovieTabFragment(){
+    public ProfileMovieListTabFragment(){
         super();
-
     }
     @Nullable
     @Override
@@ -56,10 +39,11 @@ public class MovieTabFragment extends Fragment {
         View x =  inflater.inflate(R.layout.tab_layout,null);
         tabLayout = (TabLayout) x.findViewById(R.id.tabs);
         viewPager = (ViewPager) x.findViewById(R.id.viewpager);
+
         /**
          *Set an Apater for the View Pager
          */
-        viewPager.setAdapter(new MyAdapter(getChildFragmentManager(), movieListActivity));
+        viewPager.setAdapter(new MyAdapter(getChildFragmentManager(), profileMovieListActivity));
 
         /**
          * Now , this is a workaround ,
@@ -79,26 +63,22 @@ public class MovieTabFragment extends Fragment {
     }
 
     class MyAdapter extends FragmentPagerAdapter {
-        MovieListActivity movieListActivity;
-        public MyAdapter(FragmentManager fm, MovieListActivity ma) {
+        ProfileMovieListActivity profileMovieListActivity;
+        public MyAdapter(FragmentManager fm, ProfileMovieListActivity pa) {
             super(fm);
-            movieListActivity = ma;
+            profileMovieListActivity = pa;
         }
 
         /**
          * Return fragment with respect to Position .
          */
-/*
 
- */
         @Override
         public Fragment getItem(int position)
         {
-
             switch (position){
-                case 0 : return new InTheatersFragment(movieListActivity);
-                case 1 : return new ComingSoonFragment(movieListActivity);
-                case 2 : return new TopRatedFragment(movieListActivity);
+                case 0 : return new GoingToWatchFragment(profileMovieListActivity);
+                case 1 : return new WatchedFragment(profileMovieListActivity);
             }
             return null;
         }
@@ -119,11 +99,10 @@ public class MovieTabFragment extends Fragment {
 
             switch (position){
                 case 0 :
-                    return "In Theaters";
+                    return "Going To Watch";
                 case 1 :
-                    return "Coming Soon";
-                case 2 :
-                    return "Top Rated";
+                    return "Watched";
+
             }
             return null;
         }

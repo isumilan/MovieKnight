@@ -1,11 +1,20 @@
-package models;
+package com.example.nathan.movieknight.models;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Vector;
 
-public class Profile {
+public class Profile implements Serializable {
 	
-	public static class UsernameComparator implements Comparator<Profile>{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static class UsernameComparator implements Comparator<Profile>, Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		public int compare(Profile arg0, Profile arg1) {
 			return arg0.getUsername().compareTo(arg1.getUsername());
 		}		

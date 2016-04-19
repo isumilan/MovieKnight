@@ -1,12 +1,21 @@
-package models;
+package com.example.nathan.movieknight.models;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.UUID;
 import java.util.Vector;
 
-public class MovieEvent {
+public class MovieEvent implements Serializable {
 	
-	public static class MovieComparator implements Comparator<MovieEvent>{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static class MovieComparator implements Comparator<MovieEvent>, Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		public int compare(MovieEvent arg0, MovieEvent arg1) {
 			return arg0.getGoingToWatch() - arg1.getGoingToWatch();
 		}		

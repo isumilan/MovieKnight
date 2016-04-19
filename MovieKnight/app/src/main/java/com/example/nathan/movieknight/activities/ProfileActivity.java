@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
 
@@ -76,6 +77,7 @@ public class ProfileActivity extends NavigationDrawer {
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         //open up the movie list activity
+                        startActivity(new Intent(getApplicationContext(), ProfileMovieListActivity.class));
                     }
                 }
         );

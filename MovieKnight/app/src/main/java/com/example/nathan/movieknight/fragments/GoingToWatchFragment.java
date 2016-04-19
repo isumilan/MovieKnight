@@ -11,10 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.MovieActivity;
-import com.example.nathan.movieknight.activities.MovieListActivity;
+import com.example.nathan.movieknight.activities.ProfileMovieListActivity;
 import com.example.nathan.movieknight.models.MovieList;
 
 import java.util.ArrayList;
@@ -22,39 +21,39 @@ import java.util.ArrayList;
 /**
  * Created by Nathan on 3/17/2016.
  */
-public class InTheatersFragment  extends Fragment  {
-    MovieList adapter;
+public class GoingToWatchFragment  extends Fragment  {
     ListView list;
     ArrayList<String> movieList;
     ArrayList<String> movieImages;
-    ArrayList<Integer> movieID;
-    final MovieListActivity movieListActivity;
+    final ProfileMovieListActivity profileMovieListActivity;
     @SuppressLint("ValidFragment")
-    public InTheatersFragment(MovieListActivity ma){
+    public GoingToWatchFragment(ProfileMovieListActivity ea){
         super();
-        movieListActivity = ma;
-        MovieKnightAppli application = (MovieKnightAppli)ma.getApplication();
-        movieList = application.getMovieListIn();
-        movieImages = application.getMovieImagesIn();
-        movieID = application.getMovieIDIn();
+        profileMovieListActivity = ea;
     }
-    public InTheatersFragment(){
+    public GoingToWatchFragment(){
         super();
-        movieListActivity = null;
+        profileMovieListActivity = null;
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.in_theaters_layout,null);
+        movieList = new ArrayList<String>();
+        movieList.add("Mad Samuel");
+        movieList.add("Inside Out");
+        movieList.add("Star Wars");
+        movieList.add("The Martian");
+        movieList.add("Dango");
+        movieList.add("Deadpool");
+        movieImages = new ArrayList<String>();
+        MovieList adapter = new
+                MovieList(profileMovieListActivity, movieList, movieImages);
 
 
-        list=(ListView) view.findViewById(R.id.intheaterslistView);
-        adapter = new
-                MovieList(movieListActivity, movieList, movieImages);
-
-        movieListActivity.setTheatersAdapter((adapter));
+        list=(ListView)view.findViewById(R.id.intheaterslistView);
+        profileMovieListActivity.setGoingToWatchAdapter((adapter));
         //list not showing
         //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {
@@ -66,12 +65,12 @@ public class InTheatersFragment  extends Fragment  {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Intent in = new Intent(movieListActivity.getApplicationContext(), MovieActivity.class);
+                        Intent in = new Intent(  profileMovieListActivity.getApplicationContext(), MovieActivity.class);
                         Bundle b = new Bundle();
                         b.putString("key", movieList.get(position));
                         in.putExtras(b);
                         startActivity(in);
-                        movieListActivity.finish();
+                        profileMovieListActivity.finish();
                     }
                 });
             }

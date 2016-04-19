@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.MovieActivity;
 import com.example.nathan.movieknight.activities.MovieListActivity;
 import com.example.nathan.movieknight.models.MovieList;
-import com.example.nathan.movieknight.tmdb.TmdbConnector;
 
 import java.util.ArrayList;
 
@@ -28,31 +28,21 @@ public class TopRatedFragment  extends Fragment  {
     ArrayList<String> movieList;
     ArrayList<String> movieImages;
     ArrayList<Integer> movieID;
-    TmdbConnector tmdbConnector;
     final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
-    public TopRatedFragment(MovieListActivity ma, ArrayList<String> movieList, ArrayList<String> movieImages,ArrayList<Integer> movieID,  TmdbConnector tmdbConnector){
+    public TopRatedFragment(MovieListActivity ma){
         super();
         movieListActivity = ma;
-        this.movieList = movieList;
-        this.movieImages = movieImages;
-        this.movieID = movieID;
-        this.tmdbConnector = tmdbConnector;
-        tmdbConnector.setTopRatedFragment(this);
+        MovieKnightAppli application = (MovieKnightAppli)ma.getApplication();
+        movieList = application.getMovieListTop();
+        movieImages = application.getMovieImagesTop();
+        movieID = application.getMovieIDTop();
     }
     public TopRatedFragment(){
         super();
         movieListActivity = null;
     }
-    public ArrayList<String> getMovieList(){
-        return movieList;
-    }
-    public ArrayList<String> getMovieImages(){
-        return movieImages;
-    }
-    public ArrayList<Integer> getMovieID(){
-        return movieID;
-    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,8 +55,6 @@ public class TopRatedFragment  extends Fragment  {
 
         list=(ListView)view.findViewById(R.id.topratedlistView);
         movieListActivity.setBluAdapter((adapter));
-        //list not showing
-        //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {
 
             if (adapter != null) {
