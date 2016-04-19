@@ -27,7 +27,7 @@ public class SQLDriver {
 	private final static String sendEventInvite = "INSERT INTO EVENTPARTICIPANTS(P_ID,EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?,?)";
 	private final static String acceptEventInvite = "UPDATE EVENTPARTICIPANTS SET ACCEPTED=? WHERE EVENTID=? AND USERNAME=?";
 	private final static String denyEventInvite = "DELETE FROM EVENTPARTICIPANTS WHERE EVENTID=? AND USERNAME=?";
-	private final static String addMovieToList = "INSERT INTO MOVIELISTS(P_ID,LIST_TYPE,USERNAME,MOVIEID) VALUES=(?,?,?,?)";
+	private final static String addMovieToList = "INSERT INTO MOVIELISTS(P_ID,LIST_TYPE,USERNAME,MOVIEID) VALUES(?,?,?,?)";
 	private final static String editDescription = "UPDATE USERS SET DESCRIPTION=? WHERE USERNAME=?";
 	
 	private Connection con;
@@ -282,6 +282,7 @@ public class SQLDriver {
 	public boolean AddToList(String list_type, int movieID, String name) {
 		try {
 			PreparedStatement ps= con.prepareStatement(addMovieToList);
+			System.out.println(list_type+" "+movieID+" "+name);
 			ps.setString(1, UUID.randomUUID().toString());
 			ps.setString(2, list_type);
 			ps.setString(3, name);
@@ -290,6 +291,7 @@ public class SQLDriver {
 			log.write(movieID + " added to " + list_type + " list of " + name);
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			log.write("Failed to add movie to list");
 			return false;
 		}

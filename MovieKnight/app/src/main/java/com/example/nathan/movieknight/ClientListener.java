@@ -1,5 +1,7 @@
-package com.example.nathan.movieknight;
+//package com.example.nathan.movieknight;
+package server;
 
+import com.example.nathan.movieknight.ServerClientDialogue;
 import com.example.nathan.movieknight.models.*;
 
 import java.io.IOException;
@@ -13,7 +15,7 @@ import com.example.nathan.movieknight.models.*;
  * Created by Kevin on 4/16/2016.
  */
 
-public class ClientListener extends Thread {
+public class ClientListener{
 
     private Socket mSocket;
     private ObjectInputStream ois;
@@ -22,9 +24,6 @@ public class ClientListener extends Thread {
     public ClientListener(Socket inSocket) {
         mSocket = inSocket;
         boolean socketReady = initializeVariables();
-        if (socketReady) {
-            start();
-        }
     }
 
     private boolean initializeVariables() {
@@ -46,141 +45,127 @@ public class ClientListener extends Thread {
             e.printStackTrace();
         }
     }
-
-    public void run() {
-        try {
-            while(true) {
-                //if server sends an object
-                Object obj = ois.readObject();
-                //do whatever the fuck with it
-            }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } catch (ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
-        }
-    }
-
     public Profile ProfileRequest(String username) throws IOException, ClassNotFoundException{
-        sendObject(ProfileRequestDialogue(username));
-        return (Profile)ois.readObject();
+    	sendObject(ProfileRequestDialogue(username));
+    	return (Profile)ois.readObject();
     }
     public MovieEvent MovieEventRequest(String eventID) throws IOException, ClassNotFoundException{
-        sendObject(MovieEventRequestDialogue(eventID));
-        return (MovieEvent)ois.readObject();
+    	sendObject(MovieEventRequestDialogue(eventID));
+    	return (MovieEvent)ois.readObject();
     }
     public Profile LoginRequest(String username, String password) throws IOException, ClassNotFoundException{
-        sendObject(LoginRequestDialogue(username, password));
-        return (Profile)ois.readObject();
+    	sendObject(LoginRequestDialogue(username, password));
+    	return (Profile)ois.readObject();
     }
     public Profile RegisterRequest(String username, String password, int zip) throws IOException, ClassNotFoundException{
-        sendObject(RegisterRequestDialogue(username, password, zip));
-        return (Profile)ois.readObject();
+    	sendObject(RegisterRequestDialogue(username, password, zip));
+    	Profile newUser = (Profile)ois.readObject();
+    	return newUser;
     }
     public MovieEvent MakeEventRequest(String owner, int goingToWatch
-            , boolean public_private, String EventTitle, String time
-            , String location, Vector<String> invitations) throws IOException, ClassNotFoundException{
-        sendObject(MakeEventRequestDialogue(owner, goingToWatch
-                , public_private, EventTitle, time, location, invitations));
-        return (MovieEvent)ois.readObject();
+    		, boolean public_private, String EventTitle, String time
+    		, String location, Vector<String> invitations) throws IOException, ClassNotFoundException{
+    	sendObject(MakeEventRequestDialogue(owner, goingToWatch
+    			, public_private, EventTitle, time, location, invitations));
+    	return (MovieEvent)ois.readObject();
     }
     public boolean FriendRequestRequest(String subject, String object) throws IOException, ClassNotFoundException{
-        sendObject(FriendRequestRequestDialogue(subject, object));
-        return (boolean)ois.readObject();
+    	sendObject(FriendRequestRequestDialogue(subject, object));
+    	return (boolean)ois.readObject();
     }
     public boolean FriendRequestReplyRequest(String subject, String object, boolean reply) throws IOException, ClassNotFoundException{
-        sendObject(FriendRequestReplyRequestDialogue(subject, object, reply));
-        return (boolean)ois.readObject();
+    	sendObject(FriendRequestReplyRequestDialogue(subject, object, reply));
+    	return (boolean)ois.readObject();
     }
     public boolean EventReplyRequest(String eventID, String username, boolean reply) throws IOException, ClassNotFoundException{
-        sendObject(EventReplyRequestDialogue(eventID, username, reply));
-        return (boolean)ois.readObject();
+    	sendObject(EventReplyRequestDialogue(eventID, username, reply));
+    	return (boolean)ois.readObject();
     }
     public boolean AddToToWatchListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
-        sendObject(AddToToWatchListRequestDialogue(movieID, username));
-        return (boolean)ois.readObject();
+    	sendObject(AddToToWatchListRequestDialogue(movieID, username));
+    	return (boolean)ois.readObject();
     }
     public boolean AddToLikedListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
-        sendObject(AddToLikedListRequestDialogue(movieID, username));
-        return (boolean)ois.readObject();
+    	sendObject(AddToLikedListRequestDialogue(movieID, username));
+    	return (boolean)ois.readObject();
     }
-    public boolean AddToWatchListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
-        sendObject(AddToWatchedListRequestDialogue(movieID, username));
-        return (boolean)ois.readObject();
+    public boolean AddToWatchedListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
+    	sendObject(AddToWatchedListRequestDialogue(movieID, username));
+    	return (boolean)ois.readObject();
     }
     public boolean UpdatePersonalDescriptionRequest(String description, String username) throws IOException, ClassNotFoundException{
-        sendObject(UpdatePersonalDescriptionRequestDialogue(description, username));
-        return (boolean)ois.readObject();
+    	sendObject(UpdatePersonalDescriptionRequestDialogue(description, username));
+    	return (boolean)ois.readObject();
     }
     public boolean  EditMovieEventRequest(MovieEvent me) throws IOException, ClassNotFoundException{
-        sendObject(EditMovieEventRequestDialogue(me));
-        return (boolean)ois.readObject();
+    	sendObject(EditMovieEventRequestDialogue(me));
+    	return (boolean)ois.readObject();
     }
-
-
-    /* public ServerClientDialogue MovieRequest(String title){
-         return new ServerClientDialogue(MovieConstants.MovieRequest, title);
-     }*/
+    
+    
+   /* public ServerClientDialogue MovieRequest(String title){
+    	return new ServerClientDialogue(MovieConstants.MovieRequest, title);
+    }*/
     private ServerClientDialogue ProfileRequestDialogue(String name){
-        return new ServerClientDialogue(MovieConstants.ProfileRequest, name);
+    	return new ServerClientDialogue(MovieConstants.ProfileRequest, name);
     }
     private ServerClientDialogue MovieEventRequestDialogue(String eventID){
-        return new ServerClientDialogue(MovieConstants.MovieEventRequest, eventID);
+    	return new ServerClientDialogue(MovieConstants.MovieEventRequest, eventID);
     }
     private ServerClientDialogue LoginRequestDialogue(String name, String password){
-        return new ServerClientDialogue(MovieConstants.LoginRequest
-                , name + "|" + password);
+    	return new ServerClientDialogue(MovieConstants.LoginRequest
+    			, name + "\b" + password);
     }
     private ServerClientDialogue RegisterRequestDialogue(String name, String password, int zip){
-        return new ServerClientDialogue(MovieConstants.RegisterRequest
-                , name + "|" + password + "|" + zip);
+    	return new ServerClientDialogue(MovieConstants.RegisterRequest
+    			, name + "\b" + password + "\b" + zip);
     }
     private ServerClientDialogue MakeEventRequestDialogue(String owner, int goingToWatch
-            , boolean public_private, String EventTitle, String time
-            , String location, Vector<String> invitations){
-        MovieEvent me = new MovieEvent(owner, goingToWatch);
-        me.setPublic_private(public_private);
-        me.setDescription(EventTitle);
-        me.setMovieTime(time);
-        me.setTheater(location);
-        me.setInvited(invitations);
-        return new ServerClientDialogue(MovieConstants.MakeEventRequest, me);
+    		, boolean public_private, String EventTitle, String time
+    		, String location, Vector<String> invitations){
+    	MovieEvent me = new MovieEvent(owner, goingToWatch);
+    	me.setPublic_private(public_private);
+    	me.setDescription(EventTitle);
+    	me.setMovieTime(time);
+    	me.setTheater(location);
+    	me.setInvited(invitations);
+    	return new ServerClientDialogue(MovieConstants.MakeEventRequest, me);
     }
     private ServerClientDialogue FriendRequestRequestDialogue(String subject, String object){
-        return new ServerClientDialogue(MovieConstants.FriendRequestRequest
-                , subject + "|" + object);
-        //subject sends friend request to object
+    	return new ServerClientDialogue(MovieConstants.FriendRequestRequest
+    			, subject + "\b" + object);
+    	//subject sends friend request to object
     }
     private ServerClientDialogue FriendRequestReplyRequestDialogue(String subject, String object, boolean reply){
-        return new ServerClientDialogue(MovieConstants.FriendRequestReplyRequest
-                , subject+"|"+object+"|"+reply);
-        //subject replies to object's friend request with reply(true = yes)
+    	return new ServerClientDialogue(MovieConstants.FriendRequestReplyRequest
+    			, subject+"\b"+object+"\b"+reply);
+    	//subject replies to object's friend request with reply(true = yes)
     }
     /*public ServerClientDialogue EventInviteRequest(String eventID, String name){
     	return new ServerClientDialogue(MovieConstants.MovieRequest, title);
     }*/
     private ServerClientDialogue EventReplyRequestDialogue(String eventID, String name, boolean reply){
-        return new ServerClientDialogue(MovieConstants.EventReplyRequest
-                , eventID+"|"+name+"|"+reply);
+    	return new ServerClientDialogue(MovieConstants.EventReplyRequest
+    			, eventID+"\b"+name+"\b"+reply);
     }
     private ServerClientDialogue AddToToWatchListRequestDialogue(int movieID, String name){
-        return new ServerClientDialogue(MovieConstants.AddToToWatchListRequest
-                , movieID+"|"+name);
+    	return new ServerClientDialogue(MovieConstants.AddToToWatchListRequest
+    			, movieID+"\b"+name);
     }
     private ServerClientDialogue AddToLikedListRequestDialogue(int movieID, String name){
-        return new ServerClientDialogue(MovieConstants.AddToLikedListRequest
-                , movieID+"|"+name);
+    	return new ServerClientDialogue(MovieConstants.AddToLikedListRequest
+    			, movieID+"\b"+name);
     }
     private ServerClientDialogue AddToWatchedListRequestDialogue(int movieID, String name){
-        return new ServerClientDialogue(MovieConstants.AddToWatchedListRequest
-                , movieID+"|"+name);
+    	return new ServerClientDialogue(MovieConstants.AddToWatchedListRequest
+    			, movieID+"\b"+name);
     }
     private ServerClientDialogue UpdatePersonalDescriptionRequestDialogue(String description, String name){
-        return new ServerClientDialogue(MovieConstants.UpdatePersonalDescriptionRequest
-                , description+"|"+name);
+    	return new ServerClientDialogue(MovieConstants.UpdatePersonalDescriptionRequest
+    			, description+"\b"+name);
     }
     private ServerClientDialogue EditMovieEventRequestDialogue(MovieEvent me){
-        return new ServerClientDialogue(MovieConstants.EditMovieEventRequest
-                , me);
+    	return new ServerClientDialogue(MovieConstants.EditMovieEventRequest
+    			, me);
     }
 }
