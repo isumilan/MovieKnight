@@ -1,5 +1,4 @@
-//package com.example.nathan.movieknight;
-package server;
+package com.example.nathan.movieknight;
 
 import com.example.nathan.movieknight.ServerClientDialogue;
 import com.example.nathan.movieknight.models.*;
