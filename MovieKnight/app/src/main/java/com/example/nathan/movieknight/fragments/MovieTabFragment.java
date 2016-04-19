@@ -14,14 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.MovieListActivity;
-import com.example.nathan.movieknight.tmdb.TmdbConnector;
-
-import java.util.ArrayList;
 
 public class MovieTabFragment extends Fragment {
-
-
-
 
 
 
@@ -33,11 +27,6 @@ public class MovieTabFragment extends Fragment {
     public MovieTabFragment(MovieListActivity ma){
         super();
         movieListActivity = ma;
-
-
-
-
-
 
 
 

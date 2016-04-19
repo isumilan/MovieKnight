@@ -32,6 +32,9 @@ public class MovieInfo {
     @SerializedName("vote_count")
     private String movieVoteCount;
 
+    @SerializedName("release_date")
+    private String movieReleaseDate;
+
     @SerializedName("genres")
     private List<Genre> movieGenres;
 
@@ -66,6 +69,10 @@ public class MovieInfo {
 
     public List<Genre> getGenres() {
         return movieGenres;
+    }
+
+    public String getReleaseDate() {
+        return movieReleaseDate;
     }
 
     public static class Genre {
