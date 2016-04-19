@@ -1,5 +1,6 @@
-package com.example.nathan.movieknight;
+package com.example.nathan.movieknight.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -7,13 +8,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.example.nathan.movieknight.activities.EventListActivity;
-import com.example.nathan.movieknight.activities.FriendRequestsActivity;
-import com.example.nathan.movieknight.activities.MainActivity;
-import com.example.nathan.movieknight.activities.MovieListActivity;
-import com.example.nathan.movieknight.activities.ProfileActivity;
-import com.example.nathan.movieknight.activities.SearchActivity;
+import android.app.AlertDialog;
+import com.example.nathan.movieknight.MovieKnightAppli;
+import com.example.nathan.movieknight.R;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -64,8 +61,15 @@ public class NavigationDrawer extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(), SearchActivity.class));
             finish();
         } else if (id == R.id.nav_profile) {
-            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-            finish();
+            MovieKnightAppli application = (MovieKnightAppli)getApplication();
+            if(application.isGuest()){
+                 PopUp();
+
+            }else{
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                finish();
+            }
+
         } else if (id == R.id.nav_movies) {
             startActivity(new Intent(getApplicationContext(), MovieListActivity.class));
             finish();
@@ -73,12 +77,33 @@ public class NavigationDrawer extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(), EventListActivity.class));
             finish();
         }  else if(id == R.id.nav_friend_requests){
-            startActivity(new Intent(getApplicationContext(), FriendRequestsActivity.class));
-            finish();
+            MovieKnightAppli application = (MovieKnightAppli)getApplication();
+            if(application.isGuest()){
+             PopUp();
+
+            }else {
+                startActivity(new Intent(getApplicationContext(), FriendRequestsActivity.class));
+                finish();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    void PopUp(){
+        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+        helpBuilder.setTitle("YOU ARE A GUEST");
+        helpBuilder.setMessage("Cannot access as guest. Buy our app for $4.99");
+        helpBuilder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing but close the dialog
+                    }
+                });
+
+        // Remember, create doesn't show the dialog
+        AlertDialog helpDialog = helpBuilder.create();
+        helpDialog.show();;
     }
 }

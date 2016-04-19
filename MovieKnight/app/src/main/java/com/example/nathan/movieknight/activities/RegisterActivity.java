@@ -9,8 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
+
+import java.io.IOException;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -24,13 +28,14 @@ public class RegisterActivity extends AppCompatActivity {
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
+        final MovieKnightAppli application = ((MovieKnightAppli)getApplication());
         Button guestbutton = (Button)findViewById(R.id.guest_button);
         guestbutton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        // sends a request to the server to allow access to the application
-                        // but guest access only
+                        application.setIsGuest(true);
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
                     }
                 }
         );
@@ -54,10 +59,29 @@ public class RegisterActivity extends AppCompatActivity {
                         String zcode = ((EditText)findViewById(R.id.zipcode)).getText().toString();
                         String pword = ((EditText)findViewById(R.id.password)).getText().toString();
                         String repword = ((EditText)findViewById(R.id.re_password)).getText().toString();
+                        for(int i = 0; i < zcode.length(); i++){
+                            if(zcode.charAt(i) < '0' && zcode.charAt(i) > '9'){
 
-                        if (pword != repword) {
-                            //display "Error: passwords do not match"
+                            }
                         }
+                        int zipcode = Integer.parseInt(zcode);
+                        TextView Error = (TextView)findViewById(R.id.errorText);
+                        if(dname == "" || email == "" || zcode == "" || pword == "" || repword == ""){
+                            Error.setText("Fill in all the forms");
+                        } else if (!pword.equals(repword)) {
+                            //display "Error: passwords do not match"
+                            Error.setText("Passwords do not match");
+                        } else{
+                            try{
+                                application.getClisten().RegisterRequest(dname, pword,zipcode);
+                            } catch(ClassNotFoundException cnfe){
+
+                            } catch(IOException ie){
+
+                            }
+
+                        }
+
                         //if all the fields are not null
                         //send a request to the server with relevant information and register the user
                     }

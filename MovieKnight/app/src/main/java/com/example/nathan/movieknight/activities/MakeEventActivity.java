@@ -18,7 +18,6 @@ import android.widget.ListView;
 
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.models.FriendList;
-import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.MovieEvent;
 
