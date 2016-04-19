@@ -64,9 +64,9 @@ public class ComingSoonFragment  extends Fragment  {
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
                         Intent in = new Intent(movieListActivity.getApplicationContext(), MovieActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("key", movieList.get(position));
-                        in.putExtras(b);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("movieID", movieID.get(position));
+                        in.putExtras(bundle);
                         startActivity(in);
                         movieListActivity.finish();
                     }

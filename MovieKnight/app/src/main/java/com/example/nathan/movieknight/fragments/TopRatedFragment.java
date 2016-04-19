@@ -49,9 +49,7 @@ public class TopRatedFragment  extends Fragment  {
 
         View view =  inflater.inflate(R.layout.top_rated_layout,null);
 
-
         adapter = new MovieList(movieListActivity, movieList, movieImages);
-
 
         list=(ListView)view.findViewById(R.id.topratedlistView);
         movieListActivity.setBluAdapter((adapter));
@@ -65,9 +63,9 @@ public class TopRatedFragment  extends Fragment  {
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
                         Intent in = new Intent(movieListActivity.getApplicationContext(), MovieActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("key", movieList.get(position));
-                        in.putExtras(b);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("movieID", movieID.get(position));
+                        in.putExtras(bundle);
                         startActivity(in);
                         movieListActivity.finish();
                     }
