@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                             isInt = false;
                         }
                         for(int i = 0; i < zcode.length(); i++){
-                            if(zcode.charAt(i) < '0' && zcode.charAt(i) > '9'){
+                            if(zcode.charAt(i) < '0' || zcode.charAt(i) > '9'){
                                 isInt = false;
                             }
                         }
