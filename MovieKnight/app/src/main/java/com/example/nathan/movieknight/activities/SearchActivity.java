@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
 
 /**

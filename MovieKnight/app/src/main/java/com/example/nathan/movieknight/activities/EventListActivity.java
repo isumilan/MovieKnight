@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
 import com.example.nathan.movieknight.fragments.EventTabFragment;
-import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
 
 

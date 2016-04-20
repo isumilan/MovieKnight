@@ -1,6 +1,7 @@
 package com.example.nathan.movieknight.activities;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -8,14 +9,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
-import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.models.Profile;
 
 public class ProfileActivity extends NavigationDrawer {
-
+    TextView username;
+    EditText description;
+    MovieKnightAppli application;
+    Profile userProfile;
+    boolean isUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +40,18 @@ public class ProfileActivity extends NavigationDrawer {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        Bundle b = getIntent().getExtras();
+        if(b != null){
+            isUser = b.getBoolean("user");
+        }
 
+
+        application = (MovieKnightAppli) getApplication();
+
+        username = (TextView) findViewById(R.id.profile_name);
+
+        description = (EditText) findViewById(R.id.profile_description);
+        description.setFocusable(false);
         //this button should apppear for other users but not self
         //ie getIntent.getExtras.getBoolean(friend) == true
         Button addfriendbutton = (Button)findViewById(R.id.addFriendButton);
@@ -46,7 +66,7 @@ public class ProfileActivity extends NavigationDrawer {
 
         //this button should apppear for self but not other users
         //ie getIntent.getExtras.getBoolean(friend) == false
-        Button editbutton = (Button)findViewById(R.id.editButton);
+        final Button editbutton = (Button)findViewById(R.id.editButton);
         editbutton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
@@ -55,8 +75,32 @@ public class ProfileActivity extends NavigationDrawer {
                         //Profile Description
                         //Favorite Movies
                         //Profile Image
-                     //   ((EditText) findViewById(R.id.profile_description)).setFocusable(true);
-                   //     ((EditText) findViewById(R.id.profile_description)).setTextIsSelectable(true);
+                        description.setTextIsSelectable(true);
+                        description.setFocusableInTouchMode(true);
+
+                        if(editbutton.getText().equals("Edit"))
+                        {
+                            description.setFocusable(true);
+
+                               description.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    imm.toggleSoftInputFromWindow(description.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+                                }
+                            });
+
+                            editbutton.setText("Finish Editing");
+                        }
+                        else{
+                            description.setFocusable(false);
+                            description.setOnClickListener(null);
+                            editbutton.setText("Edit");
+                            MovieKnightAppli application = (MovieKnightAppli) getApplication();
+                            Object[] objects = {"Update Personal Description", description.getText().toString(), username.getText().toString()};
+                            ClientListener cl= application.getClisten();
+                            cl.clientRequest(objects);
+                        }
 
                     }
                 }
@@ -81,6 +125,20 @@ public class ProfileActivity extends NavigationDrawer {
                     }
                 }
         );
+        //checks if it's the user
+        if(isUser){
+            //puts in user information
+            userProfile = application.getUserProfile();
+
+            username.setText(userProfile.getUsername());
+
+            description.setText(userProfile.getDescription());
+            addfriendbutton.setVisibility(View.GONE);
+        } else{
+            editbutton.setVisibility(View.GONE);
+
+        }
+
     }
 
 

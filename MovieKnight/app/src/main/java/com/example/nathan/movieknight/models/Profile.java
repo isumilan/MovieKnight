@@ -31,7 +31,7 @@ public class Profile implements Serializable {
 	public Profile(){
 		username = "*Name unavailable";
 		profilePicture = "NoImageAvailable.png"; //This needs to be changed
-		description = "no description";
+		description = "";
 		friends = new Vector<String>();
 		friendRequests = new Vector<String>();
 		toWatch = new Vector<Integer>();
@@ -45,7 +45,7 @@ public class Profile implements Serializable {
 	public Profile(String name, String pic, int zip){
 		username = name;
 		profilePicture = pic;
-		description = "no description";
+		description = "";
 		friends = new Vector<String>();
 		friendRequests = new Vector<String>();
 		toWatch = new Vector<Integer>();

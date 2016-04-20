@@ -32,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="25dp"
-
                 android:id="@+id/profile_name" />
 
 
@@ -41,10 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="110dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Profile description"
-                android:focusable="false"
+                android:hint="Profile description"
                 android:id="@+id/profile_description"
-
                 android:layout_below="@+id/profile_name" />
     </LinearLayout>
     </LinearLayout>
