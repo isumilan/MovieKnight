@@ -127,7 +127,12 @@ public class ProfileActivity extends NavigationDrawer {
         );
         Object[] objects ={"Profile Request", username};
         ClientListener cl= application.getClisten();
-        Profile prof = (Profile) cl.clientRequest(objects);
+        Profile prof = null;
+        if(cl!= null){
+            //crashes right now
+           // prof = (Profile) cl.clientRequest(objects);
+        }
+
         //checks if it's the user
         if(isUser){
 
