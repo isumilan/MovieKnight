@@ -134,17 +134,7 @@ public class MakeEventActivity extends NavigationDrawer {
                         MovieKnightAppli application = (MovieKnightAppli) getApplication();
                         Object[] objects = {"Make Event", owner, movieID, public_private, EventTitle, time, location, invitations};
                         ClientListener cl= application.getClisten();
-                        /*
-                         cl.execute(objects);
-                        try{
-                            me = (MovieEvent) cl.get();
-                        } catch (InterruptedException ie) {
-                            ie.printStackTrace();
-                        } catch (ExecutionException ee) {
-                            ee.printStackTrace();
-                        }
 
-                         */
                          me = (MovieEvent) cl.clientRequest(objects);
                         if (me != null) {
                             String eid = me.getEventID();
