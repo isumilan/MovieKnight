@@ -25,7 +25,6 @@ import com.example.nathan.movieknight.models.MovieEvent;
 
 import java.util.ArrayList;
 import java.util.Vector;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by natha on 4/6/2016.
@@ -135,7 +134,8 @@ public class MakeEventActivity extends NavigationDrawer {
                         MovieKnightAppli application = (MovieKnightAppli) getApplication();
                         Object[] objects = {"Make Event", owner, movieID, public_private, EventTitle, time, location, invitations};
                         ClientListener cl= application.getClisten();
-                        cl.execute(objects);
+                        /*
+                         cl.execute(objects);
                         try{
                             me = (MovieEvent) cl.get();
                         } catch (InterruptedException ie) {
@@ -144,6 +144,8 @@ public class MakeEventActivity extends NavigationDrawer {
                             ee.printStackTrace();
                         }
 
+                         */
+                         me = (MovieEvent) cl.clientRequest(objects);
                         if (me != null) {
                             String eid = me.getEventID();
                             Bundle b = new Bundle();
