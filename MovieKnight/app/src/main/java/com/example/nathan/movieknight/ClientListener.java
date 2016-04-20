@@ -243,6 +243,15 @@ public class ClientListener {
                 } catch (IOException ie) {
                     ie.printStackTrace();
                 }
+            } else if(code.equals("Profile Request")){
+                String username = (String) objects[1];
+                try {
+                    return ProfileRequest(username);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
             }
             return null;
         }
