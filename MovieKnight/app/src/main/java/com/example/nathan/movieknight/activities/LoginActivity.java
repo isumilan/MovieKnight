@@ -16,8 +16,6 @@ import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.Profile;
 import com.example.nathan.movieknight.tmdb.TmdbConnector;
 
-import java.util.concurrent.ExecutionException;
-
 /**
  * A login screen that offers login via email/password.
  */
@@ -54,25 +52,20 @@ public class LoginActivity extends Activity  {
                 String username = mUsername.getText().toString();
                 String password = mPasswordView.getText().toString();
                 TextView errorText = (TextView) findViewById(R.id.errorText);
-                if (username == "" || password == "") {
+                if (username.equals("") || password.equals("")) {
                     errorText.setText("Fill in all the forms");
                 } else {
                     MovieKnightAppli application = (MovieKnightAppli) getApplication();
                     Object[] objects = {"Login", username, password};
                     ClientListener cl= application.getClisten();
-                    cl.execute(objects);
-                    Profile prof = null;
-                    try{
-                        prof = (Profile) cl.get();
-                    } catch (InterruptedException ie) {
-                        ie.printStackTrace();
-                    } catch (ExecutionException ee) {
-                        ee.printStackTrace();
-                    }
+
+                    Profile prof = (Profile) cl.clientRequest(objects);
                     if(prof != null){
                         application.setUserProfile(prof);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
+                    } else{
+                        errorText.setText("Log in failed");
                     }
                 }
             }

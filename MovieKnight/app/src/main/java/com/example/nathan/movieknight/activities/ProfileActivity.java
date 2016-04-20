@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.Profile;
@@ -95,6 +96,10 @@ public class ProfileActivity extends NavigationDrawer {
                             description.setFocusable(false);
                             description.setOnClickListener(null);
                             editbutton.setText("Edit");
+                            MovieKnightAppli application = (MovieKnightAppli) getApplication();
+                            Object[] objects = {"Update Personal Description", description.getText().toString(), username.getText().toString()};
+                            ClientListener cl= application.getClisten();
+                            cl.clientRequest(objects);
                         }
 
                     }

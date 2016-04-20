@@ -14,9 +14,7 @@ import android.widget.TextView;
 import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
-import com.example.nathan.movieknight.models.*;
-
-import java.util.concurrent.ExecutionException;
+import com.example.nathan.movieknight.models.Profile;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -61,14 +59,22 @@ public class RegisterActivity extends AppCompatActivity {
                         String zcode = ((EditText)findViewById(R.id.zipcode)).getText().toString();
                         String pword = ((EditText)findViewById(R.id.password)).getText().toString();
                         String repword = ((EditText)findViewById(R.id.re_password)).getText().toString();
+                        Boolean isInt = true;
+                        if(zcode.equals("")){
+                            isInt = false;
+                        }
                         for(int i = 0; i < zcode.length(); i++){
                             if(zcode.charAt(i) < '0' && zcode.charAt(i) > '9'){
-
+                                isInt = false;
                             }
                         }
-                        int zipcode = Integer.parseInt(zcode);
+                        int zipcode = -1;
+                        if(isInt)
+                            zipcode = Integer.parseInt(zcode);
                         TextView Error = (TextView)findViewById(R.id.errorText);
-                        if(dname == "" || email == "" || zcode == "" || pword == "" || repword == ""){
+                        if(!isInt){
+                            Error.setText("Zipcode must be a number");
+                        }else if(dname.equals("") || email.equals("") || zcode.equals("") || pword.equals("") || repword.equals("")){
                             Error.setText("Fill in all the forms");
                         } else if (!pword.equals(repword)) {
                             //display "Error: passwords do not match"
@@ -76,15 +82,8 @@ public class RegisterActivity extends AppCompatActivity {
                         } else{
                             Object[] objects = {"Register", dname,pword,zipcode};
                             ClientListener cl = application.getClisten();
-                            cl.execute(objects);
-                            Profile prof = null;
-                            try{
-                                prof = (Profile) cl.get();
-                            } catch (InterruptedException ie) {
-                                ie.printStackTrace();
-                            } catch (ExecutionException ee) {
-                                ee.printStackTrace();
-                            }
+
+                            Profile prof = (Profile) cl.clientRequest(objects);
                             if(prof != null){
                                 application.setUserProfile(prof);
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
