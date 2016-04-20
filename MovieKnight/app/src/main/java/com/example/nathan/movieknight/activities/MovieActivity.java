@@ -38,7 +38,7 @@ public class MovieActivity extends NavigationDrawer {
     private TextView movieReleaseDate;
     private TextView movieRuntime;
     private TextView movieSynopsis;
-
+    private String movieNameString;
     int movieID;
 
     private DateFormat movieDateFormat;
@@ -78,6 +78,7 @@ public class MovieActivity extends NavigationDrawer {
                             //open up the movie list activity
                             Bundle b = new Bundle();
                             b.putInt("movieID", 1);
+                            b.putString("movieName", movieNameString);
                             Intent in = new Intent(getApplicationContext(), MakeEventActivity.class);
                             in.putExtras(b);
                             startActivity(in);
@@ -169,7 +170,7 @@ public class MovieActivity extends NavigationDrawer {
     private void setupDetails(MovieInfo info) {
 
         movieName.setText(info.getTitle());
-
+        movieNameString = info.getTitle();
         movieRating.setText("Rating: "+info.getVoteAverage() + "/10" + "("+info.getVoteCount()+" votes)");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);

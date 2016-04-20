@@ -21,9 +21,5 @@ public class ConnectToServer extends AsyncTask<Void, Void, ClientListener> {
         return null;
     }
 
-    public ClientListener getClientListener() {
-        if (c != null)
-            return c;
-        return null;
-    }
+
 }
