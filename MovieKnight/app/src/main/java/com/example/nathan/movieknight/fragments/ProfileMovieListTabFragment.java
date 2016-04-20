@@ -21,6 +21,8 @@ public class ProfileMovieListTabFragment extends Fragment {
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
     public static int int_items = 2 ;
+    public static MyAdapter mAdapter;
+
     ProfileMovieListActivity profileMovieListActivity;
     @SuppressLint("ValidFragment")
     public ProfileMovieListTabFragment(ProfileMovieListActivity pa){
@@ -43,7 +45,8 @@ public class ProfileMovieListTabFragment extends Fragment {
         /**
          *Set an Apater for the View Pager
          */
-        viewPager.setAdapter(new MyAdapter(getChildFragmentManager(), profileMovieListActivity));
+        mAdapter = new MyAdapter(getChildFragmentManager(), profileMovieListActivity);
+        viewPager.setAdapter(mAdapter);
 
         /**
          * Now , this is a workaround ,
