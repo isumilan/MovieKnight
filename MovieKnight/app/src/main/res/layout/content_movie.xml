@@ -24,7 +24,9 @@
         android:id="@+id/moviePoster"
         android:src="@drawable/sampai"
          />
-
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -37,7 +39,7 @@
             android:text="Movie Title"
             android:id="@+id/movieTitle"
             android:layout_gravity="center_vertical"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:layout_marginBottom = "10dp"
             android:layout_marginLeft="20dp"/>
 
@@ -78,8 +80,15 @@
 
 
         </LinearLayout>
-
+        </ScrollView>
     </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,13 +98,14 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15dp"
         android:id="@+id/movieSynopsis"
         android:layout_weight="0.37"
         android:text="Best movie ever." />
-
+        </LinearLayout>
+    </ScrollView>
     <Button
         android:layout_width="188dp"
         android:layout_height="wrap_content"

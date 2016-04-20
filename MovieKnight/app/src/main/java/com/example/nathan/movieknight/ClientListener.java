@@ -1,20 +1,25 @@
 package com.example.nathan.movieknight;
 
-import com.example.nathan.movieknight.ServerClientDialogue;
-import com.example.nathan.movieknight.models.*;
+import android.os.AsyncTask;
+import android.os.NetworkOnMainThreadException;
+import android.util.Log;
 
+import com.example.nathan.movieknight.models.MovieEvent;
+import com.example.nathan.movieknight.models.Profile;
+
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
-import com.example.nathan.movieknight.models.*;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Kevin on 4/16/2016.
  */
 
-public class ClientListener{
+public class ClientListener {
 
     private Socket mSocket;
     private ObjectInputStream ois;
@@ -23,6 +28,19 @@ public class ClientListener{
     public ClientListener(Socket inSocket) {
         mSocket = inSocket;
         boolean socketReady = initializeVariables();
+    }
+    public Object clientRequest(Object[] objects){
+        ClientRequest cr = new ClientRequest();
+        cr.execute(objects);
+        Object object = null;
+        try{
+            object =  cr.get();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        } catch (ExecutionException ee) {
+            ee.printStackTrace();
+        }
+        return object;
     }
 
     private boolean initializeVariables() {
@@ -54,10 +72,19 @@ public class ClientListener{
     }
     public Profile LoginRequest(String username, String password) throws IOException, ClassNotFoundException{
     	sendObject(LoginRequestDialogue(username, password));
-    	return (Profile)ois.readObject();
+        Profile prof = null;
+        try{
+           prof  = (Profile)ois.readObject();
+        } catch(EOFException e){
+
+        } catch(NetworkOnMainThreadException nw){
+            Log.d("network", "network exception");
+        }
+        return prof;
     }
     public Profile RegisterRequest(String username, String password, int zip) throws IOException, ClassNotFoundException{
     	sendObject(RegisterRequestDialogue(username, password, zip));
+
     	Profile newUser = (Profile)ois.readObject();
     	return newUser;
     }
@@ -166,5 +193,58 @@ public class ClientListener{
     private ServerClientDialogue EditMovieEventRequestDialogue(MovieEvent me){
     	return new ServerClientDialogue(MovieConstants.EditMovieEventRequest
     			, me);
+    }
+    class ClientRequest   extends AsyncTask<Object, Void, Object>{
+        protected Object doInBackground(Object... objects) {
+            String code = (String) objects[0];
+            if(code.equals("Login")){
+                String username = (String)objects[1];
+                String password = (String)objects[2];
+                try {
+                    return LoginRequest(username,password);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if(code.equals("Register")){
+                String username = (String)objects[1];
+                String password = (String)objects[2];
+                int zipcode = (Integer)objects[3];
+                try {
+                    return RegisterRequest(username, password, zipcode);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if (code.equals("Make Event")){
+                String owner = (String)objects[1];
+                int goingToWatch = (Integer)objects[2];
+                boolean public_private = (Boolean) objects[3];
+                String EventTitle = (String) objects[4];
+                String time = (String) objects[5];
+                String location = (String) objects[6];
+                Vector<String> invitations = (Vector<String>) objects[7];
+                try {
+                    return MakeEventRequest(owner,goingToWatch,public_private,EventTitle,time,location,invitations);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            }else if(code.equals("Update Personal Description")){
+                String description = (String) objects[1];
+                String username = (String) objects[2];
+                try {
+                    return UpdatePersonalDescriptionRequest(description,username);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            }
+            return null;
+        }
     }
 }

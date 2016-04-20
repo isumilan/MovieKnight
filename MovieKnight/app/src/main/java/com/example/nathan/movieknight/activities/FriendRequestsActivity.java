@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.FriendRequestsList;
 
