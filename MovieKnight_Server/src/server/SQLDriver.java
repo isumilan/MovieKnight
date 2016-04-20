@@ -19,7 +19,7 @@ public class SQLDriver {
 	private final static String findPassword = "SELECT PASSWORD FROM USERS WHERE USERNAME=?";
 	private final static String selectEvent = "SELECT * FROM MOVIEEVENTS WHERE EVENTID=?";
 	private final static String selectParticipants = "SELECT USERNAME FROM EVENTPARTICIPANTS WHERE EVENTID=? AND ACCEPTED=?";
-	private final static String addEvent = "INSERT INTO MOVIEEVENTS(EVENTID,OWNER,MOVIEID,DESCRIPTION,MOVIETIME,THEATER) VALUES(?,?,?,?,?,?)";
+	private final static String addEvent = "INSERT INTO MOVIEEVENTS(EVENTID,OWNER,MOVIEID,EVENTTITLE,PUBLIC_PRIVATE,MOVIETIME,THEATER) VALUES('1','a',1,'a',true,'7','h')";
 	private final static String addParticipants = "INSERT INTO EVENTPARTICIPANTS(P_ID,EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?,?)";
 	private final static String sendFriendRequest = "INSERT INTO FRIENDS(P_ID,ACCEPTED,SENDER,RECEIVER) VALUES(?,?,?,?)";
 	private final static String acceptFriendRequest = "UPDATE FRIENDS SET ACCEPTED=? WHERE SENDER=? AND RECEIVER=?";
