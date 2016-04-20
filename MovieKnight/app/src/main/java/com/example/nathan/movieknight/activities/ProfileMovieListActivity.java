@@ -41,10 +41,9 @@ public class ProfileMovieListActivity extends AppCompatActivity {
          */
 
         mFragmentManager = getSupportFragmentManager();
-        mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView,new ProfileMovieListTabFragment(this)).commit();
-
-
+        mFragmentManager.beginTransaction()
+                        .replace(R.id.containerView, new ProfileMovieListTabFragment(this))
+                        .commit();
     }
 
     public void setGoingToWatchAdapter(ArrayAdapter<String> adapter){

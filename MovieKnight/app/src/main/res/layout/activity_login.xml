@@ -11,14 +11,15 @@
     tools:context=".activities.LoginActivity">
 
     <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
-
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/errorText"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp" />
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
@@ -30,10 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="100dp">
+            android:paddingTop="60dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/email"
+            <EditText
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_username"
@@ -54,7 +55,7 @@
                 android:singleLine="true" />
 
             <Button
-                android:id="@+id/sign_in_button"
+                android:id="@+id/log_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,6 +85,9 @@
                     android:text="Log in as guest"
                     android:textStyle="bold" />
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>

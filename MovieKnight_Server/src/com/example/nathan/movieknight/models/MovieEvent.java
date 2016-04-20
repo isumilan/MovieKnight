@@ -20,7 +20,8 @@ public class MovieEvent implements Serializable {
 			return arg0.getGoingToWatch() - arg1.getGoingToWatch();
 		}		
 	}
-	public static class MovieTimeComparator implements Comparator<MovieEvent>{
+	public static class MovieTimeComparator implements Comparator<MovieEvent>, Serializable{
+		private static final long serialVersionUID = 1L;
 		public int compare(MovieEvent arg0, MovieEvent arg1) {
 			return arg0.getMovieTime().compareTo(arg1.getMovieTime());
 		}		

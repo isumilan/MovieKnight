@@ -1,6 +1,8 @@
 package com.example.nathan.movieknight.activities;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nathan.movieknight.MovieKnightAppli;
-import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.MovieInfo;
 import com.example.nathan.movieknight.tmdb.TmdbConnector;
@@ -37,7 +38,7 @@ public class MovieActivity extends NavigationDrawer {
     private TextView movieReleaseDate;
     private TextView movieRuntime;
     private TextView movieSynopsis;
-
+    private String movieNameString;
     int movieID;
 
     private DateFormat movieDateFormat;
@@ -65,23 +66,96 @@ public class MovieActivity extends NavigationDrawer {
 
         setupMoviePage();
         getMovieInfo(movieID);
-
+        final MovieKnightAppli application = (MovieKnightAppli) getApplication();
         Button makeeventbutton = (Button)findViewById(R.id.makeEventButton);
         makeeventbutton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        //open up the movie list activity
-                        Bundle b = new Bundle();
-                        b.putInt("movieID", 1);
-                        Intent in = new Intent(getApplicationContext(), MakeEventActivity.class);
-                        in.putExtras(b);
-                        startActivity(in);
+                        if(application.isGuest()){
+                            PopUp();
+
+                        } else{
+                            //open up the movie list activity
+                            Bundle b = new Bundle();
+                            b.putInt("movieID", 1);
+                            b.putString("movieName", movieNameString);
+                            Intent in = new Intent(getApplicationContext(), MakeEventActivity.class);
+                            in.putExtras(b);
+                            startActivity(in);
+                            finish();
+                        }
+
+                    }
+                }
+        );
+        Button addFavoritesButton = (Button) findViewById(R.id.addFavoritesButton);
+        addFavoritesButton.setOnClickListener(
+            new Button.OnClickListener(){
+                public void onClick(View v){
+                    if(application.isGuest()){
+                        PopUp();
+                    } else {
+                        // send the favorites information up to the server
+                        startActivity(new Intent(getApplication(), ProfileActivity.class));
                         finish();
+                    }
+                }
+            }
+        );
+        Button addWatchListButton = (Button) findViewById(R.id.addWatchlistButton);
+        addWatchListButton.setOnClickListener(
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        if(application.isGuest()){
+                            PopUp();
+                        } else {
+                            AskForDest();
+                        }
                     }
                 }
         );
     }
 
+    void AskForDest() {
+        AlertDialog.Builder movielistBuilder = new AlertDialog.Builder(this);
+        movielistBuilder.setTitle("Add Movie As...");
+        movielistBuilder.setPositiveButton("Watched",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //add the movie to WATCHED list
+                        startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
+                        finish();
+                    }
+                });
+        movielistBuilder.setNegativeButton("To Watch",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //add the movie to TO WATCH list
+                        startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
+                        finish();
+                    }
+                });
+        AlertDialog movielistDialog = movielistBuilder.create();
+        movielistDialog.show();
+    }
+
+    void PopUp(){
+        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+        helpBuilder.setTitle("YOU ARE A GUEST");
+        helpBuilder.setMessage("Cannot access as guest. Buy our app for $4.99");
+        helpBuilder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing but close the dialog
+                    }
+                });
+
+        // Remember, create doesn't show the dialog
+        AlertDialog helpDialog = helpBuilder.create();
+        helpDialog.show();
+    }
     private void setupMoviePage() {
 
         movieName = (TextView) findViewById(R.id.movieTitle);
@@ -111,7 +185,8 @@ public class MovieActivity extends NavigationDrawer {
             @Override
             public void onResponse(Response<MovieInfo> response) {
                 MovieInfo info = response.body();
-                setupDetails(info);
+                if(info != null)
+                    setupDetails(info);
             }
 
             @Override
@@ -124,7 +199,7 @@ public class MovieActivity extends NavigationDrawer {
     private void setupDetails(MovieInfo info) {
 
         movieName.setText(info.getTitle());
-
+        movieNameString = info.getTitle();
         movieRating.setText("Rating: "+info.getVoteAverage() + "/10" + "("+info.getVoteCount()+" votes)");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);

@@ -7,22 +7,22 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.SearchView;
+import android.widget.TextView;
 
+import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
-import com.example.nathan.movieknight.models.FriendList;
-import com.example.nathan.movieknight.NavigationDrawer;
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.models.FriendList;
 import com.example.nathan.movieknight.models.MovieEvent;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -48,7 +48,9 @@ public class MakeEventActivity extends NavigationDrawer {
 
         Bundle b = getIntent().getExtras();
         final int movieID = b.getInt("movieID");
-
+        String movieName = b.getString("movieName");
+        TextView nameTextView = (TextView)findViewById(R.id.movieText);
+        nameTextView.setText(movieName);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -114,6 +116,9 @@ public class MakeEventActivity extends NavigationDrawer {
             });
         }
 
+
+
+
         Button makeeventbutton = (Button)findViewById(R.id.make_event);
         makeeventbutton.setOnClickListener(
                 new View.OnClickListener() {
@@ -126,23 +131,24 @@ public class MakeEventActivity extends NavigationDrawer {
                         String location = "The Universe";
                         Vector<String> invitations = new Vector<String>(checkedList);
                         MovieEvent me = null;
-                        try {
-                            me = ((MovieKnightAppli) getApplication()).getClisten().MakeEventRequest(owner, movieID, public_private, EventTitle, time, location, invitations);
-                        } catch (ClassNotFoundException cnfe) {
-                            cnfe.printStackTrace();
-                        } catch (IOException ioe) {
-                            ioe.printStackTrace();
-                        } catch (NullPointerException npe) {
-                            npe.printStackTrace();
+                        MovieKnightAppli application = (MovieKnightAppli) getApplication();
+                        Object[] objects = {"Make Event", owner, movieID, public_private, EventTitle, time, location, invitations};
+                        ClientListener cl= application.getClisten();
+                        if(cl != null){
+                            me = (MovieEvent) cl.clientRequest(objects);
+                            if (me != null) {
+                                String eid = me.getEventID();
+                                Bundle b = new Bundle();
+                                Intent in = new Intent(getApplicationContext(), EventActivity.class);
+                                b.putString("key", eid);
+                                startActivity(in);
+                                finish();
+                            }
                         }
-                        if (me != null) {
-                            String eid = me.getEventID();
-                            Bundle b = new Bundle();
-                            Intent in = new Intent(getApplicationContext(), EventActivity.class);
-                            b.putString("key", eid);
-                            startActivity(in);
-                            finish();
-                        }
+
+
+
+
                     }
                 }
         );

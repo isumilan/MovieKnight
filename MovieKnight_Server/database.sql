@@ -30,7 +30,8 @@ CREATE TABLE MovieEvents (
 	eventID varchar(50) primary key not null,
     owner varchar(50) not null,
     movieID int not null,
-    description varchar(250) not null,
+    eventTitle varchar(250) not null,
+    public_private boolean not null,
     movieTime varchar(50) not null,
     theater varchar(50) not null
 );
