@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.example.nathan.movieknight.tmdb.TmdbConnector;
 import com.example.nathan.movieknight.tmdb.TmdbService;
-
+import com.example.nathan.movieknight.models.*;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -34,6 +34,7 @@ public class MovieKnightAppli extends Application {
 
     TmdbConnector tmdbConnector;
     TmdbService tmdbService;
+    Profile userProfile;
 
     @Override
     public void onCreate() {
@@ -115,6 +116,11 @@ public class MovieKnightAppli extends Application {
     public TmdbService getMovieService() {
         return tmdbService;
     }
-
+    public void setUserProfile(Profile prof){
+        userProfile = prof;
+    }
+    public Profile getUserProfile(){
+        return userProfile;
+    }
 
 }

@@ -11,10 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.models.*;
 
-import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -72,12 +74,21 @@ public class RegisterActivity extends AppCompatActivity {
                             //display "Error: passwords do not match"
                             Error.setText("Passwords do not match");
                         } else{
+                            Object[] objects = {"Register", dname,pword,zipcode};
+                            ClientListener cl = application.getClisten();
+                            cl.execute(objects);
+                            Profile prof = null;
                             try{
-                                application.getClisten().RegisterRequest(dname, pword,zipcode);
-                            } catch(ClassNotFoundException cnfe){
-
-                            } catch(IOException ie){
-
+                                prof = (Profile) cl.get();
+                            } catch (InterruptedException ie) {
+                                ie.printStackTrace();
+                            } catch (ExecutionException ee) {
+                                ee.printStackTrace();
+                            }
+                            if(prof != null){
+                                application.setUserProfile(prof);
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
                             }
 
                         }

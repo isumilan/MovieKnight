@@ -10,12 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.Profile;
 import com.example.nathan.movieknight.tmdb.TmdbConnector;
 
-import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A login screen that offers login via email/password.
@@ -52,22 +53,32 @@ public class LoginActivity extends Activity  {
             public void onClick(View view) {
                 String username = mUsername.getText().toString();
                 String password = mPasswordView.getText().toString();
-                if(username == "" || password == ""){
-
-                } else{
+                TextView errorText = (TextView) findViewById(R.id.errorText);
+                if (username == "" || password == "") {
+                    errorText.setText("Fill in all the forms");
+                } else {
+                    MovieKnightAppli application = (MovieKnightAppli) getApplication();
+                    Object[] objects = {"Login", username, password};
+                    ClientListener cl= application.getClisten();
+                    cl.execute(objects);
+                    Profile prof = null;
                     try{
-                        Profile prof = ((MovieKnightAppli)getApplication()).getClisten().LoginRequest(username,password);
-                    } catch(ClassNotFoundException cne){
-
-                    } catch(IOException ie){
-
+                        prof = (Profile) cl.get();
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                    } catch (ExecutionException ee) {
+                        ee.printStackTrace();
                     }
-
+                    if(prof != null){
+                        application.setUserProfile(prof);
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
                 }
             }
         });
 
-        Button registerbutton = (Button)findViewById(R.id.register_button);
+        Button registerbutton = (Button) findViewById(R.id.register_button);
         registerbutton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +87,7 @@ public class LoginActivity extends Activity  {
             }
         });
 
-        Button guestbutton = (Button)findViewById(R.id.guest_button);
+        Button guestbutton = (Button) findViewById(R.id.guest_button);
         guestbutton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,8 +98,7 @@ public class LoginActivity extends Activity  {
         });
 
 
-
-        tmdbConnector = new TmdbConnector((MovieKnightAppli)getApplication());
+        tmdbConnector = new TmdbConnector((MovieKnightAppli) getApplication());
 
         tmdbConnector.getMovies("TopRated");
         tmdbConnector.getMovies("Upcoming");
