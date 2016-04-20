@@ -114,7 +114,6 @@ public class MovieActivity extends NavigationDrawer {
                     }
                 }
         );
-
     }
 
     void AskForDest() {
@@ -125,7 +124,7 @@ public class MovieActivity extends NavigationDrawer {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //add the movie to WATCHED list
-                        startActivity(new Intent(getApplication(), MovieListActivity.class));
+                        startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
                         finish();
                     }
                 });
@@ -134,7 +133,7 @@ public class MovieActivity extends NavigationDrawer {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //add the movie to TO WATCH list
-                        startActivity(new Intent(getApplication(), MovieListActivity.class));
+                        startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
                         finish();
                     }
                 });
