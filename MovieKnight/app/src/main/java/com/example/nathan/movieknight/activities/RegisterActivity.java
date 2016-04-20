@@ -81,12 +81,13 @@ public class RegisterActivity extends AppCompatActivity {
                         } else{
                             Object[] objects = {"Register", dname,pword,zipcode};
                             ClientListener cl = application.getClisten();
-
-                            Profile prof = (Profile) cl.clientRequest(objects);
-                            if(prof != null){
-                                application.setUserProfile(prof);
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                finish();
+                            if(cl != null){
+                                Profile prof = (Profile) cl.clientRequest(objects);
+                                if(prof != null){
+                                    application.setUserProfile(prof);
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    finish();
+                                }
                             }
 
                         }

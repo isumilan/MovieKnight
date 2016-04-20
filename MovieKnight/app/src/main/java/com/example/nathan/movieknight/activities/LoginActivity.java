@@ -58,15 +58,17 @@ public class LoginActivity extends Activity  {
                     MovieKnightAppli application = (MovieKnightAppli) getApplication();
                     Object[] objects = {"Login", username, password};
                     ClientListener cl= application.getClisten();
-
-                    Profile prof = (Profile) cl.clientRequest(objects);
-                    if(prof != null){
-                        application.setUserProfile(prof);
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        finish();
-                    } else{
-                        errorText.setText("Log in failed");
+                    if(cl != null){
+                        Profile prof = (Profile) cl.clientRequest(objects);
+                        if(prof != null){
+                            application.setUserProfile(prof);
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        } else{
+                            errorText.setText("Log in failed");
+                        }
                     }
+
                 }
             }
         });

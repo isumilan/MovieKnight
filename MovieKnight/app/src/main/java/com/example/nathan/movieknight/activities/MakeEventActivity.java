@@ -134,16 +134,18 @@ public class MakeEventActivity extends NavigationDrawer {
                         MovieKnightAppli application = (MovieKnightAppli) getApplication();
                         Object[] objects = {"Make Event", owner, movieID, public_private, EventTitle, time, location, invitations};
                         ClientListener cl= application.getClisten();
-
-                         me = (MovieEvent) cl.clientRequest(objects);
-                        if (me != null) {
-                            String eid = me.getEventID();
-                            Bundle b = new Bundle();
-                            Intent in = new Intent(getApplicationContext(), EventActivity.class);
-                            b.putString("key", eid);
-                            startActivity(in);
-                            finish();
+                        if(cl != null){
+                            me = (MovieEvent) cl.clientRequest(objects);
+                            if (me != null) {
+                                String eid = me.getEventID();
+                                Bundle b = new Bundle();
+                                Intent in = new Intent(getApplicationContext(), EventActivity.class);
+                                b.putString("key", eid);
+                                startActivity(in);
+                                finish();
+                            }
                         }
+
 
 
 
