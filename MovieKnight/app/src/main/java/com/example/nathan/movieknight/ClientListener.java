@@ -127,7 +127,10 @@ public class ClientListener {
     	sendObject(EditMovieEventRequestDialogue(me));
     	return (boolean)ois.readObject();
     }
-    
+    public Vector<String> ListAllUsersRequest() throws ClassNotFoundException, IOException{
+    	sendObject(ListAllUsersRequestDialogue());
+    	return (Vector<String>)ois.readObject();
+    }
     
    /* public ServerClientDialogue MovieRequest(String title){
     	return new ServerClientDialogue(MovieConstants.MovieRequest, title);
@@ -193,6 +196,9 @@ public class ClientListener {
     private ServerClientDialogue EditMovieEventRequestDialogue(MovieEvent me){
     	return new ServerClientDialogue(MovieConstants.EditMovieEventRequest
     			, me);
+    }
+    private ServerClientDialogue ListAllUsersRequestDialogue() {
+    	return new ServerClientDialogue(MovieConstants.ListAllUsersRequest,"");
     }
     class ClientRequest   extends AsyncTask<Object, Void, Object>{
         protected Object doInBackground(Object... objects) {
