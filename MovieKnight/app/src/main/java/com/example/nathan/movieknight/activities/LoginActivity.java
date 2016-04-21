@@ -62,6 +62,7 @@ public class LoginActivity extends Activity  {
                         Profile prof = (Profile) cl.clientRequest(objects);
                         if(prof != null){
                             application.setUserProfile(prof);
+                            application.setUserName(username);
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         } else{

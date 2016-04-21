@@ -22,7 +22,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:id="@+id/profile_pic"
-            android:src="@drawable/sampai"
+
             />
 
 
@@ -92,7 +92,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="175dp"
-            android:layout_height="150dp" >
+            android:layout_height="200dp" >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="150dp" >
+            android:layout_height="200dp" >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,20 +125,24 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Comments"
-            android:id="@+id/commentText" />
 
-        <ListView
-            android:layout_width="match_parent"
+        <Button
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:id="@+id/commentListView" />
+            android:text="Going"
+            android:id="@+id/goingButton"
+      />
+
+        <Button
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="Not Going"
+            android:id="@+id/notgoingButton"
+             />
+
 
     </LinearLayout>
 

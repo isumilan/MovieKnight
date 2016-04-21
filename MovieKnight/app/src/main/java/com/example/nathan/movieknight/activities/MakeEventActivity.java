@@ -34,7 +34,7 @@ public class MakeEventActivity extends NavigationDrawer {
     ArrayList<String> friendList;
     ArrayList<String> checkedList;
     Integer[] imageId = {
-            R.drawable.sampai,
+            R.drawable.dango,
             R.drawable.event,
             R.drawable.dango,
             R.drawable.glass,
@@ -132,8 +132,9 @@ public class MakeEventActivity extends NavigationDrawer {
                         Vector<String> invitations = new Vector<String>(checkedList);
                         MovieEvent me = null;
                         MovieKnightAppli application = (MovieKnightAppli) getApplication();
-                        Object[] objects = {"Make Event", owner, movieID, public_private, EventTitle, time, location, invitations};
+                        Object[] objects = {"Make Event", owner, movieID, EventTitle, public_private, time, location, invitations};
                         ClientListener cl= application.getClisten();
+
                         if(cl != null){
                             me = (MovieEvent) cl.clientRequest(objects);
                             if (me != null) {

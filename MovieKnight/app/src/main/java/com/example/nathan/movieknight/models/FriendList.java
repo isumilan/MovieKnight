@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
     private ArrayList<String> oldFriendNames;
     private  Integer[] friendImage;
     private  Integer[] oldFriendImage;
+    private ArrayList<Boolean> checkList;
     public FriendList(Activity context,
                       ArrayList<String>  friendNames, Integer[] friendImage) {
 
@@ -41,6 +43,7 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
         for(int i = 0; i < friendImage.length;i++){
             oldFriendImage[i] = friendImage[i];
         }
+        checkList = new ArrayList<Boolean>();
     }
 
     @Override
@@ -50,13 +53,37 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
         TextView txtTitle = (TextView) rowView.findViewById(R.id.listfriendtxt);
 
         ImageView imageView = (ImageView) rowView.findViewById(R.id.listfriendimg);
+        CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.checkBox);
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean checked = ((CheckBox) view).isChecked();
+                if (checked) {
 
+
+                } else{
+
+                }
+            }
+        });
         if(position<friendNames.size())
             txtTitle.setText(friendNames.get(position));
         if(position < friendImage.length)
             imageView.setImageResource(friendImage[position]);
         return rowView;
     }
+
+
+    View.OnClickListener checkboxClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            boolean checked = ((CheckBox) view).isChecked();
+            if (checked) {
+                String text = null;
+
+            }
+        }
+    };
 
     @Override
     public Filter getFilter() {
