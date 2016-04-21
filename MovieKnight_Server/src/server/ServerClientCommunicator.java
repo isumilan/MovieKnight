@@ -80,6 +80,8 @@ public class ServerClientCommunicator extends Thread {
 					String input = (String) scd.getDialogueContent();
 					String[] inArray = input.split("\b");
 					sendObject(driver.EditDescription(inArray[0], inArray[1]));
+				}else if(scd.getRequestType() == MovieConstants.ListAllUsersRequest){
+					sendObject(driver.ListAllUsers());
 				}
 			}
 		} catch (IOException ioe) {
