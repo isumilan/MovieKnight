@@ -35,8 +35,6 @@
                 android:textSize="25dp"
                 android:id="@+id/profile_name" />
 
-
-
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="110dp"
@@ -46,6 +44,7 @@
                 android:layout_below="@+id/profile_name" />
     </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -66,14 +65,14 @@
             android:layout_marginLeft="150dp" />
     </LinearLayout>
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Favorite Movies"
         android:id="@+id/textView7"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"/>
 
     <ListView
         android:layout_width="match_parent"
@@ -92,6 +91,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/movieListButton"
         android:layout_alignEnd="@+id/movieListButton"
+        android:layout_marginTop="10dp" />
         />
 
     <Button
@@ -104,7 +104,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-  />
-
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>
