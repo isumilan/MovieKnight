@@ -207,7 +207,7 @@ public class SQLDriver {
 		try {
 			PreparedStatement ps = con.prepareStatement(sendFriendRequest);
 			ps.setString(1, UUID.randomUUID().toString());
-			ps.setBoolean(2, true);
+			ps.setBoolean(2, false);
 			ps.setString(3, sender);
 			ps.setString(4, receiver);
 			ps.executeUpdate();
@@ -225,12 +225,12 @@ public class SQLDriver {
 			if (reply) {
 				ps = con.prepareStatement(acceptFriendRequest);
 				ps.setBoolean(1, true);
-				ps.setString(2, sender);
-				ps.setString(3, receiver);
+				ps.setString(2, receiver);
+				ps.setString(3, sender);
 			} else {
 				ps = con.prepareStatement(denyFriendRequest);
-				ps.setString(1, sender);
-				ps.setString(2, receiver);
+				ps.setString(1, receiver);
+				ps.setString(2, sender);
 			}
 			ps.executeUpdate();
 			log.write(receiver + " replied to friend request");
