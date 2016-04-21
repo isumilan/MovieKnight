@@ -41,6 +41,14 @@ public class MakeEventActivity extends NavigationDrawer {
             R.drawable.home,
             R.drawable.movie
     };
+    public void updateCheckList(int pos, String username){
+        int index = checkedList.indexOf(username);
+        if(index == -1){
+            checkedList.add(username);
+        } else{
+            checkedList.remove(username);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +149,8 @@ public class MakeEventActivity extends NavigationDrawer {
                                 String eid = me.getEventID();
                                 Bundle b = new Bundle();
                                 Intent in = new Intent(getApplicationContext(), EventActivity.class);
-                                b.putString("key", eid);
+                                b.putString("eventID", eid);
+                                in.putExtras(b);
                                 startActivity(in);
                                 finish();
                             }

@@ -259,6 +259,15 @@ public class ClientListener {
                 } catch (IOException ie) {
                     ie.printStackTrace();
                 }
+            } else if(code.equals("Movie Event Request")){
+                String eventID = (String) objects[1];
+                try {
+                    return MovieEventRequest(eventID);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
             }
             return null;
         }

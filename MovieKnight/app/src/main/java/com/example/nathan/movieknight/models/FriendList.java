@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.activities.MakeEventActivity;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,6 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
     private ArrayList<String> oldFriendNames;
     private  Integer[] friendImage;
     private  Integer[] oldFriendImage;
-    private ArrayList<Boolean> checkList;
     public FriendList(Activity context,
                       ArrayList<String>  friendNames, Integer[] friendImage) {
 
@@ -43,7 +43,6 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
         for(int i = 0; i < friendImage.length;i++){
             oldFriendImage[i] = friendImage[i];
         }
-        checkList = new ArrayList<Boolean>();
     }
 
     @Override
@@ -51,21 +50,18 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.list_single_friend, null, true);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.listfriendtxt);
-
+        final int pos = position;
         ImageView imageView = (ImageView) rowView.findViewById(R.id.listfriendimg);
         CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.checkBox);
+
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean checked = ((CheckBox) view).isChecked();
-                if (checked) {
-
-
-                } else{
-
-                }
+                MakeEventActivity mea = (MakeEventActivity) context;
+                mea.updateCheckList(pos,friendNames.get(pos));
             }
         });
+
         if(position<friendNames.size())
             txtTitle.setText(friendNames.get(position));
         if(position < friendImage.length)
@@ -73,17 +69,6 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
         return rowView;
     }
 
-
-    View.OnClickListener checkboxClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            boolean checked = ((CheckBox) view).isChecked();
-            if (checked) {
-                String text = null;
-
-            }
-        }
-    };
 
     @Override
     public Filter getFilter() {
