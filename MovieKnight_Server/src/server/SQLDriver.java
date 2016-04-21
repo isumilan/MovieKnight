@@ -120,6 +120,13 @@ public class SQLDriver {
 				user.setDescription(result.getString(4));
 				user.setZipcode(result.getInt(5));
 			}
+			user.setFriends(this.getFriendsList(username));
+			user.setFriendRequests(this.getFriendsRequestList(username));
+			user.setToWatch(this.getMovieList("towatch", username));
+			user.setWatched(this.getMovieList("watched", username));
+			user.setLiked(this.getMovieList("liked", username));
+			user.setEvents(this.getParticipatingEvents(username));
+			user.setEventRequests(this.getInvitedEvents(username));
 		} catch (SQLException e) {
 			log.write("Failed to send profile with: " + username);
 		}
@@ -309,5 +316,96 @@ public class SQLDriver {
 			log.write("Failed to edit description");
 			return false;
 		}
+	}
+	
+	private Vector<String> getFriendsList(String username){
+		Vector<String> friends = new Vector<String>();
+		try {
+			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends "
+					+ "WHERE accepted=1 AND (sender=? OR receiver=?)");
+			ps.setString(1, username);
+			ps.setString(2, username);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				if(rs.getString("sender").equals(username)){
+					friends.add(rs.getString("receiver"));
+				}else{
+					friends.add(rs.getString("sender"));
+				}
+			}
+			return friends;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return friends;
+	}
+	
+	private Vector<String> getFriendsRequestList(String username){
+		Vector<String> friends = new Vector<String>();
+		try {
+			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends "
+					+ "WHERE accepted=0 AND receiver=?)");
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				friends.add(rs.getString("sender"));
+			}
+			return friends;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return friends;
+	}
+	
+	private Vector<Integer> getMovieList(String listType, String username){
+		Vector<Integer> movies = new Vector<Integer>();
+		try {
+			PreparedStatement ps= con.prepareStatement("SELECT * FROM movielists "
+					+ "WHERE username=? AND list_type=?");
+			ps.setString(1, username);
+			ps.setString(2, listType);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				movies.add(rs.getInt("movieID"));
+			}
+			return movies;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return movies;
+	}
+	
+	private Vector<String> getParticipatingEvents(String username){
+		Vector<String> events = new Vector<String>();
+		try {
+			PreparedStatement ps= con.prepareStatement("SELECT * FROM eventparticipants "
+					+ "WHERE accepted=1 AND usrname=?");
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				events.add(rs.getString("eventID"));
+			}
+			return events;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return events;
+	}
+	
+	private Vector<String> getInvitedEvents(String username){
+		Vector<String> events = new Vector<String>();
+		try {
+			PreparedStatement ps= con.prepareStatement("SELECT * FROM eventparticipants "
+					+ "WHERE accepted=0 AND usrname=?");
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				events.add(rs.getString("eventID"));
+			}
+			return events;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return events;
 	}
 }
