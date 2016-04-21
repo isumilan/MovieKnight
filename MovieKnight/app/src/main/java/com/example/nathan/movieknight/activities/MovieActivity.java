@@ -95,6 +95,9 @@ public class MovieActivity extends NavigationDrawer {
                     if(application.isGuest()){
                         PopUp();
                     } else {
+                        // send the favorites information up to the server
+                        startActivity(new Intent(getApplication(), ProfileActivity.class));
+                        finish();
                     }
                 }
             }
@@ -104,14 +107,40 @@ public class MovieActivity extends NavigationDrawer {
                 new Button.OnClickListener(){
                     public void onClick(View v){
                         if(application.isGuest()){
-                           PopUp();
+                            PopUp();
                         } else {
+                            AskForDest();
                         }
                     }
                 }
         );
-
     }
+
+    void AskForDest() {
+        AlertDialog.Builder movielistBuilder = new AlertDialog.Builder(this);
+        movielistBuilder.setTitle("Add Movie As...");
+        movielistBuilder.setPositiveButton("Watched",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //add the movie to WATCHED list
+                        startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
+                        finish();
+                    }
+                });
+        movielistBuilder.setNegativeButton("To Watch",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //add the movie to TO WATCH list
+                        startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
+                        finish();
+                    }
+                });
+        AlertDialog movielistDialog = movielistBuilder.create();
+        movielistDialog.show();
+    }
+
     void PopUp(){
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
         helpBuilder.setTitle("YOU ARE A GUEST");
@@ -125,7 +154,7 @@ public class MovieActivity extends NavigationDrawer {
 
         // Remember, create doesn't show the dialog
         AlertDialog helpDialog = helpBuilder.create();
-        helpDialog.show();;
+        helpDialog.show();
     }
     private void setupMoviePage() {
 

@@ -55,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         String dname = ((EditText)findViewById(R.id.displayName)).getText().toString();
-                        String email = ((EditText)findViewById(R.id.email)).getText().toString();
                         String zcode = ((EditText)findViewById(R.id.zipcode)).getText().toString();
                         String pword = ((EditText)findViewById(R.id.password)).getText().toString();
                         String repword = ((EditText)findViewById(R.id.re_password)).getText().toString();
@@ -73,8 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
                             zipcode = Integer.parseInt(zcode);
                         TextView Error = (TextView)findViewById(R.id.errorText);
                         if(!isInt){
-                            Error.setText("Zipcode must be a number");
-                        }else if(dname.equals("") || email.equals("") || zcode.equals("") || pword.equals("") || repword.equals("")){
+                            Error.setText("Zipcode not a number");
+                        }else if(dname.equals("")  || zcode.equals("") || pword.equals("") || repword.equals("")){
                             Error.setText("Fill in all the forms");
                         } else if (!pword.equals(repword)) {
                             //display "Error: passwords do not match"
@@ -82,12 +81,13 @@ public class RegisterActivity extends AppCompatActivity {
                         } else{
                             Object[] objects = {"Register", dname,pword,zipcode};
                             ClientListener cl = application.getClisten();
-
-                            Profile prof = (Profile) cl.clientRequest(objects);
-                            if(prof != null){
-                                application.setUserProfile(prof);
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                finish();
+                            if(cl != null){
+                                Profile prof = (Profile) cl.clientRequest(objects);
+                                if(prof != null){
+                                    application.setUserProfile(prof);
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    finish();
+                                }
                             }
 
                         }
