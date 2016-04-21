@@ -30,7 +30,7 @@ public class Profile implements Serializable {
 	//constructor for generic com.example.nathan.movieknight.models.Profile
 	public Profile(){
 		username = "*Name unavailable";
-		profilePicture = "NoImageAvailable.png"; //This needs to be changed
+		profilePicture = "noimageavailable.png"; //This needs to be changed
 		description = "no description";
 		friends = new Vector<String>();
 		friendRequests = new Vector<String>();
