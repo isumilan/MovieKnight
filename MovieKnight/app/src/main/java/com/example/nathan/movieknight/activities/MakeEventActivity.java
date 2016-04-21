@@ -116,9 +116,6 @@ public class MakeEventActivity extends NavigationDrawer {
             });
         }
 
-
-
-
         Button makeeventbutton = (Button)findViewById(R.id.make_event);
         makeeventbutton.setOnClickListener(
                 new View.OnClickListener() {
@@ -145,10 +142,6 @@ public class MakeEventActivity extends NavigationDrawer {
                                 finish();
                             }
                         }
-
-
-
-
                     }
                 }
         );
