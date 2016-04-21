@@ -77,6 +77,7 @@ public class MovieActivity extends NavigationDrawer {
                         } else{
                             //open up the movie list activity
                             Bundle b = new Bundle();
+
                             b.putInt("movieID", 1);
                             b.putString("movieName", movieNameString);
                             Intent in = new Intent(getApplicationContext(), MakeEventActivity.class);
@@ -125,7 +126,7 @@ public class MovieActivity extends NavigationDrawer {
                     public void onClick(DialogInterface dialog, int which) {
                         //add the movie to WATCHED list
                         startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
-                        finish();
+
                     }
                 });
         movielistBuilder.setNegativeButton("To Watch",
@@ -134,7 +135,7 @@ public class MovieActivity extends NavigationDrawer {
                     public void onClick(DialogInterface dialog, int which) {
                         //add the movie to TO WATCH list
                         startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
-                        finish();
+
                     }
                 });
         AlertDialog movielistDialog = movielistBuilder.create();

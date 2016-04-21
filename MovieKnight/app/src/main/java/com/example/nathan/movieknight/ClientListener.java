@@ -89,10 +89,10 @@ public class ClientListener {
     	return newUser;
     }
     public MovieEvent MakeEventRequest(String owner, int goingToWatch
-    		, boolean public_private, String EventTitle, String time
+    		, String EventTitle,  boolean public_private,String time
     		, String location, Vector<String> invitations) throws IOException, ClassNotFoundException{
-    	sendObject(MakeEventRequestDialogue(owner, goingToWatch
-    			, public_private, EventTitle, time, location, invitations));
+    	sendObject(MakeEventRequestDialogue(owner, goingToWatch,
+                 EventTitle,  public_private,time, location, invitations));
     	return (MovieEvent)ois.readObject();
     }
     public boolean FriendRequestRequest(String subject, String object) throws IOException, ClassNotFoundException{
@@ -150,11 +150,11 @@ public class ClientListener {
     			, name + "\b" + password + "\b" + zip);
     }
     private ServerClientDialogue MakeEventRequestDialogue(String owner, int goingToWatch
-    		, boolean public_private, String EventTitle, String time
+    		, String EventTitle, boolean public_private, String time
     		, String location, Vector<String> invitations){
     	MovieEvent me = new MovieEvent(owner, goingToWatch);
-    	me.setPublic_private(public_private);
     	me.setDescription(EventTitle);
+        me.setPublic_private(public_private);
     	me.setMovieTime(time);
     	me.setTheater(location);
     	me.setInvited(invitations);
@@ -226,14 +226,15 @@ public class ClientListener {
                 }
             } else if (code.equals("Make Event")){
                 String owner = (String)objects[1];
-                int goingToWatch = (Integer)objects[2];
-                boolean public_private = (Boolean) objects[3];
-                String EventTitle = (String) objects[4];
+                int movieID = (Integer)objects[2];
+                String EventTitle = (String) objects[3];
+                boolean public_private = (Boolean) objects[4];
                 String time = (String) objects[5];
                 String location = (String) objects[6];
                 Vector<String> invitations = (Vector<String>) objects[7];
+
                 try {
-                    return MakeEventRequest(owner,goingToWatch,public_private,EventTitle,time,location,invitations);
+                    return MakeEventRequest(owner,movieID,EventTitle,public_private,time,location,invitations);
                 } catch (ClassNotFoundException cne) {
                     cne.printStackTrace();
                 } catch (IOException ie) {
