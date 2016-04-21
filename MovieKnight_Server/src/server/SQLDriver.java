@@ -317,6 +317,21 @@ public class SQLDriver {
 			return false;
 		}
 	}
+	public Vector<String> ListAllUsers(){
+		Vector<String> names = new Vector<String>();
+		try {
+			PreparedStatement ps= con.prepareStatement(allUsers);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				names.add(rs.getString("username"));
+			}
+			log.write("Sent list of all users");
+			return names;
+		} catch (SQLException e) {
+			log.write("Failed to send list of all users");
+			return null;
+		}
+	}
 	
 	private Vector<String> getFriendsList(String username){
 		Vector<String> friends = new Vector<String>();
