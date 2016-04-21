@@ -14,6 +14,15 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_event"
     tools:context=".activities.EventActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Event Title"
+        android:id="@+id/eventTitle"
+        android:textSize = "30dp"
+        android:layout_gravity="center_horizontal"
+        />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -21,7 +30,7 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:id="@+id/profile_pic"
+            android:id="@+id/eventImage"
 
             />
 
@@ -119,7 +128,7 @@
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/invtedListView" />
+                android:id="@+id/invitedListView" />
 
         </LinearLayout>
     </LinearLayout>

@@ -78,7 +78,7 @@ public class MovieActivity extends NavigationDrawer {
                             //open up the movie list activity
                             Bundle b = new Bundle();
 
-                            b.putInt("movieID", 1);
+                            b.putInt("movieID", movieID);
                             b.putString("movieName", movieNameString);
                             Intent in = new Intent(getApplicationContext(), MakeEventActivity.class);
                             in.putExtras(b);
