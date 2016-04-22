@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 public class TopRatedFragment  extends Fragment  {
     MovieList adapter;
     ListView list;
-    ArrayList<String> movieList;
+    ArrayList<String> movieNames;
     ArrayList<String> movieImages;
     ArrayList<Integer> movieID;
     final MovieListActivity movieListActivity;
@@ -34,7 +35,7 @@ public class TopRatedFragment  extends Fragment  {
         super();
         movieListActivity = ma;
         MovieKnightAppli application = (MovieKnightAppli)ma.getApplication();
-        movieList = application.getMovieListTop();
+        movieNames = application.getMovieListTop();
         movieImages = application.getMovieImagesTop();
         movieID = application.getMovieIDTop();
     }
@@ -49,7 +50,7 @@ public class TopRatedFragment  extends Fragment  {
 
         View view =  inflater.inflate(R.layout.top_rated_layout,null);
 
-        adapter = new MovieList(movieListActivity, movieList, movieImages);
+        adapter = new MovieList(movieListActivity, movieNames, movieImages);
 
         list=(ListView)view.findViewById(R.id.topratedlistView);
         movieListActivity.setBluAdapter((adapter));
@@ -72,7 +73,7 @@ public class TopRatedFragment  extends Fragment  {
                 });
             }
         } else{
-            System.out.println("null");
+            Log.d("TopRatedFragment","null");
         }
 
         return view;

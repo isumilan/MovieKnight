@@ -2,6 +2,7 @@ package com.example.nathan.movieknight.activities;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class MovieActivity extends NavigationDrawer {
     private TextView movieSynopsis;
     private String movieNameString;
     int movieID;
+    private ProgressDialog progress_dialog;
 
     private DateFormat movieDateFormat;
 
@@ -60,11 +62,11 @@ public class MovieActivity extends NavigationDrawer {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         Bundle b = getIntent().getExtras();
         movieID = b.getInt("movieID");
 
         setupMoviePage();
+        displayProgressMessage();
         getMovieInfo(movieID);
         final MovieKnightAppli application = (MovieKnightAppli) getApplication();
         Button makeeventbutton = (Button)findViewById(R.id.makeEventButton);
@@ -77,7 +79,6 @@ public class MovieActivity extends NavigationDrawer {
                         } else{
                             //open up the movie list activity
                             Bundle b = new Bundle();
-
                             b.putInt("movieID", movieID);
                             b.putString("movieName", movieNameString);
                             Intent in = new Intent(getApplicationContext(), MakeEventActivity.class);
@@ -91,17 +92,17 @@ public class MovieActivity extends NavigationDrawer {
         );
         Button addFavoritesButton = (Button) findViewById(R.id.addFavoritesButton);
         addFavoritesButton.setOnClickListener(
-            new Button.OnClickListener(){
-                public void onClick(View v){
-                    if(application.isGuest()){
-                        PopUp();
-                    } else {
-                        // send the favorites information up to the server
-                        startActivity(new Intent(getApplication(), ProfileActivity.class));
-                        finish();
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        if(application.isGuest()){
+                            PopUp();
+                        } else {
+                            // send the favorites information up to the server
+                            startActivity(new Intent(getApplication(), ProfileActivity.class));
+                            finish();
+                        }
                     }
                 }
-            }
         );
         Button addWatchListButton = (Button) findViewById(R.id.addWatchlistButton);
         addWatchListButton.setOnClickListener(
@@ -126,7 +127,6 @@ public class MovieActivity extends NavigationDrawer {
                     public void onClick(DialogInterface dialog, int which) {
                         //add the movie to WATCHED list
                         startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
-
                     }
                 });
         movielistBuilder.setNegativeButton("To Watch",
@@ -135,7 +135,6 @@ public class MovieActivity extends NavigationDrawer {
                     public void onClick(DialogInterface dialog, int which) {
                         //add the movie to TO WATCH list
                         startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
-
                     }
                 });
         AlertDialog movielistDialog = movielistBuilder.create();
@@ -157,6 +156,7 @@ public class MovieActivity extends NavigationDrawer {
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
     }
+
     private void setupMoviePage() {
 
         movieName = (TextView) findViewById(R.id.movieTitle);
@@ -218,5 +218,15 @@ public class MovieActivity extends NavigationDrawer {
         Picasso.with(this)
                 .load(info.getPosterPath())
                 .into(moviePoster);
+
+        progress_dialog.dismiss();
     }
+
+
+    private void displayProgressMessage() {
+        progress_dialog = new ProgressDialog(MovieActivity.this);
+        progress_dialog.setMessage("Loading..");
+        progress_dialog.show();
+    }
+
 }
