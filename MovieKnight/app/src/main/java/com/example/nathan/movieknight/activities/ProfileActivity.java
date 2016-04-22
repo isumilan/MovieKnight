@@ -50,13 +50,9 @@ public class ProfileActivity extends NavigationDrawer {
             isUser = b.getBoolean("user");
         }
 
-
         application = (MovieKnightAppli) getApplication();
 
-
-
         username = (TextView) findViewById(R.id.profile_name);
-
         description = (EditText) findViewById(R.id.profile_description);
         description.setFocusable(false);
         //this button should apppear for other users but not self
@@ -152,7 +148,11 @@ public class ProfileActivity extends NavigationDrawer {
             addfriendbutton.setVisibility(View.GONE);
         } else{
             editbutton.setVisibility(View.GONE);
-
+            MovieKnightAppli mka = ((MovieKnightAppli)getApplication());
+            Object[] objects2 = { "Profile Request", b.getString("friend") };
+            userProfile = (Profile)mka.getClisten().clientRequest(objects2);
+            username.setText(userProfile.getUsername());
+            description.setText(userProfile.getDescription());
         }
 
     }

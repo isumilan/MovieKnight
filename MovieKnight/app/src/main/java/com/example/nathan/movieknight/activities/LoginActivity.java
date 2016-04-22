@@ -1,6 +1,8 @@
 package com.example.nathan.movieknight.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,8 +45,10 @@ public class LoginActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         MovieKnightAppli application = (MovieKnightAppli)getApplication();
-        application.setCurrentContext(this);
+     //   application.getClisten().start();
+     //   application.setCurrentContext(this);
         // Set up the login form.
         mUsername = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -76,7 +80,7 @@ public class LoginActivity extends Activity  {
                             application.setUserProfile(prof);
                             application.setUserName(username);
                             setupUser();
-                            cl.start();
+                        //    cl.start();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         } else{
@@ -124,6 +128,21 @@ public class LoginActivity extends Activity  {
         movieID = prof.getToWatch();
         for (Integer i : movieID)
             getMovieInfo(i, false);
+    }
+    public void FriendRequestPopUp(){
+        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+        helpBuilder.setTitle("Friend Request");
+        helpBuilder.setMessage("You received a friend request!");
+        helpBuilder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing but close the dialog
+                    }
+                });
+
+        // Remember, create doesn't show the dialog
+        AlertDialog helpDialog = helpBuilder.create();
+        helpDialog.show();
     }
 
     private void getMovieInfo(int id, final boolean w) {

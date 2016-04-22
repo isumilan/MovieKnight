@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 
+import com.example.nathan.movieknight.activities.LoginActivity;
 import com.example.nathan.movieknight.models.MovieEvent;
 import com.example.nathan.movieknight.models.Profile;
 
@@ -65,7 +66,8 @@ public class ClientListener extends Thread {
                 Thread.sleep(5000);
                 try {
                     if(HasSeenRequestsRequest(username)){
-                        application.FriendRequestPopUp();
+                       application.FriendRequestPopUp();
+
                     }
 
                     if(HasSeenInvitesRequest(username)){

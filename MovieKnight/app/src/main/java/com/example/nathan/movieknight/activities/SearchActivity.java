@@ -49,9 +49,9 @@ public class SearchActivity extends NavigationDrawer {
 
             @Override
             public boolean onQueryTextChange(String text) {
-                if(text.length() > 0) {
+
                     friendAdapter.getFilter().filter(text);
-                }
+
                 return false;
             }
         });
@@ -63,8 +63,8 @@ public class SearchActivity extends NavigationDrawer {
                 Bundle b = new Bundle();
                 Intent in;
                 in = new Intent(getApplicationContext(), ProfileActivity.class);
-                b.putString("key", friendAdapter.getItem(position));
-                b.putBoolean("friend", true);
+                b.putString("friend", friendAdapter.getItem(position));
+                b.putBoolean("user", false);
                 in.putExtras(b);
                 startActivity(in);
                 finish();
