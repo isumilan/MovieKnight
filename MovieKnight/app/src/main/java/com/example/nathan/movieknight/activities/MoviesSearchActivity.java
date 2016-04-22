@@ -15,6 +15,7 @@ import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.MovieList;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class MoviesSearchActivity extends NavigationDrawer {
 
@@ -22,10 +23,9 @@ public class MoviesSearchActivity extends NavigationDrawer {
     MovieList adapter;
     ListView list;
 
-    ArrayList<String> movieNames;
-    ArrayList<String> movieImages;
-    ArrayList<Integer> movieIDs;
-
+    Vector<String> movieNames;
+    Vector<String> movieImages;
+    Vector<Integer> movieIDs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +44,20 @@ public class MoviesSearchActivity extends NavigationDrawer {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        movieNames = new ArrayList<String>();
-        movieImages = new ArrayList<String>();
-        movieIDs = new ArrayList<Integer>();
+        movieNames = new Vector<String>();
+        movieImages = new Vector<String>();
+        movieIDs = new Vector<Integer>();
 
         Bundle b = getIntent().getExtras();
-        movieIDs = b.getIntegerArrayList("movieIDs");
-        movieNames = b.getStringArrayList("movieNames");
-        movieImages = b.getStringArrayList("movieImages");
+        ArrayList<Integer> mid = b.getIntegerArrayList("movieIDs");
+        for (Integer i : mid)
+            movieIDs.add(i);
+        ArrayList<String> mn = b.getStringArrayList("movieNames");
+        for (String s : mn)
+            movieNames.add(s);
+        ArrayList<String> mi = b.getStringArrayList("movieImages");
+        for (String s : mi)
+            movieImages.add(s);
 
         View view = this.findViewById(android.R.id.content);
         list = (ListView) view.findViewById(R.id.movieListView);

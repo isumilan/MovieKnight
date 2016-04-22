@@ -20,6 +20,8 @@ import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.Profile;
 
+import java.util.Vector;
+
 public class ProfileActivity extends NavigationDrawer {
     TextView username;
     EditText description;
@@ -48,6 +50,8 @@ public class ProfileActivity extends NavigationDrawer {
 
 
         application = (MovieKnightAppli) getApplication();
+
+
 
         username = (TextView) findViewById(R.id.profile_name);
 
@@ -126,7 +130,7 @@ public class ProfileActivity extends NavigationDrawer {
                     }
                 }
         );
-        Object[] objects ={"Profile Request", application.getUserName()};
+        Object[] objects ={"Profile Request", username.getText().toString()};
         ClientListener cl= application.getClisten();
         Profile prof = null;
         if(cl!= null){
@@ -136,7 +140,7 @@ public class ProfileActivity extends NavigationDrawer {
         //checks if it's the user
         if(isUser){
 
-            if(prof != null) {
+            if(prof != null && prof.getUsername().equals(username.getText().toString())) {
                 application.setUserProfile(prof);
                 Log.d("prof", prof.getUsername());
             }

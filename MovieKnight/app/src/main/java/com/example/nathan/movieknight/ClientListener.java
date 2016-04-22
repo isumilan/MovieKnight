@@ -304,6 +304,44 @@ public class ClientListener extends Thread {
                 } catch (IOException ie) {
                     ie.printStackTrace();
                 }
+            } else if(code.equals("List All Users")) {
+                try {
+                    return ListAllUsersRequest();
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if(code.equals("Add To To Watch")) {
+                int movieID = (Integer) objects[1];
+                String username = (String) objects[2];
+                try {
+                    return AddToToWatchListRequest(movieID, username);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if(code.equals("Add To Watched")) {
+                int movieID = (Integer) objects[1];
+                String username = (String) objects[2];
+                try {
+                    return AddToToWatchListRequest(movieID, username);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if(code.equals("Add To Liked")) {
+                int movieID = (Integer) objects[1];
+                String username = (String) objects[2];
+                try {
+                    return AddToLikedListRequest(movieID, username);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
             }
             return null;
         }

@@ -23,6 +23,7 @@ public class Profile implements Serializable {
 	private String username, profilePicture, description;
 	private Vector<String> friends, friendRequests;
 	private Vector<Integer> toWatch, watched, liked;
+	private Vector<String> toWatchName, watchedName, likedName;
 	private Vector<String> events, eventRequests;
 	private int zipcode;
 	private UsernameComparator ucomp = new UsernameComparator();
@@ -36,7 +37,10 @@ public class Profile implements Serializable {
 		friendRequests = new Vector<String>();
 		toWatch = new Vector<Integer>();
 		watched = new Vector<Integer>();
+		toWatchName = new Vector<String>();
+		watchedName = new Vector<String>();
 		liked = new Vector<Integer>();
+		likedName = new Vector<String>();
 		events = new Vector<String>();
 		eventRequests = new Vector<String>();
 		zipcode = 0;
@@ -50,7 +54,10 @@ public class Profile implements Serializable {
 		friendRequests = new Vector<String>();
 		toWatch = new Vector<Integer>();
 		watched = new Vector<Integer>();
+		toWatchName = new Vector<String>();
+		watchedName = new Vector<String>();
 		liked = new Vector<Integer>();
+		likedName = new Vector<String>();
 		events = new Vector<String>();
 		eventRequests = new Vector<String>();
 		zipcode = zip;
@@ -77,8 +84,13 @@ public class Profile implements Serializable {
 	public Vector<Integer> getWatched() {
 		return watched;
 	}
+	public Vector<String> getToWatchName() { return toWatchName; }
+	public Vector<String> getWatchedName() { return watchedName; }
 	public Vector<Integer> getLiked() {
 		return liked;
+	}
+	public Vector<String> getLikedName() {
+		return likedName;
 	}
 	public Vector<String> getEvents() {
 		return events;
@@ -115,8 +127,11 @@ public class Profile implements Serializable {
 	public void setWatched(Vector<Integer> watched) {
 		this.watched = watched;
 	}
-	public void setLiked(Vector<Integer> liked) {
-		this.liked = liked;
+	public void setToWatchName(Vector<String> toWatchName) { this.toWatchName = toWatchName; }
+	public void setWatchedName(Vector<String> watchedName) { this.watchedName = watchedName; }
+	public void setLiked(Vector<Integer> liked) { this.liked = liked; }
+	public void setLikedName(Vector<String> likedName) {
+		this.likedName =  likedName;
 	}
 	public void setEvents(Vector<String> events) {
 		this.events = events;

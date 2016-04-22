@@ -3,6 +3,7 @@ package com.example.nathan.movieknight.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,8 +15,16 @@ import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.PasswordEncryptor;
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.models.MovieInfo;
 import com.example.nathan.movieknight.models.Profile;
 import com.example.nathan.movieknight.tmdb.TmdbConnector;
+import com.example.nathan.movieknight.tmdb.TmdbService;
+
+import java.util.Vector;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
 
 /**
  * A login screen that offers login via email/password.
@@ -64,6 +73,7 @@ public class LoginActivity extends Activity  {
                         if(prof != null){
                             application.setUserProfile(prof);
                             application.setUserName(username);
+                            setupUser();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         } else{
@@ -103,6 +113,55 @@ public class LoginActivity extends Activity  {
 
     }
 
+    private void setupUser() {
+        Profile prof = ((MovieKnightAppli)getApplication()).getUserProfile();
+        Vector<Integer> movieID = prof.getWatched();
+        for (Integer i : movieID)
+            getMovieInfo(i, true);
+        movieID = prof.getToWatch();
+        for (Integer i : movieID)
+            getMovieInfo(i, false);
+    }
 
+    private void getMovieInfo(int id, final boolean w) {
+        TmdbService movieService = ((MovieKnightAppli)getApplication()).getMovieService();
+//        Log.d("movieID is", ""+id);
+
+        Call<MovieInfo> infoCall = movieService.getMovieDetails(id, TmdbConnector.API_KEY);
+
+        infoCall.enqueue(new Callback<MovieInfo>() {
+            @Override
+            public void onResponse(Response<MovieInfo> response) {
+                MovieInfo info = response.body();
+                if(info != null) {
+                    if (w) {
+                        Vector<String> s = ((MovieKnightAppli) getApplication()).getUserProfile().getWatchedName();
+                        if (s == null) {
+                            Vector<String> t = new Vector<String>();
+                            t.add(info.getTitle());
+                            ((MovieKnightAppli) getApplication()).getUserProfile().setWatchedName(t);
+                        }
+                        else
+                            s.add(info.getTitle());
+                    }
+                    else {
+                        Vector<String> s = ((MovieKnightAppli) getApplication()).getUserProfile().getToWatchName();
+                        if (s == null) {
+                            Vector<String> t = new Vector<String>();
+                            t.add(info.getTitle());
+                            ((MovieKnightAppli) getApplication()).getUserProfile().setToWatchName(t);
+                        }
+                        else
+                            s.add(info.getTitle());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
 }
 
