@@ -28,7 +28,7 @@ public class InvitedFriendList extends ArrayAdapter<String> implements Filterabl
     private  Integer[] friendImage;
     private  Integer[] oldFriendImage;
     public InvitedFriendList(Activity context,
-                             ArrayList<String> friendNames, Integer[] friendImage) {
+                             ArrayList<String>  friendNames, Integer[] friendImage) {
 
         super(context, R.layout.list_single_friend, friendNames);
 

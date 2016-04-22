@@ -57,28 +57,6 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
-        <TextView
-            android:layout_width="113dp"
-            android:layout_height="40dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="\t Location"
-
-            android:textSize="20dp" />
-
-
-
-        <EditText
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:id="@+id/location"
-            android:maxLines="1"
-            android:singleLine="true"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
         android:layout_height="35dp"
         >
 
@@ -182,6 +160,12 @@
             </LinearLayout>
 
     </LinearLayout>
+
+    <SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/friendSearchView" />
 
     <ListView
         android:layout_marginLeft="30dp"
