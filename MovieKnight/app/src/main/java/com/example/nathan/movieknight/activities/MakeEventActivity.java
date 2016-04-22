@@ -52,7 +52,7 @@ public class MakeEventActivity extends NavigationDrawer {
 
         Bundle b = getIntent().getExtras();
         final int movieID = b.getInt("movieID");
-        String movieName = b.getString("movieName");
+        final String movieName = b.getString("movieName");
         TextView nameTextView = (TextView)findViewById(R.id.movieText);
         nameTextView.setText(movieName);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -110,7 +110,7 @@ public class MakeEventActivity extends NavigationDrawer {
                     public void onClick(View v) {
                         String owner = ((MovieKnightAppli)getApplication()).getUserName();
                         boolean public_private = ((RadioGroup)findViewById(R.id.privacy_radio_group)).indexOfChild(((RadioGroup)findViewById(R.id.privacy_radio_group)).findViewById(((RadioGroup)findViewById(R.id.privacy_radio_group)).getCheckedRadioButtonId())) == 0;
-                        String EventTitle = ((EditText)findViewById(R.id.eventTitle)).getText().toString();
+                        String EventTitle = movieName;
                         String time = ((EditText)findViewById(R.id.dateTime)).getText().toString();
                         String location = ((EditText)findViewById(R.id.location)).getText().toString();
                         Vector<String> invitations = new Vector<String>(checkedList);

@@ -34,7 +34,6 @@ public class EventActivity extends NavigationDrawer {
     private int movieID;
     private ImageView eventImage;
     TextView eventTitle;
-    TextView movieTitle;
     TextView date;
     TextView theater;
     TextView owner;
@@ -99,7 +98,6 @@ public class EventActivity extends NavigationDrawer {
         goingList = (ListView)findViewById(R.id.goingListView);
 
         eventTitle = (TextView) findViewById(R.id.eventTitle);
-        movieTitle = (TextView) findViewById(R.id.movieTitle);
         date = (TextView) findViewById(R.id.dateTime);
         theater = (TextView) findViewById(R.id.movieTheater);
         owner = (TextView) findViewById(R.id.movieOwner);
@@ -115,9 +113,9 @@ public class EventActivity extends NavigationDrawer {
                 MovieEvent movieEvent = (MovieEvent) cl.clientRequest(objects);
                 if (movieEvent != null) {
                     eventTitle.setText(movieEvent.getDescription());
-                    date.setText(movieEvent.getMovieTime());
-                    theater.setText(movieEvent.getTheater());
-                    owner.setText(movieEvent.getOwner());
+                    date.setText("Date: " + movieEvent.getMovieTime());
+                    theater.setText("Location: " + movieEvent.getTheater());
+                    owner.setText("Owner: " + movieEvent.getOwner());
                     movieID = movieEvent.getGoingToWatch();
                     getMovieInfo(movieID);
                     goingButton.setVisibility(View.GONE);
@@ -161,7 +159,6 @@ public class EventActivity extends NavigationDrawer {
         });
     }
     private void setupDetails(MovieInfo info) {
-        movieTitle.setText(info.getTitle());
         Picasso.with(this)
                 .load(info.getPosterPath())
                 .into(eventImage);
