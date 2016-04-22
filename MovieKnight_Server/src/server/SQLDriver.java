@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.UUID;
 import java.util.Vector;
 
 import com.example.nathan.movieknight.models.MovieEvent;
@@ -20,14 +19,14 @@ public class SQLDriver {
 	private final static String selectEvent = "SELECT * FROM MOVIEEVENTS WHERE EVENTID=?";
 	private final static String selectParticipants = "SELECT USERNAME FROM EVENTPARTICIPANTS WHERE EVENTID=? AND ACCEPTED=?";
 	private final static String addEvent = "INSERT INTO MOVIEEVENTS(EVENTID,OWNER,MOVIEID,EVENTTITLE,PUBLIC_PRIVATE,MOVIETIME,THEATER) VALUES(?,?,?,?,?,?,?)";
-	private final static String addParticipants = "INSERT INTO EVENTPARTICIPANTS(P_ID,EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?,?)";
-	private final static String sendFriendRequest = "INSERT INTO FRIENDS(P_ID,ACCEPTED,SENDER,RECEIVER) VALUES(?,?,?,?)";
+	private final static String addParticipants = "INSERT INTO EVENTPARTICIPANTS(EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?)";
+	private final static String sendFriendRequest = "INSERT INTO FRIENDS(ACCEPTED,SENDER,RECEIVER) VALUES(?,?,?)";
 	private final static String acceptFriendRequest = "UPDATE FRIENDS SET ACCEPTED=? WHERE SENDER=? AND RECEIVER=?";
 	private final static String denyFriendRequest = "DELETE FROM FRIENDS WHERE SENDER=? AND RECEIVER=?";
-	private final static String sendEventInvite = "INSERT INTO EVENTPARTICIPANTS(P_ID,EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?,?)";
+	private final static String sendEventInvite = "INSERT INTO EVENTPARTICIPANTS(EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?)";
 	private final static String acceptEventInvite = "UPDATE EVENTPARTICIPANTS SET ACCEPTED=? WHERE EVENTID=? AND USERNAME=?";
 	private final static String denyEventInvite = "DELETE FROM EVENTPARTICIPANTS WHERE EVENTID=? AND USERNAME=?";
-	private final static String addMovieToList = "INSERT INTO MOVIELISTS(P_ID,LIST_TYPE,USERNAME,MOVIEID) VALUES(?,?,?,?)";
+	private final static String addMovieToList = "INSERT INTO MOVIELISTS(LIST_TYPE,USERNAME,MOVIEID) VALUES(?,?,?)";
 	private final static String editDescription = "UPDATE USERS SET DESCRIPTION=? WHERE USERNAME=?";
 	private final static String allUsers = "SELECT * FROM USERS";
 	private final static String setHasNewRequest = "UPDATE USERS SET HASNEWREQUEST=? WHERE USERNAME=?";
@@ -190,10 +189,9 @@ public class SQLDriver {
 			
 			PreparedStatement ps2 = con.prepareStatement(addParticipants);
 			for (String invitee : event.getInvited()) {
-				ps2.setString(1, UUID.randomUUID().toString());
-				ps2.setString(2, event.getEventID());
-				ps2.setBoolean(3, false);
-				ps2.setString(4, invitee);
+				ps2.setString(1, event.getEventID());
+				ps2.setBoolean(2, false);
+				ps2.setString(3, invitee);
 				ps2.executeUpdate();
 				
 				PreparedStatement ps3 = con.prepareStatement(setHasNewInvite);
@@ -204,10 +202,9 @@ public class SQLDriver {
 			
 		 	PreparedStatement ps3 = con.prepareStatement(addParticipants);
 			for (String participant : event.getParticipants()) {
-				ps3.setString(1, UUID.randomUUID().toString());
-				ps3.setString(2, event.getEventID());
-				ps3.setBoolean(3, true);
-				ps3.setString(4, participant);
+				ps3.setString(1, event.getEventID());
+				ps3.setBoolean(2, true);
+				ps3.setString(3, participant);
 				ps3.executeUpdate();
 			}
 		 
@@ -223,10 +220,9 @@ public class SQLDriver {
 	public boolean FriendRequest(String sender, String receiver) {
 		try {
 			PreparedStatement ps = con.prepareStatement(sendFriendRequest);
-			ps.setString(1, UUID.randomUUID().toString());
-			ps.setBoolean(2, false);
-			ps.setString(3, sender);
-			ps.setString(4, receiver);
+			ps.setBoolean(1, false);
+			ps.setString(2, sender);
+			ps.setString(3, receiver);
 			ps.executeUpdate();
 			
 			PreparedStatement ps2 = con.prepareStatement(setHasNewRequest);
@@ -268,10 +264,9 @@ public class SQLDriver {
 	public boolean EventInvite(String eventID, String username){
 		try {
 			PreparedStatement ps = con.prepareStatement(sendEventInvite);
-			ps.setString(1, UUID.randomUUID().toString());
-			ps.setString(2, eventID);
-			ps.setBoolean(3, false);
-			ps.setString(4, username);
+			ps.setString(1, eventID);
+			ps.setBoolean(2, false);
+			ps.setString(3, username);
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -306,10 +301,9 @@ public class SQLDriver {
 		try {
 			PreparedStatement ps= con.prepareStatement(addMovieToList);
 			System.out.println(list_type+" "+movieID+" "+name);
-			ps.setString(1, UUID.randomUUID().toString());
-			ps.setString(2, list_type);
-			ps.setString(3, name);
-			ps.setInt(4, movieID);
+			ps.setString(1, list_type);
+			ps.setString(2, name);
+			ps.setInt(3, movieID);
 			ps.executeUpdate();
 			log.write(movieID + " added to " + list_type + " list of " + name);
 			return true;
@@ -404,7 +398,7 @@ public class SQLDriver {
 		Vector<String> friends = new Vector<String>();
 		try {
 			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends "
-					+ "WHERE accepted=0 AND receiver=?)");
+					+ "WHERE accepted=0 AND receiver=?");
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){

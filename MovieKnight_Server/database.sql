@@ -15,14 +15,22 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Friends (
+<<<<<<< HEAD
 	P_Id int(12) primary key not null auto_increment,
+=======
+	P_Id int primary key not null auto_increment,
+>>>>>>> c013f0860d9917f7bf9b0d339d0bfb767ce99c79
 	accepted bool not null,
     sender varchar(50) not null,
     receiver varchar(50) not null
 );
 
 CREATE TABLE MovieLists (
+<<<<<<< HEAD
 	P_Id int(12) primary key not null auto_increment,
+=======
+	P_Id int primary key not null auto_increment,
+>>>>>>> c013f0860d9917f7bf9b0d339d0bfb767ce99c79
 	list_type varchar(50) not null,
     username varchar(50) not null,
     movieID int not null
@@ -39,7 +47,11 @@ CREATE TABLE MovieEvents (
 );
 
 CREATE TABLE EventParticipants (
+<<<<<<< HEAD
 	P_Id int(12) primary key not null auto_increment,
+=======
+	P_Id int primary key not null auto_increment,
+>>>>>>> c013f0860d9917f7bf9b0d339d0bfb767ce99c79
 	eventID varchar(50) not null,
     accepted bool not null,
     username varchar(50) not null
