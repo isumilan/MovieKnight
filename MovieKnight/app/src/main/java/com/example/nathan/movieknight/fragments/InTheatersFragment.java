@@ -18,6 +18,7 @@ import com.example.nathan.movieknight.activities.MovieListActivity;
 import com.example.nathan.movieknight.models.MovieList;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Created by Nathan on 3/17/2016.
@@ -25,18 +26,27 @@ import java.util.ArrayList;
 public class InTheatersFragment  extends Fragment  {
     MovieList adapter;
     ListView list;
-    ArrayList<String> movieNames;
-    ArrayList<String> movieImages;
-    ArrayList<Integer> movieID;
+    Vector<String> movieList;
+    Vector<String> movieImages;
+    Vector<Integer> movieID;
     final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
     public InTheatersFragment(MovieListActivity ma){
         super();
         movieListActivity = ma;
+        movieList = new Vector<String>();
+        movieImages = new Vector<String>();
+        movieID = new Vector<Integer>();
         MovieKnightAppli application = (MovieKnightAppli)ma.getApplication();
-        movieNames = application.getMovieListIn();
-        movieImages = application.getMovieImagesIn();
-        movieID = application.getMovieIDIn();
+        ArrayList<String> ml = application.getMovieListUpcoming();
+        for (String s : ml)
+            movieList .add(s);
+        ArrayList<String> mi = application.getMovieImagesUpcoming();
+        for (String s : mi)
+            movieImages.add(s);
+        ArrayList<Integer> mid = application.getMovieIDUpcoming();
+        for (Integer i : mid)
+            movieID.add(i);
     }
     public InTheatersFragment(){
         super();
@@ -48,10 +58,11 @@ public class InTheatersFragment  extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.in_theaters_layout,null);
-
+        MovieKnightAppli application = (MovieKnightAppli)movieListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
         list=(ListView) view.findViewById(R.id.intheaterslistView);
         adapter = new
-                MovieList(movieListActivity, movieNames, movieImages);
+                MovieList(movieListActivity, movieList, movieImages);
 
         movieListActivity.setTheatersAdapter((adapter));
         //list not showing

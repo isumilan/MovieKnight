@@ -18,6 +18,7 @@ import com.example.nathan.movieknight.activities.MovieListActivity;
 import com.example.nathan.movieknight.models.MovieList;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Created by Nathan on 3/17/2016.
@@ -25,18 +26,27 @@ import java.util.ArrayList;
 public class ComingSoonFragment  extends Fragment  {
     MovieList adapter;
     ListView list;
-    ArrayList<String> movieList;
-    ArrayList<String> movieImages;
-    ArrayList<Integer> movieID;
+    Vector<String> movieList;
+    Vector<String> movieImages;
+    Vector<Integer> movieID;
     final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
     public ComingSoonFragment(MovieListActivity ma){
         super();
         movieListActivity = ma;
+        movieList = new Vector<String>();
+        movieImages = new Vector<String>();
+        movieID = new Vector<Integer>();
         MovieKnightAppli application = (MovieKnightAppli)ma.getApplication();
-        movieList = application.getMovieListUpcoming();
-        movieImages = application.getMovieImagesUpcoming();
-        movieID = application.getMovieIDUpcoming();
+        ArrayList<String> ml = application.getMovieListUpcoming();
+        for (String s : ml)
+            movieList .add(s);
+        ArrayList<String> mi = application.getMovieImagesUpcoming();
+        for (String s : mi)
+            movieImages.add(s);
+        ArrayList<Integer> mid = application.getMovieIDUpcoming();
+        for (Integer i : mid)
+            movieID.add(i);
     }
     public ComingSoonFragment(){
         super();
@@ -49,6 +59,8 @@ public class ComingSoonFragment  extends Fragment  {
 
         View view =  inflater.inflate(R.layout.coming_soon_layout,null);
 
+        MovieKnightAppli application = (MovieKnightAppli)movieListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
 
         list=(ListView) view.findViewById(R.id.comingsoonlistView);
         adapter = new

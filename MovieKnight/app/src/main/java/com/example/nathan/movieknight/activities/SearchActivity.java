@@ -12,7 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
+
+import java.util.Vector;
 
 /**
  * Created by natha on 4/6/2016.
@@ -20,21 +23,23 @@ import com.example.nathan.movieknight.R;
 public class SearchActivity extends NavigationDrawer {
     ListView lv;
     SearchView sv;
-    String[] movies;
-    String[] friends;
+    Vector<String> friends;
 
-    ArrayAdapter<String> movieAdapter;
     ArrayAdapter<String> friendAdapter;
-    boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
 
-        movieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, movies);
+        Object[] objects = {"List All Users"};
+        friends = new Vector<String>();
+        friends = (Vector<String>)((MovieKnightAppli)getApplication()).getClisten().clientRequest(objects);
+
         friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
-        lv.setAdapter(movieAdapter);
+        lv.setAdapter(friendAdapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -44,20 +49,9 @@ public class SearchActivity extends NavigationDrawer {
 
             @Override
             public boolean onQueryTextChange(String text) {
-                if(movieMode && text.length() > 0 && text.substring(0,1).equals("@")){
-                    lv.setAdapter(friendAdapter);
-                    movieMode = false;
-                } else if(text.length() == 0 || (!movieMode &&  text.length() > 0 && !text.substring(0,1).equals("@"))){
-                    lv.setAdapter(movieAdapter);
-                    movieMode = true;
-                }
-                if(movieMode){
-                    movieAdapter.getFilter().filter(text);
-                } else{
-                    if(text.length() > 0) {
-                        friendAdapter.getFilter().filter(text.substring(1,text.length()));
-                    }
-                }
+
+                    friendAdapter.getFilter().filter(text);
+
                 return false;
             }
         });
@@ -68,15 +62,9 @@ public class SearchActivity extends NavigationDrawer {
                                     int position, long id) {
                 Bundle b = new Bundle();
                 Intent in;
-                if (movieMode) {
-                    in = new Intent(getApplicationContext(), MovieActivity.class);
-                    b.putString("key", movieAdapter.getItem(position));
-                }
-                else {
-                    in = new Intent(getApplicationContext(), ProfileActivity.class);
-                    b.putString("key", friendAdapter.getItem(position));
-                    b.putBoolean("friend", true);
-                }
+                in = new Intent(getApplicationContext(), ProfileActivity.class);
+                b.putString("friend", friendAdapter.getItem(position));
+                b.putBoolean("user", false);
                 in.putExtras(b);
                 startActivity(in);
                 finish();

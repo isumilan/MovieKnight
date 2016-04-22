@@ -30,6 +30,8 @@ public class FriendListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
+        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
         friendsList = new Vector<String>();
@@ -48,7 +50,8 @@ public class FriendListActivity extends AppCompatActivity {
                                         int position, long id) {
                     Intent in = new Intent( getApplicationContext(), ProfileActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("key", friendsList.get(position));
+                    b.putString("friend", friendsList.get(position));
+                    b.putBoolean("user", false);
                     in.putExtras(b);
                     startActivity(in);
                     finish();

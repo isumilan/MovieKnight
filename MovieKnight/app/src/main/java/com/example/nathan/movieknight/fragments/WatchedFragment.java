@@ -2,6 +2,7 @@ package com.example.nathan.movieknight.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,20 +12,25 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.MovieActivity;
 import com.example.nathan.movieknight.activities.ProfileMovieListActivity;
+
 import com.example.nathan.movieknight.models.MovieList;
 
-import java.util.ArrayList;
+import java.util.Vector;
+
+
 
 /**
  * Created by Nathan on 3/17/2016.
  */
 public class WatchedFragment  extends Fragment  {
     ListView list;
-    ArrayList<String> movieList;
-ArrayList<String> movieImages;
+    Vector<Integer> movieID;
+    Vector<String> movieList;
+    Vector<String> movieImages;
     final ProfileMovieListActivity profileMovieListActivity;
     @SuppressLint("ValidFragment")
     public WatchedFragment(ProfileMovieListActivity ea){
@@ -40,17 +46,15 @@ ArrayList<String> movieImages;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.in_theaters_layout,null);
-        movieList = new ArrayList<String>();
-        movieList.add("Mad Samuel");
-        movieList.add("Inside Out");
-        movieList.add("Star Wars");
-        movieList.add("The Martian");
-        movieList.add("Dango");
-        movieList.add("Deadpool");
-        movieImages = new ArrayList<String>();
-       MovieList adapter = new
-               MovieList(profileMovieListActivity, movieList, movieImages);
-
+        movieID = ((MovieKnightAppli)profileMovieListActivity.getApplication()).getUserProfile().getWatched();
+        movieList = ((MovieKnightAppli)profileMovieListActivity.getApplication()).getUserProfile().getWatchedName();
+        movieImages = new Vector<String>();
+        if(movieList == null){
+            movieList = new Vector<String>();
+        }
+       MovieList adapter = new MovieList(profileMovieListActivity, movieList, movieImages);
+        MovieKnightAppli application = (MovieKnightAppli)profileMovieListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
 
         list=(ListView)view.findViewById(R.id.intheaterslistView);
         profileMovieListActivity.setGoingToWatchAdapter((adapter));
@@ -67,7 +71,7 @@ ArrayList<String> movieImages;
                                             int position, long id) {
                         Intent in = new Intent(  profileMovieListActivity.getApplicationContext(), MovieActivity.class);
                         Bundle b = new Bundle();
-                        b.putString("key", movieList.get(position));
+                        b.putInt("movieID", movieID.get(position));
                         in.putExtras(b);
                         startActivity(in);
                         profileMovieListActivity.finish();

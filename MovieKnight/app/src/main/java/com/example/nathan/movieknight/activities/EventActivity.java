@@ -57,7 +57,8 @@ public class EventActivity extends NavigationDrawer {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
         //This activity also should have differing functionality based on other user vs. self
 
         Button editbutton = (Button)findViewById(R.id.customizeButton);
@@ -106,7 +107,6 @@ public class EventActivity extends NavigationDrawer {
 
         if(b != null) {
             eventID = b.getString("eventID");
-            MovieKnightAppli application = (MovieKnightAppli) getApplication();
             Object[] objects = {"Movie Event Request", eventID};
             ClientListener cl = application.getClisten();
             if (cl != null) {
