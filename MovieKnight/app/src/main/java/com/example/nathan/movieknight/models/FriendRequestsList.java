@@ -4,8 +4,8 @@ package com.example.nathan.movieknight.models;
  * Created by nathan on 4/6/2016.
  */
 
+import android.content.Intent;
 import android.app.Activity;
-import android.app.Application;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,28 +14,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.activities.FriendListActivity;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Vector;
 
-public class   FriendRequestsList extends ArrayAdapter<String>  {
+public class FriendRequestsList extends ArrayAdapter<String>  {
     private final Activity context;
-    private ArrayList<String> friendNames;
+    private Vector<String> friendNames;
     private  Integer[] friendImage;
 
     public FriendRequestsList(Activity context,
-                              ArrayList<String> friendNames, Integer[] friendImage) {
+                              Vector<String> friendNames, Integer[] friendImage) {
 
         super(context, R.layout.list_single_friend_request, friendNames);
-
         this.context = context;
         this.friendNames = friendNames;
-
         this.friendImage = friendImage;
-
     }
 
     @Override
@@ -55,13 +53,10 @@ public class   FriendRequestsList extends ArrayAdapter<String>  {
             @Override
             public void onClick(View v) {
                 MovieKnightAppli mka = ((MovieKnightAppli)context.getApplication());
-                try {
-                    mka.getClisten().FriendRequestReplyRequest(mka.getUserName(), txtTitle.getText().toString(), true);
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                } catch (ClassNotFoundException cnfe) {
-                    cnfe.printStackTrace();
-                }
+                Object[] objects = { "Friend Request Reply", mka.getUserName(), txtTitle.getText().toString(), true };
+                mka.getClisten().clientRequest(objects);
+                context.startActivity(new Intent(context.getApplicationContext(), FriendListActivity.class));
+                context.finish();
             }
         });
         Button ignoreButton = (Button) rowView.findViewById(R.id.ignoreButton);
@@ -69,13 +64,10 @@ public class   FriendRequestsList extends ArrayAdapter<String>  {
             @Override
             public void onClick(View v) {
                 MovieKnightAppli mka = ((MovieKnightAppli)context.getApplication());
-                try {
-                    mka.getClisten().FriendRequestReplyRequest(mka.getUserName(), txtTitle.getText().toString(), false);
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                } catch (ClassNotFoundException cnfe) {
-                    cnfe.printStackTrace();
-                }
+                Object[] objects = {"Friend Request Reply", mka.getUserName(), txtTitle.getText().toString(), false };
+                mka.getClisten().clientRequest(objects);
+                context.startActivity(new Intent(context.getApplicationContext(), FriendListActivity.class));
+                context.finish();
             }
         });
         return rowView;

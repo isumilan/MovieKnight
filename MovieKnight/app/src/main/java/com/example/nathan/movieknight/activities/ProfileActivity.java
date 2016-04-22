@@ -140,9 +140,7 @@ public class ProfileActivity extends NavigationDrawer {
                 application.setUserProfile(prof);
             }
             userProfile = application.getUserProfile();
-
             username.setText(userProfile.getUsername());
-
             description.setText(userProfile.getDescription());
             addfriendbutton.setVisibility(View.GONE);
         } else{

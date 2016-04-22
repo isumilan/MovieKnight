@@ -9,10 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.models.FriendList;
 import com.example.nathan.movieknight.models.InvitedFriendList;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Created by natha on 4/6/2016.
@@ -20,19 +23,23 @@ import java.util.ArrayList;
 public class FriendListActivity extends AppCompatActivity {
     ListView lv;
     SearchView sv;
-    ArrayList<String> friendsList;
+    Vector<String> friendsList;
     Integer[] imageId;
-    InvitedFriendList friendAdapter;
+    FriendList friendAdapter;
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
-        friendsList = new ArrayList<String>();
-
+        friendsList = new Vector<String>();
+        friendsList = ((MovieKnightAppli)getApplication()).getUserProfile().getFriends();
+        imageId = new Integer[friendsList.size()];
+        for (int i = 0; i < friendsList.size(); i++) {
+            imageId[i] = R.drawable.dango;
+        }
         if (friendsList != null && imageId != null) {
-            friendAdapter = new InvitedFriendList(this, friendsList, imageId);
+            friendAdapter = new FriendList(this, friendsList, imageId);
             lv.setAdapter(friendAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -62,7 +69,7 @@ public class FriendListActivity extends AppCompatActivity {
                     return false;
                 }
             });
-        
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
