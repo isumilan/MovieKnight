@@ -101,7 +101,7 @@ public class ClientListener {
     }
     public boolean FriendRequestReplyRequest(String subject, String object, boolean reply) throws IOException, ClassNotFoundException{
     	sendObject(FriendRequestReplyRequestDialogue(subject, object, reply));
-    	return (boolean)ois.readObject();
+        return (boolean)ois.readObject();
     }
     public boolean EventReplyRequest(String eventID, String username, boolean reply) throws IOException, ClassNotFoundException{
     	sendObject(EventReplyRequestDialogue(eventID, username, reply));
