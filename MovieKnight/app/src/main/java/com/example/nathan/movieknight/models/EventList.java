@@ -16,24 +16,28 @@ import android.widget.TextView;
 import com.example.nathan.movieknight.R;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class EventList extends ArrayAdapter<String> implements Filterable {
     private Filter eventFilter;
     private final Activity context;
-    private ArrayList<String> eventNames;
-    private ArrayList<String> oldeventNames;
+    private Vector<String> eventNames;
+    private Vector<String> oldeventNames;
+    private Vector<String> eventDate;
+    private Vector<String> eventTheaters;
     public EventList(Activity context,
-                     ArrayList<String>  eventNames) {
+                     Vector<String> eventNames,  Vector<String> eventDate, Vector<String> eventTheaters) {
 
         super(context, R.layout.list_single_event, eventNames);
 
         this.context = context;
         this.eventNames = eventNames;
-        oldeventNames = new ArrayList<String>();
+        oldeventNames = new Vector<String>();
         for(String event : eventNames){
             oldeventNames.add(event);
         }
-
+        this.eventDate = eventDate;
+        this.eventTheaters = eventTheaters;
     }
 
     @Override
@@ -41,11 +45,15 @@ public class EventList extends ArrayAdapter<String> implements Filterable {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.list_single_event, null, true);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.listeventtxt);
-
-
-
-        if(position<eventNames.size())
+        TextView txtdate = (TextView)rowView.findViewById(R.id.listeventdateTime);
+        TextView txttheater = (TextView)rowView.findViewById(R.id.listeventmovieTheater);
+        if(position<eventNames.size()){
             txtTitle.setText(eventNames.get(position));
+
+            txtdate.setText(eventDate.get(position));
+            txttheater.setText(eventTheaters.get(position));
+        }
+
 
         return rowView;
     }
@@ -110,7 +118,7 @@ public class EventList extends ArrayAdapter<String> implements Filterable {
             }
             else {
                 clear();
-                eventNames = (ArrayList<String>) results.values;
+                eventNames = (Vector<String>) results.values;
 
                 addAll(eventNames);
 

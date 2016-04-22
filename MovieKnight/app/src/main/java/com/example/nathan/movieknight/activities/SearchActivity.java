@@ -20,8 +20,8 @@ import com.example.nathan.movieknight.R;
 public class SearchActivity extends NavigationDrawer {
     ListView lv;
     SearchView sv;
-    String[] movies = {"Max Max", "Inside Out", "Star Wars", "The Martian", "Dango", "Deadpool"};
-    String[] friends = {"Chaitanya", "Isumi", "Kevin", "Nathan", "Lim"};
+    String[] movies;
+    String[] friends;
 
     ArrayAdapter<String> movieAdapter;
     ArrayAdapter<String> friendAdapter;

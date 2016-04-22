@@ -15,16 +15,20 @@ import android.view.ViewGroup;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.EventListActivity;
 
+import java.util.Vector;
+
 public class EventTabFragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
     public static int int_items = 2 ;
     EventListActivity eventListActivity;
+
     @SuppressLint("ValidFragment")
     public EventTabFragment(EventListActivity ea){
         super();
         eventListActivity = ea;
+
     }
     public EventTabFragment(){
         super();
@@ -76,8 +80,8 @@ public class EventTabFragment extends Fragment {
         public Fragment getItem(int position)
         {
             switch (position){
-                case 0 : return new GoingFragment(eventListActivity);
-                case 1 : return new InvitedFragment(eventListActivity);
+                case 0 : return new GoingFragment(eventListActivity,eventListActivity.getInvitedEvents());
+                case 1 : return new InvitedFragment(eventListActivity,eventListActivity.getGoingEvents());
             }
             return null;
         }
