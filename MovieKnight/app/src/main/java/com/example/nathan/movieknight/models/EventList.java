@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nathan.movieknight.R;
@@ -23,10 +22,8 @@ public class EventList extends ArrayAdapter<String> implements Filterable {
     private final Activity context;
     private ArrayList<String> eventNames;
     private ArrayList<String> oldeventNames;
-    private  Integer[] eventImage;
-    private  Integer[] oldeventImage;
     public EventList(Activity context,
-                     ArrayList<String>  eventNames, Integer[] eventImage) {
+                     ArrayList<String>  eventNames) {
 
         super(context, R.layout.list_single_event, eventNames);
 
@@ -36,11 +33,7 @@ public class EventList extends ArrayAdapter<String> implements Filterable {
         for(String event : eventNames){
             oldeventNames.add(event);
         }
-        oldeventImage = new Integer[eventImage.length];
-        this.eventImage = eventImage;
-        for(int i = 0; i < eventImage.length;i++){
-            oldeventImage[i] = eventImage[i];
-        }
+
     }
 
     @Override
@@ -49,12 +42,11 @@ public class EventList extends ArrayAdapter<String> implements Filterable {
         View rowView= inflater.inflate(R.layout.list_single_event, null, true);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.listeventtxt);
 
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.listeventimg);
+
 
         if(position<eventNames.size())
             txtTitle.setText(eventNames.get(position));
-        if(position < eventImage.length)
-            imageView.setImageResource(eventImage[position]);
+
         return rowView;
     }
 
@@ -80,9 +72,7 @@ public class EventList extends ArrayAdapter<String> implements Filterable {
                 // No filter implemented we return all the list
                 results.values = oldeventNames;
                 results.count = oldeventNames.size();
-                for(int i = 0; i < oldeventImage.length; i++){
-                    eventImage[i] = oldeventImage[i];
-                }
+
 
             }
             else {
@@ -114,10 +104,7 @@ public class EventList extends ArrayAdapter<String> implements Filterable {
                 if(!noMatch){
                     addAll(oldeventNames);
                     eventNames = oldeventNames;
-                    eventImage = new Integer[oldeventImage.length];
-                    for(int i = 0; i < oldeventImage.length; i++){
-                        eventImage[i] = oldeventImage[i];
-                    }
+
                 }
 
             }
@@ -126,12 +113,7 @@ public class EventList extends ArrayAdapter<String> implements Filterable {
                 eventNames = (ArrayList<String>) results.values;
 
                 addAll(eventNames);
-                if(positions.size() > 0){
-                    eventImage = new Integer[positions.size()];
-                    for(int i = 0; i < positions.size(); i++){
-                        eventImage[i] = oldeventImage[positions.get(i)];
-                    }
-                }
+
 
                 notifyDataSetChanged();
 
