@@ -12,7 +12,7 @@ import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.FriendRequestsList;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Created by natha on 4/6/2016.
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class FriendRequestsActivity extends NavigationDrawer {
     ListView lv;
     SearchView sv;
-    ArrayList<String> friendsList;
+    Vector<String> friendsList;
     Integer[] imageId;
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +30,12 @@ public class FriendRequestsActivity extends NavigationDrawer {
         setContentView(R.layout.activity_friend_requests);
         lv = (ListView)findViewById(R.id.listView);
 
-        friendsList = new ArrayList<String>();
-
+        friendsList = new Vector<String>();
+        friendsList = ((MovieKnightAppli)getApplication()).getUserProfile().getFriendRequests();
+        imageId = new Integer[friendsList.size()];
+        for (int i = 0; i < friendsList.size(); i++) {
+            imageId[i] = R.drawable.dango;
+        }
         if (imageId != null && friendsList != null) {
             FriendRequestsList adapter = new FriendRequestsList(this, friendsList, imageId);
             lv.setAdapter(adapter);

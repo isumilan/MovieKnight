@@ -20,7 +20,6 @@ import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.InvitedFriendList;
 import com.example.nathan.movieknight.models.MovieEvent;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -28,8 +27,8 @@ import java.util.Vector;
  */
 public class MakeEventActivity extends NavigationDrawer {
     ListView list;
-    ArrayList<String> friendList;
-    ArrayList<String> checkedList;
+    Vector<String> friendList;
+    Vector<String> checkedList;
     Integer[] imageId = {
             R.drawable.dango,
             R.drawable.event,
@@ -67,10 +66,13 @@ public class MakeEventActivity extends NavigationDrawer {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         MovieKnightAppli application = (MovieKnightAppli)getApplication();
         application.setCurrentContext(this);
-        friendList = new ArrayList<String>();
-        checkedList = new ArrayList<String>();
+
+
+        friendList = new Vector<String>();
+        checkedList = new Vector<String>();
        // checkedList.add(((MovieKnightAppli)getApplication()).getUserName());
 
         friendList.add("Mad Samuel");

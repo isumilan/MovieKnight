@@ -35,10 +35,8 @@ public class SearchActivity extends NavigationDrawer {
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
 
-        if (movies != null)
-            movieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, movies);
-        if (friends != null)
-            friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
+        movieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, movies);
+        friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
         lv.setAdapter(movieAdapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
