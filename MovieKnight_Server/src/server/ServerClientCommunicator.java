@@ -91,7 +91,7 @@ public class ServerClientCommunicator extends Thread {
 				}
 			}
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
+			//ioe.printStackTrace();
 			serverListener.removeServerClientCommunicator(this);
 			try {
 				socket.close();
