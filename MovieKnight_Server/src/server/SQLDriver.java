@@ -31,6 +31,7 @@ public class SQLDriver {
 	private final static String allUsers = "SELECT * FROM USERS";
 	private final static String setHasNewRequest = "UPDATE USERS SET HASNEWREQUEST=? WHERE USERNAME=?";
 	private final static String setHasNewInvite = "UPDATE USERS SET HASNEWINVITE=? WHERE USERNAME=?";
+	
 	private Connection con;
 	private ServerLog log;
 
@@ -346,12 +347,19 @@ public class SQLDriver {
 	
 	public boolean HasSeenRequests(String username) {
 		try {
-			PreparedStatement ps = con.prepareStatement(setHasNewRequest);
+			boolean thereIs = false;
+			PreparedStatement ps = con.prepareStatement(selectName);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				thereIs = rs.getBoolean("hasNewRequest");
+			}
+			log.write("Check if " + username + " has new friend requests");
+			ps = con.prepareStatement(setHasNewRequest);
 			ps.setBoolean(1, false);
 			ps.setString(2, username);
 			ps.executeUpdate();
 			log.write("Changed requests to seen");
-			return true;
+			return thereIs;
 		} catch (SQLException e) {
 			log.write("Failed to change requests to seen");
 			return false;
@@ -360,14 +368,21 @@ public class SQLDriver {
 	
 	public boolean HasSeenInvites(String username) {
 		try {
-			PreparedStatement ps = con.prepareStatement(setHasNewInvite);
+			boolean thereIs = false;
+			PreparedStatement ps = con.prepareStatement(selectName);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				thereIs = rs.getBoolean("hasNewInvite");
+			}
+			log.write("Check if " + username + " has new event invite");
+			ps = con.prepareStatement(setHasNewInvite);
 			ps.setBoolean(1, false);
 			ps.setString(2, username);
 			ps.executeUpdate();
 			log.write("Changed invites to seen");
-			return true;
+			return thereIs;
 		} catch (SQLException e) {
-			log.write("Failed to change invites to seen");
+			log.write("Failed to change requests to seen");
 			return false;
 		}
 	}

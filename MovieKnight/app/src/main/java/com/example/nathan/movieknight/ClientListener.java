@@ -24,12 +24,14 @@ public class ClientListener extends Thread {
     private Socket mSocket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-
-    public ClientListener(Socket inSocket) {
+    private MovieKnightAppli application;
+    public ClientListener(Socket inSocket, MovieKnightAppli application) {
         mSocket = inSocket;
         boolean socketReady = initializeVariables();
+        this.application = application;
     }
     public Object clientRequest(Object[] objects){
+
         ClientRequest cr = new ClientRequest();
         cr.execute(objects);
         Object object = null;
@@ -55,10 +57,31 @@ public class ClientListener extends Thread {
     }
 
     public void run() {
+        boolean friend;
+        boolean event;
+        String username = application.getUserName();
         try {
             while (true) {
                 Thread.sleep(5000);
+                try {
+                    if(HasSeenRequestsRequest(username)){
+                        application.FriendRequestPopUp();
+                    }
+
+                    if(HasSeenInvitesRequest(username)){
+                        application.EventInvitedPopUp();
+                    }
+
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
                 //TODO: refresh new requests and invites
+
+
+
+
             }
         } catch (InterruptedException ie) {
             ie.printStackTrace();

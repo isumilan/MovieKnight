@@ -63,14 +63,15 @@ public class MovieActivity extends NavigationDrawer {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        final MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
         Bundle b = getIntent().getExtras();
         movieID = b.getInt("movieID");
 
         setupMoviePage();
         displayProgressMessage();
         getMovieInfo(movieID);
-        final MovieKnightAppli application = (MovieKnightAppli) getApplication();
+
         Button makeeventbutton = (Button)findViewById(R.id.makeEventButton);
         makeeventbutton.setOnClickListener(
                 new Button.OnClickListener() {

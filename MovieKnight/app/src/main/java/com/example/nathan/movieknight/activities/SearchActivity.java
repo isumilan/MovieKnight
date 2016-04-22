@@ -29,6 +29,8 @@ public class SearchActivity extends NavigationDrawer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
 

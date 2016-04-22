@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.MovieList;
 
@@ -47,6 +48,8 @@ public class MoviesSearchActivity extends NavigationDrawer {
         movieNames = new Vector<String>();
         movieImages = new Vector<String>();
         movieIDs = new Vector<Integer>();
+        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
 
         Bundle b = getIntent().getExtras();
         ArrayList<Integer> mid = b.getIntegerArrayList("movieIDs");

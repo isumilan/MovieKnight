@@ -43,6 +43,8 @@ public class LoginActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
         // Set up the login form.
         mUsername = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -74,6 +76,7 @@ public class LoginActivity extends Activity  {
                             application.setUserProfile(prof);
                             application.setUserName(username);
                             setupUser();
+                            cl.start();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         } else{

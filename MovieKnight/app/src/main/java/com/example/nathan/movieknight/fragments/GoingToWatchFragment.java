@@ -61,6 +61,8 @@ public class GoingToWatchFragment  extends Fragment  {
 
         list = (ListView) view.findViewById(R.id.intheaterslistView);
         profileMovieListActivity.setGoingToWatchAdapter((adapter));
+        MovieKnightAppli application = (MovieKnightAppli)profileMovieListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
         //list not showing
         //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if (list != null) {

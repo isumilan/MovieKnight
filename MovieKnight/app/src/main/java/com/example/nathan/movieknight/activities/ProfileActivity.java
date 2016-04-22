@@ -43,6 +43,8 @@ public class ProfileActivity extends NavigationDrawer {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
         Bundle b = getIntent().getExtras();
         if(b != null){
             isUser = b.getBoolean("user");

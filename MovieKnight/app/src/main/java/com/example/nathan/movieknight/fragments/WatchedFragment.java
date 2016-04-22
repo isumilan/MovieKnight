@@ -53,7 +53,8 @@ public class WatchedFragment  extends Fragment  {
             movieList = new Vector<String>();
         }
        MovieList adapter = new MovieList(profileMovieListActivity, movieList, movieImages);
-
+        MovieKnightAppli application = (MovieKnightAppli)profileMovieListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
 
         list=(ListView)view.findViewById(R.id.intheaterslistView);
         profileMovieListActivity.setGoingToWatchAdapter((adapter));
