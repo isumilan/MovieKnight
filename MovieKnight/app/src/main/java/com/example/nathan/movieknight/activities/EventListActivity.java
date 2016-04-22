@@ -56,11 +56,11 @@ public class EventListActivity extends NavigationDrawer {
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void setGoingAdapter(ArrayAdapter<String> adpater){
-        goingAdapter = adpater;
+    public void setGoingAdapter(ArrayAdapter<String> adapter){
+        goingAdapter = adapter;
     }
-    public void setInvitedAdapter(ArrayAdapter<String> adpater){
-        invitedAdapter = adpater;
+    public void setInvitedAdapter(ArrayAdapter<String> adapter){
+        invitedAdapter = adapter;
     }
 
     @Override

@@ -4,11 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
         <TableRow>
-    <ImageView
-        android:id = "@+id/listeventimg"
-        android:layout_width = "100dp"
-        android:layout_height = "100dp"
-        />
 
     <LinearLayout
         android:orientation="vertical"
@@ -63,7 +58,7 @@
         android:layout_gravity="right"
         android:id="@+id/listimage"
         android:src="@drawable/rightarrow"
-        />
+        android:layout_marginLeft="50dp" />
 
         />
 </TableRow>

@@ -24,14 +24,7 @@ import java.util.ArrayList;
 public class InvitedFragment  extends Fragment  {
     ListView list;
     ArrayList<String> eventList;
-    Integer[] imageId = {
-            R.drawable.dango,
-            R.drawable.event,
-            R.drawable.dango,
-            R.drawable.glass,
-            R.drawable.home,
-            R.drawable.movie
-    };
+
     final EventListActivity eventListActivity;
     @SuppressLint("ValidFragment")
     public InvitedFragment(EventListActivity ea){
@@ -55,7 +48,7 @@ public class InvitedFragment  extends Fragment  {
         eventList.add("Dango");
         eventList.add("Deadpool");
         EventList adapter = new
-                EventList(eventListActivity, eventList, imageId);
+                EventList(eventListActivity, eventList);
 
 
         list=(ListView)view.findViewById(R.id.intheaterslistView);
