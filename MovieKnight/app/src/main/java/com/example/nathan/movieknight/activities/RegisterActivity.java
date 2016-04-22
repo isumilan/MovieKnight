@@ -29,7 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        final MovieKnightAppli application = ((MovieKnightAppli)getApplication());
+        final MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
         Button guestbutton = (Button)findViewById(R.id.guest_button);
         guestbutton.setOnClickListener(
                 new Button.OnClickListener() {
@@ -88,6 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 if(prof != null){
                                     application.setUserProfile(prof);
                                     application.setUserName(dname);
+                                    cl.start();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     finish();
                                 } else{
