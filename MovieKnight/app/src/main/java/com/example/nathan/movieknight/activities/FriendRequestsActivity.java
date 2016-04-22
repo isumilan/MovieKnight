@@ -21,7 +21,7 @@ public class FriendRequestsActivity extends NavigationDrawer {
     SearchView sv;
     ArrayList<String> friendsList;
     Integer[] imageId = {
-            R.drawable.sampai,
+            R.drawable.dango,
             R.drawable.event,
             R.drawable.dango,
             R.drawable.glass,

@@ -9,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.activities.MakeEventActivity;
 
 import java.util.ArrayList;
 
@@ -48,8 +50,17 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.list_single_friend, null, true);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.listfriendtxt);
-
+        final int pos = position;
         ImageView imageView = (ImageView) rowView.findViewById(R.id.listfriendimg);
+        CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.checkBox);
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MakeEventActivity mea = (MakeEventActivity) context;
+                mea.updateCheckList(pos,friendNames.get(pos));
+            }
+        });
 
         if(position<friendNames.size())
             txtTitle.setText(friendNames.get(position));
@@ -57,6 +68,7 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
             imageView.setImageResource(friendImage[position]);
         return rowView;
     }
+
 
     @Override
     public Filter getFilter() {
