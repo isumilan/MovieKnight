@@ -300,13 +300,21 @@ public class SQLDriver {
 	
 	public boolean AddToList(String list_type, int movieID, String name) {
 		try {
-			PreparedStatement ps= con.prepareStatement(addMovieToList);
-			System.out.println(list_type+" "+movieID+" "+name);
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM  movielists WHERE list_type=? AND username=? AND movieID=?");
 			ps.setString(1, list_type);
 			ps.setString(2, name);
 			ps.setInt(3, movieID);
-			ps.executeUpdate();
-			log.write(movieID + " added to " + list_type + " list of " + name);
+			ResultSet rs = ps.executeQuery();
+			if(!rs.next()){			
+				ps = con.prepareStatement(addMovieToList);
+				System.out.println(list_type+" "+movieID+" "+name);
+				ps.setString(1, UUID.randomUUID().toString());
+				ps.setString(2, list_type);
+				ps.setString(3, name);
+				ps.setInt(4, movieID);
+				ps.executeUpdate();
+				log.write(movieID + " added to " + list_type + " list of " + name);
+			}
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
