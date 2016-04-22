@@ -3,6 +3,9 @@ package com.example.nathan.movieknight.activities;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+
+import com.example.nathan.movieknight.ClientListener;
+import com.example.nathan.movieknight.MovieKnightAppli;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +20,10 @@ import android.widget.ArrayAdapter;
 
 import com.example.nathan.movieknight.fragments.EventTabFragment;
 import com.example.nathan.movieknight.R;
+import com.example.nathan.movieknight.models.Profile;
+
+import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class EventListActivity extends NavigationDrawer {
@@ -26,7 +33,8 @@ public class EventListActivity extends NavigationDrawer {
 
     ArrayAdapter<String> goingAdapter;
     ArrayAdapter<String> invitedAdapter;
-
+    Vector<String> invitedEvents;
+    Vector<String> goingEvents;
     String filterText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,19 @@ public class EventListActivity extends NavigationDrawer {
          * Lets inflate the very first fragment
          * Here , we are inflating the TabFragment as the first Fragment
          */
+
+         MovieKnightAppli application = (MovieKnightAppli) getApplication();
+        Object[] objects ={"Profile Request", application.getUserName()};
+        ClientListener cl= application.getClisten();
+        Profile prof = null;
+        if(cl!= null){
+            prof = (Profile) cl.clientRequest(objects);
+        }
+        invitedEvents = new Vector<String>();
+        invitedEvents = prof.getEvents();
+        goingEvents = new Vector<String>();
+        goingEvents = prof.getEventRequests();
+
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
@@ -62,7 +83,12 @@ public class EventListActivity extends NavigationDrawer {
     public void setInvitedAdapter(ArrayAdapter<String> adapter){
         invitedAdapter = adapter;
     }
-
+    public Vector<String> getInvitedEvents(){
+        return invitedEvents;
+    }
+    public Vector<String> getGoingEvents(){
+        return goingEvents;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();

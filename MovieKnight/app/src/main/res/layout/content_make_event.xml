@@ -9,33 +9,12 @@
 
 
 
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="60dp">
-        <TextView
-            android:layout_width="113dp"
-            android:layout_height="40dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="\t Event Title"
-
-            android:textSize="20dp" />
-
-
-
-        <EditText
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:id="@+id/eventTitle"
-            android:maxLines="1"
-            android:singleLine="true"
- />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
         <TextView
             android:layout_width="113dp"
             android:layout_height="40dp"

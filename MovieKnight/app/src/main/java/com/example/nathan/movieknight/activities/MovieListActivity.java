@@ -115,7 +115,7 @@ public class MovieListActivity extends NavigationDrawer {
                     //newt
 
                     displayProgressMessage();
-
+                    Log.d("movies", text);
                     getMovieResults(text);
 
                     Intent in = new Intent(getApplicationContext(), MoviesSearchActivity.class);
@@ -202,6 +202,7 @@ public class MovieListActivity extends NavigationDrawer {
 
     private void displayProgressMessage() {
         progress_dialog = new ProgressDialog(MovieListActivity.this);
+
         progress_dialog.setMessage("Loading..");
         progress_dialog.show();
     }

@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -125,12 +126,11 @@ public class ProfileActivity extends NavigationDrawer {
                     }
                 }
         );
-        Object[] objects ={"Profile Request", username};
+        Object[] objects ={"Profile Request", application.getUserName()};
         ClientListener cl= application.getClisten();
         Profile prof = null;
         if(cl!= null){
-            //crashes right now
-           // prof = (Profile) cl.clientRequest(objects);
+           prof = (Profile) cl.clientRequest(objects);
         }
 
         //checks if it's the user
@@ -138,6 +138,7 @@ public class ProfileActivity extends NavigationDrawer {
 
             if(prof != null) {
                 application.setUserProfile(prof);
+                Log.d("prof", prof.getUsername());
             }
             userProfile = application.getUserProfile();
 
