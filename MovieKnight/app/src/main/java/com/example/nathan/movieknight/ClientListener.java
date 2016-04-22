@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
  * Created by Kevin on 4/16/2016.
  */
 
-public class ClientListener {
+public class ClientListener extends Thread {
 
     private Socket mSocket;
     private ObjectInputStream ois;
@@ -62,15 +62,15 @@ public class ClientListener {
             e.printStackTrace();
         }
     }
-    public Profile ProfileRequest(String username) throws IOException, ClassNotFoundException{
+    synchronized public Profile ProfileRequest(String username) throws IOException, ClassNotFoundException{
     	sendObject(ProfileRequestDialogue(username));
     	return (Profile)ois.readObject();
     }
-    public MovieEvent MovieEventRequest(String eventID) throws IOException, ClassNotFoundException{
+    synchronized public MovieEvent MovieEventRequest(String eventID) throws IOException, ClassNotFoundException{
     	sendObject(MovieEventRequestDialogue(eventID));
     	return (MovieEvent)ois.readObject();
     }
-    public Profile LoginRequest(String username, String password) throws IOException, ClassNotFoundException{
+    synchronized public Profile LoginRequest(String username, String password) throws IOException, ClassNotFoundException{
     	sendObject(LoginRequestDialogue(username, password));
         Profile prof = null;
         try{
@@ -82,52 +82,52 @@ public class ClientListener {
         }
         return prof;
     }
-    public Profile RegisterRequest(String username, String password, int zip) throws IOException, ClassNotFoundException{
+    synchronized public Profile RegisterRequest(String username, String password, int zip) throws IOException, ClassNotFoundException{
     	sendObject(RegisterRequestDialogue(username, password, zip));
 
     	Profile newUser = (Profile)ois.readObject();
     	return newUser;
     }
-    public MovieEvent MakeEventRequest(String owner, int goingToWatch
+    synchronized public MovieEvent MakeEventRequest(String owner, int goingToWatch
     		, String EventTitle,  boolean public_private,String time
     		, String location, Vector<String> invitations) throws IOException, ClassNotFoundException{
     	sendObject(MakeEventRequestDialogue(owner, goingToWatch,
-                 EventTitle,  public_private,time, location, invitations));
+                EventTitle, public_private, time, location, invitations));
     	return (MovieEvent)ois.readObject();
     }
-    public boolean FriendRequestRequest(String subject, String object) throws IOException, ClassNotFoundException{
+    synchronized public boolean FriendRequestRequest(String subject, String object) throws IOException, ClassNotFoundException{
     	sendObject(FriendRequestRequestDialogue(subject, object));
     	return (boolean)ois.readObject();
     }
-    public boolean FriendRequestReplyRequest(String subject, String object, boolean reply) throws IOException, ClassNotFoundException{
+    synchronized public boolean FriendRequestReplyRequest(String subject, String object, boolean reply) throws IOException, ClassNotFoundException{
     	sendObject(FriendRequestReplyRequestDialogue(subject, object, reply));
     	return (boolean)ois.readObject();
     }
-    public boolean EventReplyRequest(String eventID, String username, boolean reply) throws IOException, ClassNotFoundException{
+    synchronized public boolean EventReplyRequest(String eventID, String username, boolean reply) throws IOException, ClassNotFoundException{
     	sendObject(EventReplyRequestDialogue(eventID, username, reply));
     	return (boolean)ois.readObject();
     }
-    public boolean AddToToWatchListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
+    synchronized public boolean AddToToWatchListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
     	sendObject(AddToToWatchListRequestDialogue(movieID, username));
     	return (boolean)ois.readObject();
     }
-    public boolean AddToLikedListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
+    synchronized public boolean AddToLikedListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
     	sendObject(AddToLikedListRequestDialogue(movieID, username));
     	return (boolean)ois.readObject();
     }
-    public boolean AddToWatchedListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
+    synchronized public boolean AddToWatchedListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
     	sendObject(AddToWatchedListRequestDialogue(movieID, username));
     	return (boolean)ois.readObject();
     }
-    public boolean UpdatePersonalDescriptionRequest(String description, String username) throws IOException, ClassNotFoundException{
+    synchronized public boolean UpdatePersonalDescriptionRequest(String description, String username) throws IOException, ClassNotFoundException{
     	sendObject(UpdatePersonalDescriptionRequestDialogue(description, username));
     	return (boolean)ois.readObject();
     }
-    public boolean  EditMovieEventRequest(MovieEvent me) throws IOException, ClassNotFoundException{
+    synchronized public boolean  EditMovieEventRequest(MovieEvent me) throws IOException, ClassNotFoundException{
     	sendObject(EditMovieEventRequestDialogue(me));
     	return (boolean)ois.readObject();
     }
-    public Vector<String> ListAllUsersRequest() throws ClassNotFoundException, IOException{
+    synchronized public Vector<String> ListAllUsersRequest() throws ClassNotFoundException, IOException{
     	sendObject(ListAllUsersRequestDialogue());
     	return (Vector<String>)ois.readObject();
     }
@@ -200,7 +200,7 @@ public class ClientListener {
     private ServerClientDialogue ListAllUsersRequestDialogue() {
     	return new ServerClientDialogue(MovieConstants.ListAllUsersRequest,"");
     }
-    class ClientRequest   extends AsyncTask<Object, Void, Object>{
+    class ClientRequest extends AsyncTask<Object, Void, Object>{
         protected Object doInBackground(Object... objects) {
             String code = (String) objects[0];
             if(code.equals("Login")){
