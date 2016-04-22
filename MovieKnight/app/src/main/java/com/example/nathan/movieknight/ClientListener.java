@@ -54,6 +54,17 @@ public class ClientListener extends Thread {
         return true;
     }
 
+    public void run() {
+        try {
+            while (true) {
+                Thread.sleep(5000);
+                //TODO: refresh new requests and invites
+            }
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+    }
+
     public void sendObject(Object obj) {
         try {
             oos.writeObject(obj);
@@ -101,7 +112,7 @@ public class ClientListener extends Thread {
     }
     synchronized public boolean FriendRequestReplyRequest(String subject, String object, boolean reply) throws IOException, ClassNotFoundException{
     	sendObject(FriendRequestReplyRequestDialogue(subject, object, reply));
-    	return (boolean)ois.readObject();
+        return (boolean)ois.readObject();
     }
     synchronized public boolean EventReplyRequest(String eventID, String username, boolean reply) throws IOException, ClassNotFoundException{
     	sendObject(EventReplyRequestDialogue(eventID, username, reply));
