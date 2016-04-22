@@ -20,13 +20,7 @@ public class FriendRequestsActivity extends NavigationDrawer {
     ListView lv;
     SearchView sv;
     ArrayList<String> friendsList;
-    Integer[] imageId = {
-            R.drawable.dango,
-            R.drawable.event,
-            R.drawable.dango,
-            R.drawable.glass,
-            R.drawable.home,
-    };
+    Integer[] imageId;
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,23 +28,17 @@ public class FriendRequestsActivity extends NavigationDrawer {
         lv = (ListView)findViewById(R.id.listView);
 
         friendsList = new ArrayList<String>();
-        friendsList.add("A");
-        friendsList.add("B");
-        friendsList.add("C");
-        friendsList.add("D");
-        friendsList.add("E");
-        FriendRequestsList adapter = new FriendRequestsList(this, friendsList, imageId);
-        lv.setAdapter(adapter);
 
+        if (imageId != null && friendsList != null) {
+            FriendRequestsList adapter = new FriendRequestsList(this, friendsList, imageId);
+            lv.setAdapter(adapter);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
