@@ -4,11 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
         <TableRow>
-    <ImageView
-        android:id = "@+id/listeventimg"
-        android:layout_width = "100dp"
-        android:layout_height = "100dp"
-        />
 
     <LinearLayout
         android:orientation="vertical"
@@ -24,14 +19,7 @@
             android:layout_gravity="center_vertical"
 
             android:layout_marginLeft="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Movie Title"
-            android:id="@+id/movieTitle"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"/>
+
 
 
 
@@ -40,7 +28,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Date/Time"
-            android:id="@+id/dateTime"
+            android:id="@+id/listeventdateTime"
             android:layout_gravity="center_vertical"
             android:textSize="18dp"
             android:textIsSelectable="false"
@@ -51,7 +39,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Theater"
-            android:id="@+id/movieTheater"
+            android:id="@+id/listeventmovieTheater"
             android:layout_gravity="center_vertical"
             android:textSize="18dp"
             android:layout_marginLeft="20dp" />
@@ -63,7 +51,7 @@
         android:layout_gravity="right"
         android:id="@+id/listimage"
         android:src="@drawable/rightarrow"
-        />
+        android:layout_marginLeft="50dp" />
 
         />
 </TableRow>
