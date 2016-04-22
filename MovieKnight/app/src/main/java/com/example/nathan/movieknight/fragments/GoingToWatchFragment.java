@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +16,25 @@ import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.MovieActivity;
 import com.example.nathan.movieknight.activities.ProfileMovieListActivity;
+import com.example.nathan.movieknight.models.MovieInfo;
 import com.example.nathan.movieknight.models.MovieList;
+import com.example.nathan.movieknight.tmdb.TmdbConnector;
+import com.example.nathan.movieknight.tmdb.TmdbService;
 
-import java.util.ArrayList;
+import java.util.Vector;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
 
 /**
  * Created by Nathan on 3/17/2016.
  */
 public class GoingToWatchFragment  extends Fragment  {
     ListView list;
-    ArrayList<String> movieList;
-    ArrayList<String> movieImages;
+    Vector<Integer> movieID;
+    Vector<String> movieList;
+    Vector<String> movieImages;
     final ProfileMovieListActivity profileMovieListActivity;
     @SuppressLint("ValidFragment")
     public GoingToWatchFragment(ProfileMovieListActivity ea){
@@ -40,26 +49,23 @@ public class GoingToWatchFragment  extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.in_theaters_layout,null);
-        movieList = new ArrayList<String>();
-        movieList.add("Mad Samuel");
-        movieList.add("Inside Out");
-        movieList.add("Star Wars");
-        movieList.add("The Martian");
-        movieList.add("Dango");
-        movieList.add("Deadpool");
-        movieImages = new ArrayList<String>();
+        View view = inflater.inflate(R.layout.in_theaters_layout, null);
+        movieID = ((MovieKnightAppli)profileMovieListActivity.getApplication()).getUserProfile().getToWatch();
+        movieList = ((MovieKnightAppli) profileMovieListActivity.getApplication()).getUserProfile().getToWatchName();
+        Log.d("movieid", ""+movieID.size());
+        Log.d("movieList", ""+movieList.size());
+        movieImages = new Vector<String>();
         MovieList adapter = new
                 MovieList(profileMovieListActivity, movieList, movieImages);
 
 
-        list=(ListView)view.findViewById(R.id.intheaterslistView);
+        list = (ListView) view.findViewById(R.id.intheaterslistView);
         profileMovieListActivity.setGoingToWatchAdapter((adapter));
         MovieKnightAppli application = (MovieKnightAppli)profileMovieListActivity.getApplication();
         application.setCurrentContext(inflater.getContext());
         //list not showing
         //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
-        if(list != null) {
+        if (list != null) {
 
             if (adapter != null) {
                 list.setAdapter(adapter);
@@ -68,16 +74,16 @@ public class GoingToWatchFragment  extends Fragment  {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Intent in = new Intent(  profileMovieListActivity.getApplicationContext(), MovieActivity.class);
+                        Intent in = new Intent(profileMovieListActivity.getApplicationContext(), MovieActivity.class);
                         Bundle b = new Bundle();
-                        b.putString("key", movieList.get(position));
+                        b.putInt("movieID", movieID.get(position));
                         in.putExtras(b);
                         startActivity(in);
                         profileMovieListActivity.finish();
                     }
                 });
             }
-        } else{
+        } else {
             System.out.println("null");
         }
 

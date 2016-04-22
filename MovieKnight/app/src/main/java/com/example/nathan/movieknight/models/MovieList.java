@@ -18,32 +18,30 @@ import com.example.nathan.movieknight.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class MovieList extends ArrayAdapter<String> implements Filterable {
     private Filter movieFilter;
     private final Activity context;
-    private ArrayList<String> movieNames;
-    private ArrayList<String> oldMovieNames;
-    private  ArrayList<String> movieImages;
-    private  ArrayList<String> oldMovieImages;
+    private Vector<String> movieNames;
+    private Vector<String> oldMovieNames;
+    private  Vector<String> movieImages;
+    private  Vector<String> oldMovieImages;
     public MovieList(Activity context,
-                     ArrayList<String>  movieNames, ArrayList<String> movieImages) {
+                     Vector<String> movieNames, Vector<String> movieImages) {
 
         super(context, R.layout.list_single_movie, movieNames);
-
         this.context = context;
-
         this.movieNames = movieNames;
+        oldMovieNames = new Vector<String>();
 
-        oldMovieNames = new ArrayList<String>();
-        for(String movie : movieNames){
+        for (String movie : this.movieNames) {
             oldMovieNames.add(movie);
         }
 
         this.movieImages = movieImages;
-
-        oldMovieImages = new ArrayList<String>();
-        for(String movieimg : movieImages){
+        oldMovieImages = new Vector<String>();
+        for(String movieimg : this.movieImages){
             oldMovieImages.add(movieimg);
         }
     }
@@ -135,7 +133,7 @@ public class MovieList extends ArrayAdapter<String> implements Filterable {
             }
             else {
                 clear();
-                movieNames = (ArrayList<String>) results.values;
+                movieNames = (Vector<String>) results.values;
 
                 addAll(movieNames);
 
@@ -146,12 +144,8 @@ public class MovieList extends ArrayAdapter<String> implements Filterable {
                         movieImages.add(oldMovieImages.get(i));
                     }
                 }
-
                 notifyDataSetChanged();
-
             }
-
         }
-
     }
 }

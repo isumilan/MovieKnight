@@ -50,7 +50,8 @@ public class FriendListActivity extends AppCompatActivity {
                                         int position, long id) {
                     Intent in = new Intent( getApplicationContext(), ProfileActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("key", friendsList.get(position));
+                    b.putString("friend", friendsList.get(position));
+                    b.putBoolean("user", false);
                     in.putExtras(b);
                     startActivity(in);
                     finish();

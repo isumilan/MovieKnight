@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import com.example.nathan.movieknight.activities.LoginActivity;
+import com.example.nathan.movieknight.activities.NavigationDrawer;
 import com.example.nathan.movieknight.tmdb.TmdbConnector;
 import com.example.nathan.movieknight.tmdb.TmdbService;
 import com.example.nathan.movieknight.models.*;
@@ -126,7 +128,7 @@ public class MovieKnightAppli extends Application {
         return userProfile;
     }
     public void FriendRequestPopUp(){
-        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(context);
+        AlertDialog.Builder helpBuilder = new AlertDialog.Builder((LoginActivity) context);
         helpBuilder.setTitle("Friend Request");
         helpBuilder.setMessage("You received a friend request!");
         helpBuilder.setPositiveButton("Ok",

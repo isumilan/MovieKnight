@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 
+import com.example.nathan.movieknight.activities.LoginActivity;
 import com.example.nathan.movieknight.models.MovieEvent;
 import com.example.nathan.movieknight.models.Profile;
 
@@ -65,7 +66,8 @@ public class ClientListener extends Thread {
                 Thread.sleep(5000);
                 try {
                     if(HasSeenRequestsRequest(username)){
-                        application.FriendRequestPopUp();
+                       application.FriendRequestPopUp();
+
                     }
 
                     if(HasSeenInvitesRequest(username)){
@@ -322,6 +324,44 @@ public class ClientListener extends Thread {
                 boolean accept = (boolean) objects[3];
                 try {
                     return FriendRequestReplyRequest(username, friend, accept);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if(code.equals("List All Users")) {
+                try {
+                    return ListAllUsersRequest();
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if(code.equals("Add To To Watch")) {
+                int movieID = (Integer) objects[1];
+                String username = (String) objects[2];
+                try {
+                    return AddToToWatchListRequest(movieID, username);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if(code.equals("Add To Watched")) {
+                int movieID = (Integer) objects[1];
+                String username = (String) objects[2];
+                try {
+                    return AddToToWatchListRequest(movieID, username);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if(code.equals("Add To Liked")) {
+                int movieID = (Integer) objects[1];
+                String username = (String) objects[2];
+                try {
+                    return AddToLikedListRequest(movieID, username);
                 } catch (ClassNotFoundException cne) {
                     cne.printStackTrace();
                 } catch (IOException ie) {
