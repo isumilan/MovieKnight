@@ -89,6 +89,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     application.setUserName(dname);
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     finish();
+                                } else{
+                                    Error.setText("Username already taken");
                                 }
                             }
 
