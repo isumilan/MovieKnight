@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
+import com.example.nathan.movieknight.PasswordEncryptor;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.Profile;
 
@@ -79,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //display "Error: passwords do not match"
                             Error.setText("Passwords do not match");
                         } else{
-                            Object[] objects = {"Register", dname,pword,zipcode};
+                            Object[] objects = {"Register", dname, PasswordEncryptor.encrypt(pword), zipcode};
 
                             ClientListener cl = application.getClisten();
                             if(cl != null){

@@ -20,15 +20,15 @@ import com.example.nathan.movieknight.activities.MakeEventActivity;
 
 import java.util.ArrayList;
 
-public class FriendList extends ArrayAdapter<String> implements Filterable {
+public class InvitedFriendList extends ArrayAdapter<String> implements Filterable {
     private Filter friendFilter;
     private final Activity context;
     private ArrayList<String> friendNames;
     private ArrayList<String> oldFriendNames;
     private  Integer[] friendImage;
     private  Integer[] oldFriendImage;
-    public FriendList(Activity context,
-                      ArrayList<String>  friendNames, Integer[] friendImage) {
+    public InvitedFriendList(Activity context,
+                             ArrayList<String>  friendNames, Integer[] friendImage) {
 
         super(context, R.layout.list_single_friend, friendNames);
 

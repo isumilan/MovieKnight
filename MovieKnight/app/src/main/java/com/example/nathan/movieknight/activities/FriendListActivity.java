@@ -1,13 +1,16 @@
 package com.example.nathan.movieknight.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.example.nathan.movieknight.R;
-import com.example.nathan.movieknight.models.FriendList;
+import com.example.nathan.movieknight.models.InvitedFriendList;
 
 import java.util.ArrayList;
 
@@ -25,7 +28,7 @@ public class FriendListActivity extends AppCompatActivity {
             R.drawable.glass,
             R.drawable.home,
     };
-    FriendList friendAdapter;
+    InvitedFriendList friendAdapter;
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +42,7 @@ public class FriendListActivity extends AppCompatActivity {
         friendsList.add("D");
         friendsList.add("E");
 
-       friendAdapter = new FriendList(this, friendsList, imageId);
+       friendAdapter = new InvitedFriendList(this, friendsList, imageId);
         lv.setAdapter(friendAdapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -52,6 +55,20 @@ public class FriendListActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String text) {
                 friendAdapter.getFilter().filter(text);
                 return false;
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Intent in = new Intent( getApplicationContext(), ProfileActivity.class);
+                Bundle b = new Bundle();
+                b.putString("key", friendsList.get(position));
+                in.putExtras(b);
+                startActivity(in);
+                finish();
             }
         });
 
