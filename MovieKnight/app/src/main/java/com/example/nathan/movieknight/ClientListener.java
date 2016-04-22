@@ -284,10 +284,21 @@ public class ClientListener extends Thread {
                 } catch (IOException ie) {
                     ie.printStackTrace();
                 }
-            } else if(code.equals("Movie Event Request")){
+            } else if(code.equals("Movie Event Request")) {
                 String eventID = (String) objects[1];
                 try {
                     return MovieEventRequest(eventID);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if(code.equals("Friend Request Reply")) {
+                String username = (String) objects[1];
+                String friend = (String) objects[2];
+                boolean accept = (boolean) objects[3];
+                try {
+                    return FriendRequestReplyRequest(username, friend, accept);
                 } catch (ClassNotFoundException cne) {
                     cne.printStackTrace();
                 } catch (IOException ie) {
