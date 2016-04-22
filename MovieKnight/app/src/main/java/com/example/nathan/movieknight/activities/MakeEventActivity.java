@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
-import com.example.nathan.movieknight.models.FriendList;
+import com.example.nathan.movieknight.models.InvitedFriendList;
 import com.example.nathan.movieknight.models.MovieEvent;
 
 import java.util.ArrayList;
@@ -81,8 +81,8 @@ public class MakeEventActivity extends NavigationDrawer {
         friendList.add("The Martian");
         friendList.add("Dango");
         friendList.add("Deadpool");
-        final FriendList adapter = new
-                FriendList(this, friendList, imageId);
+        final InvitedFriendList adapter = new
+                InvitedFriendList(this, friendList, imageId);
 
         list=(ListView)findViewById(R.id.friendlistView);
         //list not showing
@@ -124,9 +124,6 @@ public class MakeEventActivity extends NavigationDrawer {
             });
         }
 
-
-
-
         Button makeeventbutton = (Button)findViewById(R.id.make_event);
         makeeventbutton.setOnClickListener(
                 new View.OnClickListener() {
@@ -155,10 +152,6 @@ public class MakeEventActivity extends NavigationDrawer {
                                 finish();
                             }
                         }
-
-
-
-
                     }
                 }
         );

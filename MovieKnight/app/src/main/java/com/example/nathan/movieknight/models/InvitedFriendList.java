@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -19,17 +20,17 @@ import com.example.nathan.movieknight.activities.MakeEventActivity;
 
 import java.util.ArrayList;
 
-public class FriendList extends ArrayAdapter<String> implements Filterable {
+public class InvitedFriendList extends ArrayAdapter<String> implements Filterable {
     private Filter friendFilter;
     private final Activity context;
     private ArrayList<String> friendNames;
     private ArrayList<String> oldFriendNames;
     private  Integer[] friendImage;
     private  Integer[] oldFriendImage;
-    public FriendList(Activity context,
-                      ArrayList<String>  friendNames, Integer[] friendImage) {
+    public InvitedFriendList(Activity context,
+                             ArrayList<String>  friendNames, Integer[] friendImage) {
 
-        super(context, R.layout.list_single_friendlist, friendNames);
+        super(context, R.layout.list_single_friend, friendNames);
 
         this.context = context;
         this.friendNames = friendNames;
@@ -47,10 +48,19 @@ public class FriendList extends ArrayAdapter<String> implements Filterable {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView= inflater.inflate(R.layout.list_single_friendlist, null, true);
+        View rowView= inflater.inflate(R.layout.list_single_friend, null, true);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.listfriendtxt);
         final int pos = position;
         ImageView imageView = (ImageView) rowView.findViewById(R.id.listfriendimg);
+        CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.checkBox);
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MakeEventActivity mea = (MakeEventActivity) context;
+                mea.updateCheckList(pos,friendNames.get(pos));
+            }
+        });
 
         if(position<friendNames.size())
             txtTitle.setText(friendNames.get(position));
