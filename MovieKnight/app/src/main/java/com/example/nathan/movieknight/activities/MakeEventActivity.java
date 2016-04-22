@@ -67,6 +67,10 @@ public class MakeEventActivity extends NavigationDrawer {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
+
+
         friendList = new Vector<String>();
         checkedList = new Vector<String>();
        // checkedList.add(((MovieKnightAppli)getApplication()).getUserName());

@@ -49,6 +49,8 @@ public class ComingSoonFragment  extends Fragment  {
 
         View view =  inflater.inflate(R.layout.coming_soon_layout,null);
 
+        MovieKnightAppli application = (MovieKnightAppli)movieListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
 
         list=(ListView) view.findViewById(R.id.comingsoonlistView);
         adapter = new

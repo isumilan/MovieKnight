@@ -67,10 +67,11 @@ public class InvitedFragment  extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.in_theaters_layout,null);
-
+        MovieKnightAppli application = (MovieKnightAppli)eventListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
         for(String id: eventIDs){
 
-            MovieKnightAppli application = (MovieKnightAppli) eventListActivity.getApplication();
+
             Object[] objects = {"Movie Event Request", id};
             ClientListener cl = application.getClisten();
             if (cl != null) {

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.MovieActivity;
 import com.example.nathan.movieknight.activities.ProfileMovieListActivity;
@@ -48,6 +49,8 @@ ArrayList<String> movieImages;
         movieList.add("Dango");
         movieList.add("Deadpool");
         movieImages = new ArrayList<String>();
+        MovieKnightAppli application = (MovieKnightAppli)profileMovieListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
        MovieList adapter = new
                MovieList(profileMovieListActivity, movieList, movieImages);
 
