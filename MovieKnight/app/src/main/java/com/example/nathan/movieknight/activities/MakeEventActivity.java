@@ -100,10 +100,6 @@ public class MakeEventActivity extends NavigationDrawer {
         } else{
             System.out.println("null");
         }
-
-
-
-
         final Button makeeventbutton = (Button)findViewById(R.id.make_event);
         makeeventbutton.setOnClickListener(
                 new View.OnClickListener() {
