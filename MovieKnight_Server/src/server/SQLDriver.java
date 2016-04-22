@@ -196,7 +196,7 @@ public class SQLDriver {
 			}
 			
 		 	PreparedStatement ps3 = con.prepareStatement(addParticipants);
-			for (String participant : event.getInvited()) {
+			for (String participant : event.getParticipants()) {
 				ps3.setString(1, UUID.randomUUID().toString());
 				ps3.setString(2, event.getEventID());
 				ps3.setBoolean(3, true);
