@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class InTheatersFragment  extends Fragment  {
     MovieList adapter;
     ListView list;
-    ArrayList<String> movieList;
+    ArrayList<String> movieNames;
     ArrayList<String> movieImages;
     ArrayList<Integer> movieID;
     final MovieListActivity movieListActivity;
@@ -34,7 +34,7 @@ public class InTheatersFragment  extends Fragment  {
         super();
         movieListActivity = ma;
         MovieKnightAppli application = (MovieKnightAppli)ma.getApplication();
-        movieList = application.getMovieListIn();
+        movieNames = application.getMovieListIn();
         movieImages = application.getMovieImagesIn();
         movieID = application.getMovieIDIn();
     }
@@ -49,10 +49,9 @@ public class InTheatersFragment  extends Fragment  {
 
         View view =  inflater.inflate(R.layout.in_theaters_layout,null);
 
-
         list=(ListView) view.findViewById(R.id.intheaterslistView);
         adapter = new
-                MovieList(movieListActivity, movieList, movieImages);
+                MovieList(movieListActivity, movieNames, movieImages);
 
         movieListActivity.setTheatersAdapter((adapter));
         //list not showing
