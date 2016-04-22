@@ -362,9 +362,9 @@ public class SQLDriver {
 	
 	private Vector<String> getFriendsRequestList(String username){
 		Vector<String> friends = new Vector<String>();
+		System.out.println(username);
 		try {
-			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends "
-					+ "WHERE accepted=0 AND receiver=?)");
+			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends WHERE accepted=0 AND receiver=?");
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
