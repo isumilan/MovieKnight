@@ -1,6 +1,7 @@
 package com.example.nathan.movieknight.activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -41,6 +42,10 @@ public class EventActivity extends NavigationDrawer {
     Button notGoingButton;
     ListView invitedList;
     ListView goingList;
+    ArrayAdapter<String> goingAdapter;
+    ArrayAdapter<String> invitedAdapter;
+    Vector<String> going;
+    Vector<String> invited;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +84,7 @@ public class EventActivity extends NavigationDrawer {
                     }
                 }
         );
+        editbutton.setVisibility(View.GONE);
         final Button goingButton= (Button)findViewById(R.id.goingButton);
         goingButton.setOnClickListener(
                 new Button.OnClickListener() {
@@ -87,8 +93,11 @@ public class EventActivity extends NavigationDrawer {
                         Object[] objects = {"Event Reply Request", eventID, application.getUserName(),true};
                         ClientListener cl= application.getClisten();
                         cl.clientRequest(objects);
-
-
+                        if(!going.contains(application.getUserName()))
+                            going.add(application.getUserName());
+                        invited.remove(application.getUserName());
+                        goingAdapter.notifyDataSetChanged();
+                        invitedAdapter.notifyDataSetChanged();
                     }
                 }
         );
@@ -100,7 +109,8 @@ public class EventActivity extends NavigationDrawer {
                         Object[] objects = {"Event Reply Request", eventID, application.getUserName(), false};
                         ClientListener cl= application.getClisten();
                         cl.clientRequest(objects);
-
+                        startActivity(new Intent(getApplicationContext(), EventListActivity.class));
+                      finish();
                     }
                 }
         );
@@ -124,23 +134,32 @@ public class EventActivity extends NavigationDrawer {
                     eventTitle.setText(movieEvent.getDescription());
                     date.setText("Date: " + movieEvent.getMovieTime());
                     theater.setText("Location: " + movieEvent.getTheater());
-                    owner.setText("Owner: " + movieEvent.getOwner());
-                    if(!application.getUserName().equals(owner.getText().toString().substring(7))){
-                        editbutton.setVisibility(View.GONE);
-                    }
+
                     movieID = movieEvent.getGoingToWatch();
                     getMovieInfo(movieID);
-                    if(!movieEvent.getOwner().equals(application.getUserName())){
+                    if(movieEvent.getOwner().equals(application.getUserName())){
                         goingButton.setVisibility(View.GONE);
                         notGoingButton.setVisibility(View.GONE);
                     }
 
-                    Vector<String> invited =  movieEvent.getInvited();
-                    ArrayAdapter<String> invitedAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, invited);
+                    invited =  movieEvent.getInvited();
+                   invitedAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, invited);
                     invitedList.setAdapter(invitedAdapter);
-                    Vector<String> going =  movieEvent.getParticipants();
-                    ArrayAdapter<String> goingAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, going);
+                   going =  movieEvent.getParticipants();
+                    owner.setText("Owner: " + movieEvent.getOwner());
+                    if(!application.getUserName().equals(owner.getText().toString().substring(7))){
+                        editbutton.setVisibility(View.GONE);
+
+                    }else{
+                        if(!going.contains(application.getUserName())){
+                            going.add(application.getUserName());
+                        }
+                    }
+
+
+                     goingAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, going);
                     goingList.setAdapter(goingAdapter);
+
                 }
             }
         }
@@ -148,9 +167,12 @@ public class EventActivity extends NavigationDrawer {
         else{
             //do something maybe
         }
-
+        if(going.contains(application.getUserName())){
+            goingButton.setVisibility(View.GONE);
+        }
         //something something Comment area functionality
     }
+
 
     private void getMovieInfo(int id) {
 

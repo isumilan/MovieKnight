@@ -80,7 +80,7 @@ public class LoginActivity extends Activity  {
                             application.setUserProfile(prof);
                             application.setUserName(username);
                             setupUser();
-                         // cl.start();
+//                          cl.start();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         } else{

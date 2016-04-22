@@ -76,6 +76,7 @@ public class InvitedFragment  extends Fragment  {
             ClientListener cl = application.getClisten();
             if (cl != null) {
                 MovieEvent movieEvent = (MovieEvent) cl.clientRequest(objects);
+
                 if (movieEvent != null) {
                 }
                 eventList.add(movieEvent.getDescription());
