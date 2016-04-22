@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +41,7 @@ public class EventActivity extends NavigationDrawer {
     Button goingButton;
     Button notGoingButton;
     ListView invitedList;
+    ListView goingList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +96,7 @@ public class EventActivity extends NavigationDrawer {
                 }
         );
         invitedList = (ListView)findViewById(R.id.invitedListView);
-
+        goingList = (ListView)findViewById(R.id.goingListView);
 
         eventTitle = (TextView) findViewById(R.id.eventTitle);
         movieTitle = (TextView) findViewById(R.id.movieTitle);
@@ -103,6 +105,7 @@ public class EventActivity extends NavigationDrawer {
         owner = (TextView) findViewById(R.id.movieOwner);
         eventImage = (ImageView) findViewById(R.id.eventImage);
         Bundle b = getIntent().getExtras();
+
         if(b != null) {
             eventID = b.getString("eventID");
             MovieKnightAppli application = (MovieKnightAppli) getApplication();
@@ -122,6 +125,9 @@ public class EventActivity extends NavigationDrawer {
                     Vector<String> invited =  movieEvent.getInvited();
                     ArrayAdapter<String> invitedAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, invited);
                     invitedList.setAdapter(invitedAdapter);
+                    Vector<String> going =  movieEvent.getParticipants();
+                    ArrayAdapter<String> goingAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, going);
+                    goingList.setAdapter(goingAdapter);
                 }
             }
         }
