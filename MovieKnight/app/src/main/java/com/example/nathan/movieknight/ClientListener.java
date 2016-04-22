@@ -54,6 +54,17 @@ public class ClientListener extends Thread {
         return true;
     }
 
+    public void run() {
+        try {
+            while (true) {
+                Thread.sleep(5000);
+                //TODO: refresh new requests and invites
+            }
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+    }
+
     public void sendObject(Object obj) {
         try {
             oos.writeObject(obj);
