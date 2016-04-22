@@ -48,7 +48,8 @@ public class InTheatersFragment  extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.in_theaters_layout,null);
-
+        MovieKnightAppli application = (MovieKnightAppli)movieListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
         list=(ListView) view.findViewById(R.id.intheaterslistView);
         adapter = new
                 MovieList(movieListActivity, movieNames, movieImages);

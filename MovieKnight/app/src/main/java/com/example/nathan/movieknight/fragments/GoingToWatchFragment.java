@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.MovieActivity;
 import com.example.nathan.movieknight.activities.ProfileMovieListActivity;
@@ -54,6 +55,8 @@ public class GoingToWatchFragment  extends Fragment  {
 
         list=(ListView)view.findViewById(R.id.intheaterslistView);
         profileMovieListActivity.setGoingToWatchAdapter((adapter));
+        MovieKnightAppli application = (MovieKnightAppli)profileMovieListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
         //list not showing
         //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
         if(list != null) {

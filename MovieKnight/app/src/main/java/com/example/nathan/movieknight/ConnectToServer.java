@@ -10,16 +10,19 @@ import java.net.Socket;
  */
 public class ConnectToServer extends AsyncTask<Void, Void, ClientListener> {
     private ClientListener c;
-
+    private MovieKnightAppli application;
     protected ClientListener doInBackground(Void... voids) {
         try {
-            c = new ClientListener(new Socket("10.0.2.2", 5000));
+            c = new ClientListener(new Socket("10.0.2.2", 5000), application);
+
             return c;
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
         return null;
     }
-
+    ConnectToServer(MovieKnightAppli application){
+        this.application = application;
+    }
 
 }

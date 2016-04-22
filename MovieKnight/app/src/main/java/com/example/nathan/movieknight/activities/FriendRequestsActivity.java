@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.FriendRequestsList;
 
@@ -24,6 +25,8 @@ public class FriendRequestsActivity extends NavigationDrawer {
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        application.setCurrentContext(this);
         setContentView(R.layout.activity_friend_requests);
         lv = (ListView)findViewById(R.id.listView);
 

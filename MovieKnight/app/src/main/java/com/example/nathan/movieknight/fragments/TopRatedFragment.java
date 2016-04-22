@@ -49,7 +49,8 @@ public class TopRatedFragment  extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.top_rated_layout,null);
-
+        MovieKnightAppli application = (MovieKnightAppli)movieListActivity.getApplication();
+        application.setCurrentContext(inflater.getContext());
         adapter = new MovieList(movieListActivity, movieNames, movieImages);
 
         list=(ListView)view.findViewById(R.id.topratedlistView);
