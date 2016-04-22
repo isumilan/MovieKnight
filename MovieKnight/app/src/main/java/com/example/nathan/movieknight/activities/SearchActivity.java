@@ -16,7 +16,7 @@ import com.example.nathan.movieknight.R;
 
 /**
  * Created by natha on 4/6/2016.
- */
+// */
 public class SearchActivity extends NavigationDrawer {
     ListView lv;
     SearchView sv;
