@@ -76,7 +76,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="94dp"
-        android:id="@+id/listView2"
+        android:id="@+id/favMoviesList"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.20" />
 
@@ -96,7 +96,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Movie List"
+        android:text="Movie List"
         android:id="@+id/movieListButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
