@@ -20,8 +20,8 @@ import com.example.nathan.movieknight.R;
 public class SearchActivity extends NavigationDrawer {
     ListView lv;
     SearchView sv;
-    String[] movies = {"Max Max", "Inside Out", "Star Wars", "The Martian", "Dango", "Deadpool"};
-    String[] friends = {"Chaitanya", "Isumi", "Kevin", "Nathan", "Lim"};
+    String[] movies;
+    String[] friends;
 
     ArrayAdapter<String> movieAdapter;
     ArrayAdapter<String> friendAdapter;
@@ -32,8 +32,10 @@ public class SearchActivity extends NavigationDrawer {
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
 
-        movieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, movies);
-        friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
+        if (movies != null)
+            movieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, movies);
+        if (friends != null)
+            friendAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
         lv.setAdapter(movieAdapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
