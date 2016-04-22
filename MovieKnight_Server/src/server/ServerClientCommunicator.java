@@ -80,8 +80,14 @@ public class ServerClientCommunicator extends Thread {
 					String input = (String) scd.getDialogueContent();
 					String[] inArray = input.split("\b");
 					sendObject(driver.EditDescription(inArray[0], inArray[1]));
-				}else if(scd.getRequestType() == MovieConstants.ListAllUsersRequest){
+				} else if (scd.getRequestType() == MovieConstants.ListAllUsersRequest){
 					sendObject(driver.ListAllUsers());
+				} else if (scd.getRequestType() == MovieConstants.HasSeenRequestsRequest) {
+					String input = (String) scd.getDialogueContent();
+					sendObject(driver.HasSeenRequests(input));
+				} else if (scd.getRequestType() == MovieConstants.HasSeenInvitesRequest) {
+					String input = (String) scd.getDialogueContent();
+					sendObject(driver.HasSeenInvites(input));
 				}
 			}
 		} catch (IOException ioe) {

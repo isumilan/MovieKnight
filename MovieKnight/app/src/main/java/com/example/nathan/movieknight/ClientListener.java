@@ -131,6 +131,14 @@ public class ClientListener extends Thread {
     	sendObject(ListAllUsersRequestDialogue());
     	return (Vector<String>)ois.readObject();
     }
+    synchronized public boolean HasSeenRequestsRequest(String username) throws ClassNotFoundException, IOException{
+        sendObject(HasSeenRequestsDialogue(username));
+        return (boolean)ois.readObject();
+    }
+    synchronized public boolean HasSeenInvitesRequest(String username) throws ClassNotFoundException, IOException{
+        sendObject(HasSeenInvitesDialogue(username));
+        return (boolean)ois.readObject();
+    }
     
    /* public ServerClientDialogue MovieRequest(String title){
     	return new ServerClientDialogue(MovieConstants.MovieRequest, title);
@@ -199,6 +207,12 @@ public class ClientListener extends Thread {
     }
     private ServerClientDialogue ListAllUsersRequestDialogue() {
     	return new ServerClientDialogue(MovieConstants.ListAllUsersRequest,"");
+    }
+    private ServerClientDialogue HasSeenRequestsDialogue(String name) {
+        return new ServerClientDialogue(MovieConstants.HasSeenRequestsRequest,name);
+    }
+    private ServerClientDialogue HasSeenInvitesDialogue(String name) {
+        return new ServerClientDialogue(MovieConstants.HasSeenInvitesRequest,name);
     }
     class ClientRequest extends AsyncTask<Object, Void, Object>{
         protected Object doInBackground(Object... objects) {
