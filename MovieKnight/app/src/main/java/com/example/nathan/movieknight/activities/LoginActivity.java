@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
+import com.example.nathan.movieknight.PasswordEncryptor;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.Profile;
 import com.example.nathan.movieknight.tmdb.TmdbConnector;
@@ -56,7 +57,7 @@ public class LoginActivity extends Activity  {
                     errorText.setText("Fill in all the forms");
                 } else {
                     MovieKnightAppli application = (MovieKnightAppli) getApplication();
-                    Object[] objects = {"Login", username, password};
+                    Object[] objects = {"Login", username, PasswordEncryptor.encrypt(password)};
                     ClientListener cl= application.getClisten();
                     if(cl != null){
                         Profile prof = (Profile) cl.clientRequest(objects);
