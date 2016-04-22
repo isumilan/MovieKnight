@@ -52,8 +52,12 @@ public class GoingToWatchFragment  extends Fragment  {
         View view = inflater.inflate(R.layout.in_theaters_layout, null);
         movieID = ((MovieKnightAppli)profileMovieListActivity.getApplication()).getUserProfile().getToWatch();
         movieList = ((MovieKnightAppli) profileMovieListActivity.getApplication()).getUserProfile().getToWatchName();
-        Log.d("movieid", ""+movieID.size());
-        Log.d("movieList", ""+movieList.size());
+       if(movieList == null){
+           movieList = new Vector<String>();
+       }
+        if (movieID == null){
+            movieID = new Vector<Integer>();
+        }
         movieImages = new Vector<String>();
         MovieList adapter = new
                 MovieList(profileMovieListActivity, movieList, movieImages);

@@ -19,6 +19,7 @@ import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.InvitedFriendList;
 import com.example.nathan.movieknight.models.MovieEvent;
+import com.example.nathan.movieknight.models.Profile;
 
 import java.util.Vector;
 
@@ -29,14 +30,7 @@ public class MakeEventActivity extends NavigationDrawer {
     ListView list;
     Vector<String> friendList;
     Vector<String> checkedList;
-    Integer[] imageId = {
-            R.drawable.dango,
-            R.drawable.event,
-            R.drawable.dango,
-            R.drawable.glass,
-            R.drawable.home,
-            R.drawable.movie
-    };
+    Integer[] imageId ;
     public void updateCheckList(int pos, String username){
         int index = checkedList.indexOf(username);
         if(index == -1){
@@ -75,12 +69,18 @@ public class MakeEventActivity extends NavigationDrawer {
         checkedList = new Vector<String>();
        // checkedList.add(((MovieKnightAppli)getApplication()).getUserName());
 
-        friendList.add("Mad Samuel");
-        friendList.add("Inside Out");
-        friendList.add("Star Wars");
-        friendList.add("The Martian");
-        friendList.add("Dango");
-        friendList.add("Deadpool");
+        Object[] objects ={"Profile Request", application.getUserName()};
+        ClientListener cl= application.getClisten();
+        Profile prof = null;
+        if(cl!= null){
+            prof = (Profile) cl.clientRequest(objects);
+        }
+        friendList = prof.getFriends();
+        imageId = new Integer[friendList.size()];
+        for(int i = 0; i < friendList.size();i++){
+            imageId[i] = R.drawable.dango;
+        }
+
         final InvitedFriendList adapter = new
                 InvitedFriendList(this, friendList, imageId);
 

@@ -104,8 +104,18 @@ public class MovieActivity extends NavigationDrawer {
                             Object[] objects = { "Add To Liked", movieID, mka.getUserName()};
                             mka.getClisten().clientRequest(objects);
                             mka.getUserProfile().getLiked().add(movieID);
-                            mka.getUserProfile().getLikedName().add(movieNameString);
-                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                            if (mka.getUserProfile().getLikedName() != null)
+                                mka.getUserProfile().getLikedName().add(movieNameString);
+                            else {
+                                Vector<String> s = new Vector<String>();
+                                s.add(movieNameString);
+                                mka.getUserProfile().setLikedName(s);
+                            }
+                            Bundle b = new Bundle();
+                            b.putBoolean("user", true);
+                            Intent in = new Intent(getApplicationContext(), ProfileActivity.class);
+                            in.putExtras(b);
+                            startActivity(in);
                             finish();
                         }
                     }

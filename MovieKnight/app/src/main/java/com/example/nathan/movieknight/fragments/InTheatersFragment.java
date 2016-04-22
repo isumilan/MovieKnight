@@ -38,13 +38,13 @@ public class InTheatersFragment  extends Fragment  {
         movieImages = new Vector<String>();
         movieID = new Vector<Integer>();
         MovieKnightAppli application = (MovieKnightAppli)ma.getApplication();
-        ArrayList<String> ml = application.getMovieListUpcoming();
+        ArrayList<String> ml = application.getMovieListIn();
         for (String s : ml)
             movieList .add(s);
-        ArrayList<String> mi = application.getMovieImagesUpcoming();
+        ArrayList<String> mi = application.getMovieImagesIn();
         for (String s : mi)
             movieImages.add(s);
-        ArrayList<Integer> mid = application.getMovieIDUpcoming();
+        ArrayList<Integer> mid = application.getMovieIDIn();
         for (Integer i : mid)
             movieID.add(i);
     }

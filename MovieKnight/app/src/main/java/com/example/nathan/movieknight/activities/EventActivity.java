@@ -79,18 +79,27 @@ public class EventActivity extends NavigationDrawer {
                     }
                 }
         );
-        Button goingButton= (Button)findViewById(R.id.goingButton);
-        editbutton.setOnClickListener(
+        final Button goingButton= (Button)findViewById(R.id.goingButton);
+        goingButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
+                        MovieKnightAppli application = (MovieKnightAppli) getApplication();
+                        Object[] objects = {"Event Reply Request", eventID, application.getUserName(),true};
+                        ClientListener cl= application.getClisten();
+                        cl.clientRequest(objects);
+
 
                     }
                 }
         );
         Button notGoingButton= (Button)findViewById(R.id.notgoingButton);
-        editbutton.setOnClickListener(
+        notGoingButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
+                        MovieKnightAppli application = (MovieKnightAppli) getApplication();
+                        Object[] objects = {"Event Reply Request", eventID, application.getUserName(), false};
+                        ClientListener cl= application.getClisten();
+                        cl.clientRequest(objects);
 
                     }
                 }
@@ -116,10 +125,16 @@ public class EventActivity extends NavigationDrawer {
                     date.setText("Date: " + movieEvent.getMovieTime());
                     theater.setText("Location: " + movieEvent.getTheater());
                     owner.setText("Owner: " + movieEvent.getOwner());
+                    if(!application.getUserName().equals(owner.getText().toString().substring(7))){
+                        editbutton.setVisibility(View.GONE);
+                    }
                     movieID = movieEvent.getGoingToWatch();
                     getMovieInfo(movieID);
-                    goingButton.setVisibility(View.GONE);
-                    notGoingButton.setVisibility(View.GONE);
+                    if(!movieEvent.getOwner().equals(application.getUserName())){
+                        goingButton.setVisibility(View.GONE);
+                        notGoingButton.setVisibility(View.GONE);
+                    }
+
                     Vector<String> invited =  movieEvent.getInvited();
                     ArrayAdapter<String> invitedAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, invited);
                     invitedList.setAdapter(invitedAdapter);

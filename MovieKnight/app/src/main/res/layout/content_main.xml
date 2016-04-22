@@ -14,15 +14,8 @@
     tools:context=".activities.MainActivity">
 
     <TextView
-        android:text=" I am the bone of my app\n
- Procrastination is my body and\n
- Dr. Pepper is my blood\n
- I have created over a thousand lines of code\n
- Unknown to Sleep, Nor known to Life\n
- Have withstood pain to stay awake all night\n
- Yet, those hands will never type anything\n
- So as I pray, UNLIMITED MOVIE WORKS."
-        android:textSize="15dp"
+        android:text=" Movie Knight"
+        android:textSize="50dp"
         android:textColor="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

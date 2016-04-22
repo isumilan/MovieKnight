@@ -11,8 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.nathan.movieknight.ClientListener;
@@ -43,14 +47,14 @@ public class ProfileActivity extends NavigationDrawer {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        final MovieKnightAppli application = (MovieKnightAppli)getApplication();
         application.setCurrentContext(this);
         Bundle b = getIntent().getExtras();
         if(b != null){
             isUser = b.getBoolean("user");
         }
 
-        application = (MovieKnightAppli) getApplication();
+
 
         username = (TextView) findViewById(R.id.profile_name);
         description = (EditText) findViewById(R.id.profile_description);
@@ -63,6 +67,14 @@ public class ProfileActivity extends NavigationDrawer {
                     public void onClick(View v) {
                         //sends a friend request
                         //makes a popup notifying success
+                        Object[] objects ={"Friend Request", application.getUserName(),username.getText().toString()};
+                        ClientListener cl= application.getClisten();
+                        boolean friendRequest;
+                        if(cl!= null){
+                            friendRequest = (Boolean) cl.clientRequest(objects);
+                        }
+
+
                     }
                 }
         );
@@ -113,7 +125,11 @@ public class ProfileActivity extends NavigationDrawer {
         friendlistbutton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        startActivity(new Intent(getApplicationContext(), FriendListActivity.class));
+                        Intent in = new Intent(getApplicationContext(), FriendListActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("username", username.getText().toString());
+                        in.putExtras(bundle);
+                        startActivity(in);
                     }
                 }
         );
@@ -146,13 +162,53 @@ public class ProfileActivity extends NavigationDrawer {
             username.setText(userProfile.getUsername());
             description.setText(userProfile.getDescription());
             addfriendbutton.setVisibility(View.GONE);
+            ListView favList = (ListView)findViewById(R.id.favMoviesList);
+
+
+
+            Vector<String> favoriteMoviesNames = userProfile.getLikedName();
+            final Vector<Integer> favoriteMovieIDs = userProfile.getLiked();
+            if(favoriteMoviesNames== null){
+                favoriteMoviesNames = new Vector<String>();
+            }
+
+           ArrayAdapter<String>  favoriteAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favoriteMoviesNames);
+            if(favList!= null && favoriteAdapter != null && favoriteMovieIDs != null){
+
+                favList.setAdapter(favoriteAdapter);
+                favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        Intent in = new Intent(getApplicationContext(), MovieActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("movieID", favoriteMovieIDs.get(position));
+                        in.putExtras(bundle);
+                        startActivity(in);
+                        finish();
+                    }
+                });
+            }
+
+
         } else{
             editbutton.setVisibility(View.GONE);
+            //change this once we get movie list names on server side
+            movielistbutton.setVisibility(View.GONE);
             MovieKnightAppli mka = ((MovieKnightAppli)getApplication());
-            Object[] objects2 = { "Profile Request", b.getString("friend") };
-            userProfile = (Profile)mka.getClisten().clientRequest(objects2);
-            username.setText(userProfile.getUsername());
-            description.setText(userProfile.getDescription());
+            if(b!= null){
+                String friendUsername = b.getString("friend");
+                //make add friend button invisible
+                Vector<String> friends = application.getUserProfile().getFriends();
+                if(friends.contains(friendUsername)){
+                    addfriendbutton.setVisibility(View.GONE);
+                }
+                Object[] objects2 = { "Profile Request", friendUsername };
+                userProfile = (Profile)mka.getClisten().clientRequest(objects2);
+                username.setText(userProfile.getUsername());
+                description.setText(userProfile.getDescription());
+            }
+
         }
 
     }

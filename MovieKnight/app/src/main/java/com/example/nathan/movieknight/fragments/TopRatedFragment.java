@@ -39,13 +39,13 @@ public class TopRatedFragment  extends Fragment  {
         movieImages = new Vector<String>();
         movieID = new Vector<Integer>();
         MovieKnightAppli application = (MovieKnightAppli)ma.getApplication();
-        ArrayList<String> ml = application.getMovieListUpcoming();
+        ArrayList<String> ml = application.getMovieListTop();
         for (String s : ml)
             movieList .add(s);
-        ArrayList<String> mi = application.getMovieImagesUpcoming();
+        ArrayList<String> mi = application.getMovieImagesTop();
         for (String s : mi)
             movieImages.add(s);
-        ArrayList<Integer> mid = application.getMovieIDUpcoming();
+        ArrayList<Integer> mid = application.getMovieIDTop();
         for (Integer i : mid)
             movieID.add(i);
     }
