@@ -1,7 +1,5 @@
 package com.example.nathan.movieknight.activities;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,13 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
-import com.example.nathan.movieknight.models.FriendList;
+import com.example.nathan.movieknight.models.InvitedFriendList;
 import com.example.nathan.movieknight.models.MovieEvent;
 
 import java.util.ArrayList;
@@ -81,8 +78,8 @@ public class MakeEventActivity extends NavigationDrawer {
         friendList.add("The Martian");
         friendList.add("Dango");
         friendList.add("Deadpool");
-        final FriendList adapter = new
-                FriendList(this, friendList, imageId);
+        final InvitedFriendList adapter = new
+                InvitedFriendList(this, friendList, imageId);
 
         list=(ListView)findViewById(R.id.friendlistView);
         //list not showing
