@@ -25,7 +25,7 @@ public class InvitedFragment  extends Fragment  {
     ListView list;
     ArrayList<String> eventList;
     Integer[] imageId = {
-            R.drawable.sampai,
+            R.drawable.dango,
             R.drawable.event,
             R.drawable.dango,
             R.drawable.glass,

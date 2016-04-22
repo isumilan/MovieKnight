@@ -19,7 +19,7 @@ public class SQLDriver {
 	private final static String findPassword = "SELECT PASSWORD FROM USERS WHERE USERNAME=?";
 	private final static String selectEvent = "SELECT * FROM MOVIEEVENTS WHERE EVENTID=?";
 	private final static String selectParticipants = "SELECT USERNAME FROM EVENTPARTICIPANTS WHERE EVENTID=? AND ACCEPTED=?";
-	private final static String addEvent = "INSERT INTO MOVIEEVENTS(EVENTID,OWNER,MOVIEID,EVENTTITLE,PUBLIC_PRIVATE,MOVIETIME,THEATER) VALUES('1','a',1,'a',true,'7','h')";
+	private final static String addEvent = "INSERT INTO MOVIEEVENTS(EVENTID,OWNER,MOVIEID,EVENTTITLE,PUBLIC_PRIVATE,MOVIETIME,THEATER) VALUES(?,?,?,?,?,?,?)";
 	private final static String addParticipants = "INSERT INTO EVENTPARTICIPANTS(P_ID,EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?,?)";
 	private final static String sendFriendRequest = "INSERT INTO FRIENDS(P_ID,ACCEPTED,SENDER,RECEIVER) VALUES(?,?,?,?)";
 	private final static String acceptFriendRequest = "UPDATE FRIENDS SET ACCEPTED=? WHERE SENDER=? AND RECEIVER=?";
@@ -29,9 +29,10 @@ public class SQLDriver {
 	private final static String denyEventInvite = "DELETE FROM EVENTPARTICIPANTS WHERE EVENTID=? AND USERNAME=?";
 	private final static String addMovieToList = "INSERT INTO MOVIELISTS(P_ID,LIST_TYPE,USERNAME,MOVIEID) VALUES(?,?,?,?)";
 	private final static String editDescription = "UPDATE USERS SET DESCRIPTION=? WHERE USERNAME=?";
-	
+	private final static String allUsers = "SELECT * FROM USERS";
 	private Connection con;
 	private ServerLog log;
+
 	
 	public SQLDriver(ServerLog inLog) {
 		log = inLog;
@@ -180,8 +181,9 @@ public class SQLDriver {
 			ps.setString(2, event.getOwner());
 			ps.setInt(3, event.getGoingToWatch());
 			ps.setString(4, event.getDescription());
-			ps.setString(5, event.getMovieTime());
-			ps.setString(6, event.getTheater());
+			ps.setBoolean(5,  event.isPublic_private());
+			ps.setString(6, event.getMovieTime());
+			ps.setString(7, event.getTheater());
 			ps.executeUpdate();
 			
 			PreparedStatement ps2 = con.prepareStatement(addParticipants);
@@ -193,18 +195,21 @@ public class SQLDriver {
 				ps2.executeUpdate();
 			}
 			
-			PreparedStatement ps3 = con.prepareStatement(addParticipants);
-			for (String participant : event.getInvited()) {
+		 	PreparedStatement ps3 = con.prepareStatement(addParticipants);
+			for (String participant : event.getParticipants()) {
 				ps3.setString(1, UUID.randomUUID().toString());
 				ps3.setString(2, event.getEventID());
 				ps3.setBoolean(3, true);
 				ps3.setString(4, participant);
 				ps3.executeUpdate();
 			}
+		 
+		
 			
 			log.write("Made event with ID: " + event.getEventID());
 			return event;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			log.write("Failed to make event with ID: " + event.getEventID());
 			return null;
 		}
@@ -357,9 +362,9 @@ public class SQLDriver {
 	
 	private Vector<String> getFriendsRequestList(String username){
 		Vector<String> friends = new Vector<String>();
+		System.out.println(username);
 		try {
-			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends "
-					+ "WHERE accepted=0 AND receiver=?)");
+			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends WHERE accepted=0 AND receiver=?");
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
@@ -394,7 +399,7 @@ public class SQLDriver {
 		Vector<String> events = new Vector<String>();
 		try {
 			PreparedStatement ps= con.prepareStatement("SELECT * FROM eventparticipants "
-					+ "WHERE accepted=1 AND usrname=?");
+					+ "WHERE accepted=1 AND username=?");
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
@@ -411,7 +416,7 @@ public class SQLDriver {
 		Vector<String> events = new Vector<String>();
 		try {
 			PreparedStatement ps= con.prepareStatement("SELECT * FROM eventparticipants "
-					+ "WHERE accepted=0 AND usrname=?");
+					+ "WHERE accepted=0 AND username=?");
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
