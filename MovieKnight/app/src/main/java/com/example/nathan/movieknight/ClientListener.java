@@ -65,10 +65,10 @@ public class ClientListener extends Thread {
             while (true) {
                 Thread.sleep(5000);
                 try {
-                    if(HasSeenRequestsRequest(username)){
+                   if(HasSeenRequestsRequest(username)){
                        application.FriendRequestPopUp();
 
-                    }
+                   }
 
                     if(HasSeenInvitesRequest(username)){
                         application.EventInvitedPopUp();
