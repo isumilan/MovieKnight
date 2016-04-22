@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.example.nathan.movieknight.R;
-import com.example.nathan.movieknight.models.FriendList;
+import com.example.nathan.movieknight.models.InvitedFriendList;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class FriendListActivity extends AppCompatActivity {
             R.drawable.glass,
             R.drawable.home,
     };
-    FriendList friendAdapter;
+    InvitedFriendList friendAdapter;
     boolean movieMode = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,7 @@ public class FriendListActivity extends AppCompatActivity {
         friendsList.add("D");
         friendsList.add("E");
 
-       friendAdapter = new FriendList(this, friendsList, imageId);
+       friendAdapter = new InvitedFriendList(this, friendsList, imageId);
         lv.setAdapter(friendAdapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
