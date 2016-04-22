@@ -80,13 +80,17 @@ public class RegisterActivity extends AppCompatActivity {
                             Error.setText("Passwords do not match");
                         } else{
                             Object[] objects = {"Register", dname,pword,zipcode};
+
                             ClientListener cl = application.getClisten();
                             if(cl != null){
                                 Profile prof = (Profile) cl.clientRequest(objects);
                                 if(prof != null){
                                     application.setUserProfile(prof);
+                                    application.setUserName(dname);
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     finish();
+                                } else{
+                                    Error.setText("Username already taken");
                                 }
                             }
 

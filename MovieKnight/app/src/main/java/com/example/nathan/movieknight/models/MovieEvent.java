@@ -62,10 +62,6 @@ public class MovieEvent implements Serializable {
 		public_private = true;
 	}
 
-
-
-
-
 	//Getters
 	public String getOwner() {
 		return owner;

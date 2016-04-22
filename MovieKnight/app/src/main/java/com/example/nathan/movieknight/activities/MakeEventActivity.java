@@ -34,13 +34,21 @@ public class MakeEventActivity extends NavigationDrawer {
     ArrayList<String> friendList;
     ArrayList<String> checkedList;
     Integer[] imageId = {
-            R.drawable.sampai,
+            R.drawable.dango,
             R.drawable.event,
             R.drawable.dango,
             R.drawable.glass,
             R.drawable.home,
             R.drawable.movie
     };
+    public void updateCheckList(int pos, String username){
+        int index = checkedList.indexOf(username);
+        if(index == -1){
+            checkedList.add(username);
+        } else{
+            checkedList.remove(username);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,15 +137,17 @@ public class MakeEventActivity extends NavigationDrawer {
                         Vector<String> invitations = new Vector<String>(checkedList);
                         MovieEvent me = null;
                         MovieKnightAppli application = (MovieKnightAppli) getApplication();
-                        Object[] objects = {"Make Event", owner, movieID, public_private, EventTitle, time, location, invitations};
+                        Object[] objects = {"Make Event", owner, movieID, EventTitle, public_private, time, location, invitations};
                         ClientListener cl= application.getClisten();
+
                         if(cl != null){
                             me = (MovieEvent) cl.clientRequest(objects);
                             if (me != null) {
                                 String eid = me.getEventID();
                                 Bundle b = new Bundle();
                                 Intent in = new Intent(getApplicationContext(), EventActivity.class);
-                                b.putString("key", eid);
+                                b.putString("eventID", eid);
+                                in.putExtras(b);
                                 startActivity(in);
                                 finish();
                             }

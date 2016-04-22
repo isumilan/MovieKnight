@@ -22,7 +22,6 @@
         android:layout_width="144dp"
         android:layout_height="257dp"
         android:id="@+id/moviePoster"
-        android:src="@drawable/sampai"
          />
         <ScrollView
             android:layout_width="match_parent"
@@ -36,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Movie Title"
+            android:text=""
             android:id="@+id/movieTitle"
             android:layout_gravity="center_vertical"
             android:textSize="25dp"
@@ -49,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Rating: 7.5/10"
+                android:text=""
                 android:id="@+id/movieRated"
                 android:layout_gravity="center_vertical"
                 android:textSize="18dp"
@@ -61,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Release: 04/21/16"
+                android:text=""
                 android:id="@+id/movieReleaseDate"
                 android:textSize="18dp"
                 android:layout_marginBottom = "10dp"
@@ -71,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Runtime: 90 min"
+                android:text=""
                 android:id="@+id/movieRuntime"
                 android:layout_gravity="center_vertical"
                 android:textSize="18dp"
@@ -103,7 +102,7 @@
         android:textSize="15dp"
         android:id="@+id/movieSynopsis"
         android:layout_weight="0.37"
-        android:text="Best movie ever." />
+        android:text="" />
         </LinearLayout>
     </ScrollView>
     <Button
