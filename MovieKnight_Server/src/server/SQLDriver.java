@@ -30,6 +30,8 @@ public class SQLDriver {
 	private final static String addMovieToList = "INSERT INTO MOVIELISTS(P_ID,LIST_TYPE,USERNAME,MOVIEID) VALUES(?,?,?,?)";
 	private final static String editDescription = "UPDATE USERS SET DESCRIPTION=? WHERE USERNAME=?";
 	private final static String allUsers = "SELECT * FROM USERS";
+	private final static String setHasNewRequest = "UPDATE USERS SET HASNEWREQUEST=? WHERE USERNAME=?";
+	private final static String setHasNewInvite = "UPDATE USERS SET HASNEWINVITE=? WHERE USERNAME=?";
 	private Connection con;
 	private ServerLog log;
 
@@ -193,6 +195,11 @@ public class SQLDriver {
 				ps2.setBoolean(3, false);
 				ps2.setString(4, invitee);
 				ps2.executeUpdate();
+				
+				PreparedStatement ps3 = con.prepareStatement(setHasNewInvite);
+				ps3.setBoolean(1, true);
+				ps3.setString(2, invitee);
+				ps3.executeUpdate();
 			}
 			
 		 	PreparedStatement ps3 = con.prepareStatement(addParticipants);
@@ -204,8 +211,6 @@ public class SQLDriver {
 				ps3.executeUpdate();
 			}
 		 
-		
-			
 			log.write("Made event with ID: " + event.getEventID());
 			return event;
 		} catch (SQLException e) {
@@ -223,6 +228,12 @@ public class SQLDriver {
 			ps.setString(3, sender);
 			ps.setString(4, receiver);
 			ps.executeUpdate();
+			
+			PreparedStatement ps2 = con.prepareStatement(setHasNewRequest);
+			ps2.setBoolean(1, true);
+			ps2.setString(2, receiver);
+			ps2.executeUpdate();
+			
 			log.write("Sent friend request from " + sender + " to " + receiver);
 			return true;
 		} catch (SQLException e) {
@@ -322,10 +333,11 @@ public class SQLDriver {
 			return false;
 		}
 	}
+	
 	public Vector<String> ListAllUsers(){
 		Vector<String> names = new Vector<String>();
 		try {
-			PreparedStatement ps= con.prepareStatement(allUsers);
+			PreparedStatement ps = con.prepareStatement(allUsers);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				names.add(rs.getString("username"));
@@ -335,6 +347,34 @@ public class SQLDriver {
 		} catch (SQLException e) {
 			log.write("Failed to send list of all users");
 			return null;
+		}
+	}
+	
+	public boolean HasSeenRequests(String username) {
+		try {
+			PreparedStatement ps = con.prepareStatement(setHasNewRequest);
+			ps.setBoolean(1, false);
+			ps.setString(2, username);
+			ps.executeUpdate();
+			log.write("Changed requests to seen");
+			return true;
+		} catch (SQLException e) {
+			log.write("Failed to change requests to seen");
+			return false;
+		}
+	}
+	
+	public boolean HasSeenInvites(String username) {
+		try {
+			PreparedStatement ps = con.prepareStatement(setHasNewInvite);
+			ps.setBoolean(1, false);
+			ps.setString(2, username);
+			ps.executeUpdate();
+			log.write("Changed invites to seen");
+			return true;
+		} catch (SQLException e) {
+			log.write("Failed to change invites to seen");
+			return false;
 		}
 	}
 	
@@ -362,9 +402,9 @@ public class SQLDriver {
 	
 	private Vector<String> getFriendsRequestList(String username){
 		Vector<String> friends = new Vector<String>();
-		System.out.println(username);
 		try {
-			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends WHERE accepted=0 AND receiver=?");
+			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends "
+					+ "WHERE accepted=0 AND receiver=?)");
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){

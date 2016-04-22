@@ -16,5 +16,7 @@ public class MovieConstants {
 	public static int AddToWatchedListRequest = 13;
 	public static int UpdatePersonalDescriptionRequest = 14;
 	public static int EditMovieEventRequest = 15;
-        public static int ListAllUsersRequest = 16;
+	public static int ListAllUsersRequest = 16;
+	public static int HasSeenRequestsRequest = 17;
+	public static int HasSeenInvitesRequest = 18;
 }

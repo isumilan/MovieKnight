@@ -9,7 +9,9 @@ CREATE TABLE Users (
     password varchar(50) NOT NULL,
     profilePicture varchar(50) DEFAULT 'NoImageAvailable.png',
     description varchar(140) DEFAULT 'no description',
-    zipcode int not null
+    zipcode int not null,
+    hasNewRequest bool DEFAULT false,
+    hasNewInvite bool DEFAULT false
 );
 
 CREATE TABLE Friends (
