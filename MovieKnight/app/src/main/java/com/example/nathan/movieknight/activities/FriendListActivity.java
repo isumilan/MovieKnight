@@ -1,8 +1,11 @@
 package com.example.nathan.movieknight.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -52,6 +55,20 @@ public class FriendListActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String text) {
                 friendAdapter.getFilter().filter(text);
                 return false;
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Intent in = new Intent( getApplicationContext(), ProfileActivity.class);
+                Bundle b = new Bundle();
+                b.putString("key", friendsList.get(position));
+                in.putExtras(b);
+                startActivity(in);
+                finish();
             }
         });
 
