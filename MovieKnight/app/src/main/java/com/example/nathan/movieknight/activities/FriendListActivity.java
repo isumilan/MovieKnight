@@ -9,10 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.FriendList;
 import com.example.nathan.movieknight.models.InvitedFriendList;
+import com.example.nathan.movieknight.models.Profile;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -34,8 +36,16 @@ public class FriendListActivity extends AppCompatActivity {
         application.setCurrentContext(this);
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
+        Bundle b = getIntent().getExtras();
+        String username = b.getString("username");
+        Object[] objects ={"Profile Request", username};
+        ClientListener cl= application.getClisten();
+        Profile prof = null;
+
+        prof = (Profile) cl.clientRequest(objects);
+
         friendsList = new Vector<String>();
-        friendsList = ((MovieKnightAppli)getApplication()).getUserProfile().getFriends();
+        friendsList = prof.getFriends();
         imageId = new Integer[friendsList.size()];
         for (int i = 0; i < friendsList.size(); i++) {
             imageId[i] = R.drawable.dango;
@@ -50,7 +60,8 @@ public class FriendListActivity extends AppCompatActivity {
                                         int position, long id) {
                     Intent in = new Intent( getApplicationContext(), ProfileActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("key", friendsList.get(position));
+                    b.putString("friend", friendsList.get(position));
+                    b.putBoolean("user", false);
                     in.putExtras(b);
                     startActivity(in);
                     finish();

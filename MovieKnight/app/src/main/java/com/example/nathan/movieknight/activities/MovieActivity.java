@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Vector;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -98,8 +100,22 @@ public class MovieActivity extends NavigationDrawer {
                         if(application.isGuest()){
                             PopUp();
                         } else {
-                            // send the favorites information up to the server
-                            startActivity(new Intent(getApplication(), ProfileActivity.class));
+                            MovieKnightAppli mka = ((MovieKnightAppli)getApplication());
+                            Object[] objects = { "Add To Liked", movieID, mka.getUserName()};
+                            mka.getClisten().clientRequest(objects);
+                            mka.getUserProfile().getLiked().add(movieID);
+                            if (mka.getUserProfile().getLikedName() != null)
+                                mka.getUserProfile().getLikedName().add(movieNameString);
+                            else {
+                                Vector<String> s = new Vector<String>();
+                                s.add(movieNameString);
+                                mka.getUserProfile().setLikedName(s);
+                            }
+                            Bundle b = new Bundle();
+                            b.putBoolean("user", true);
+                            Intent in = new Intent(getApplicationContext(), ProfileActivity.class);
+                            in.putExtras(b);
+                            startActivity(in);
                             finish();
                         }
                     }
@@ -126,16 +142,36 @@ public class MovieActivity extends NavigationDrawer {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //add the movie to WATCHED list
-                        startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
+                        MovieKnightAppli mka = ((MovieKnightAppli)getApplication());
+                        Object[] objects = { "Add To Watched", movieID, mka.getUserName()};
+                        mka.getClisten().clientRequest(objects);
+                        mka.getUserProfile().getWatched().add(movieID);
+                        if (mka.getUserProfile().getWatchedName() != null)
+                            mka.getUserProfile().getWatchedName().add(movieNameString);
+                        else {
+                            Vector<String> s = new Vector<String>();
+                            s.add(movieNameString);
+                            mka.getUserProfile().setWatchedName(s);
+                        }
+                        startActivity(new Intent(getApplicationContext(), ProfileMovieListActivity.class));
                     }
                 });
         movielistBuilder.setNegativeButton("To Watch",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //add the movie to TO WATCH list
-                        startActivity(new Intent(getApplication(), ProfileMovieListActivity.class));
+                        MovieKnightAppli mka = ((MovieKnightAppli)getApplication());
+                        Object[] objects = { "Add To To Watch", movieID, mka.getUserName()};
+                        mka.getClisten().clientRequest(objects);
+                        mka.getUserProfile().getToWatch().add(movieID);
+                        if (mka.getUserProfile().getToWatchName() != null)
+                            mka.getUserProfile().getToWatchName().add(movieNameString);
+                        else {
+                            Vector<String> s = new Vector<String>();
+                            s.add(movieNameString);
+                            mka.getUserProfile().setToWatchName(s);
+                        }
+                        startActivity(new Intent(getApplicationContext(), ProfileMovieListActivity.class));
                     }
                 });
         AlertDialog movielistDialog = movielistBuilder.create();
@@ -202,6 +238,7 @@ public class MovieActivity extends NavigationDrawer {
 
         movieName.setText(info.getTitle());
         movieNameString = info.getTitle();
+        Log.d("MVNameString",movieNameString);
         movieRating.setText("Rating: "+info.getVoteAverage() + "/10" + "("+info.getVoteCount()+" votes)");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);

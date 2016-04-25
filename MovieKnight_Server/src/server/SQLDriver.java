@@ -148,8 +148,9 @@ public class SQLDriver {
 				event.setOwner(result.getString(2));
 				event.setGoingToWatch(result.getInt(3));
 				event.setDescription(result.getString(4));
-				event.setMovieTime(result.getString(5));
-				event.setTheater(result.getString(6));
+				event.setPublic_private(result.getBoolean(5));
+				event.setMovieTime(result.getString(6));
+				event.setTheater(result.getString(7));
 				event.setInvited(getEventParticipants(eventID, false));
 				event.setParticipants(getEventParticipants(eventID, true));
 			}
@@ -208,7 +209,10 @@ public class SQLDriver {
 				ps3.setString(3, participant);
 				ps3.executeUpdate();
 			}
-		 
+			ps3.setString(1, event.getEventID());
+			ps3.setBoolean(2, true);
+			ps3.setString(3, event.getOwner());
+			ps3.executeUpdate();
 			log.write("Made event with ID: " + event.getEventID());
 			return event;
 		} catch (SQLException e) {

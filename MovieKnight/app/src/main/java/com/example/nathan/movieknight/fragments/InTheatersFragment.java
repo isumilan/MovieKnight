@@ -18,6 +18,7 @@ import com.example.nathan.movieknight.activities.MovieListActivity;
 import com.example.nathan.movieknight.models.MovieList;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Created by Nathan on 3/17/2016.
@@ -25,18 +26,27 @@ import java.util.ArrayList;
 public class InTheatersFragment  extends Fragment  {
     MovieList adapter;
     ListView list;
-    ArrayList<String> movieNames;
-    ArrayList<String> movieImages;
-    ArrayList<Integer> movieID;
+    Vector<String> movieList;
+    Vector<String> movieImages;
+    Vector<Integer> movieID;
     final MovieListActivity movieListActivity;
     @SuppressLint("ValidFragment")
     public InTheatersFragment(MovieListActivity ma){
         super();
         movieListActivity = ma;
+        movieList = new Vector<String>();
+        movieImages = new Vector<String>();
+        movieID = new Vector<Integer>();
         MovieKnightAppli application = (MovieKnightAppli)ma.getApplication();
-        movieNames = application.getMovieListIn();
-        movieImages = application.getMovieImagesIn();
-        movieID = application.getMovieIDIn();
+        ArrayList<String> ml = application.getMovieListIn();
+        for (String s : ml)
+            movieList .add(s);
+        ArrayList<String> mi = application.getMovieImagesIn();
+        for (String s : mi)
+            movieImages.add(s);
+        ArrayList<Integer> mid = application.getMovieIDIn();
+        for (Integer i : mid)
+            movieID.add(i);
     }
     public InTheatersFragment(){
         super();
@@ -52,7 +62,7 @@ public class InTheatersFragment  extends Fragment  {
         application.setCurrentContext(inflater.getContext());
         list=(ListView) view.findViewById(R.id.intheaterslistView);
         adapter = new
-                MovieList(movieListActivity, movieNames, movieImages);
+                MovieList(movieListActivity, movieList, movieImages);
 
         movieListActivity.setTheatersAdapter((adapter));
         //list not showing
