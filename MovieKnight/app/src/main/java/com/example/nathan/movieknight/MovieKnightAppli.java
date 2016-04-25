@@ -141,7 +141,7 @@ public class MovieKnightAppli extends Application {
 
     }
     public void EventInvitedPopUp(){
-        Intent intent =new Intent(getApplicationContext(), MakeEventActivity.class);
+        Intent intent =new Intent(getApplicationContext(), EventListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 

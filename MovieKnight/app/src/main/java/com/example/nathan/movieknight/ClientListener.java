@@ -66,8 +66,8 @@ public class ClientListener extends Thread {
                 Thread.sleep(5000);
                 try {
                    if(HasSeenRequestsRequest(username)){
+                       Log.d("friend", "friend");
                        application.FriendRequestPopUp();
-
                    }
 
                     if(HasSeenInvitesRequest(username)){
