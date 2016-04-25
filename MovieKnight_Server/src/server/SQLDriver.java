@@ -364,20 +364,17 @@ public class SQLDriver {
 	
 	public boolean HasSeenRequests(String username) {
 		try {
-			boolean thereIs = true;
+			boolean thereIs = false;
 			PreparedStatement ps = con.prepareStatement(selectName);
 			ps.setString(1,username);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
 				thereIs = rs.getBoolean("hasNewRequest");
-				System.out.println("Friend: " + thereIs);
 			}
-			log.write("Check if " + username + " has new friend requests");
 			ps = con.prepareStatement(setHasNewRequest);
 			ps.setBoolean(1, false);
 			ps.setString(2, username);
 			ps.executeUpdate();
-			log.write("Changed requests to seen " + thereIs);
 			return thereIs;
 		} catch (SQLException e) {
 			log.write("Failed to change requests to seen");
@@ -394,14 +391,11 @@ public class SQLDriver {
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
 				thereIs = rs.getBoolean("hasNewInvite");
-				System.out.println("event:" + thereIs);
 			}
-			log.write("Check if " + username + " has new event invite");
 			ps = con.prepareStatement(setHasNewInvite);
 			ps.setBoolean(1, false);
 			ps.setString(2, username);
 			ps.executeUpdate();
-			log.write("Changed invites to seen " + thereIs);
 			return thereIs;
 		} catch (SQLException e) {
 			log.write("Failed to change requests to seen");
