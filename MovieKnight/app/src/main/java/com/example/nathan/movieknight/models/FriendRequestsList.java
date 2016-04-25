@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.FriendListActivity;
+import com.example.nathan.movieknight.activities.FriendRequestsActivity;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -55,7 +56,9 @@ public class FriendRequestsList extends ArrayAdapter<String>  {
                 MovieKnightAppli mka = ((MovieKnightAppli)context.getApplication());
                 Object[] objects = { "Friend Request Reply", mka.getUserName(), txtTitle.getText().toString(), true };
                 mka.getClisten().clientRequest(objects);
-                context.startActivity(new Intent(context.getApplicationContext(), FriendListActivity.class));
+                //friendNames.remove(txtTitle.getText().toString());
+
+                context.startActivity(new Intent(context.getApplicationContext(), FriendRequestsActivity.class));
                 context.finish();
             }
         });
@@ -66,7 +69,7 @@ public class FriendRequestsList extends ArrayAdapter<String>  {
                 MovieKnightAppli mka = ((MovieKnightAppli)context.getApplication());
                 Object[] objects = {"Friend Request Reply", mka.getUserName(), txtTitle.getText().toString(), false };
                 mka.getClisten().clientRequest(objects);
-                context.startActivity(new Intent(context.getApplicationContext(), FriendListActivity.class));
+                context.startActivity(new Intent(context.getApplicationContext(), FriendRequestsActivity.class));
                 context.finish();
             }
         });

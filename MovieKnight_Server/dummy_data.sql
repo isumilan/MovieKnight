@@ -45,4 +45,4 @@ INSERT INTO movielists(P_Id, list_type, username, movieID) VALUES(5, 'watched', 
 INSERT INTO movielists(P_Id, list_type, username, movieID) VALUES(6, 'liked', 'isumi', 140607);
 INSERT INTO movielists(P_Id, list_type, username, movieID) VALUES(7, 'liked', 'kevin', 140607);
 INSERT INTO movielists(P_Id, list_type, username, movieID) VALUES(8, 'liked', 'samuel', 140607);
-INSERT INTO movielists(P_Id, list_type, username, movieID) VALUES(9, 'liked', 'samuel', 140607);
+INSERT INTO movielists(P_Id, list_type, username, movieID) VALUES(9, 'liked', 'nathan', 140607);

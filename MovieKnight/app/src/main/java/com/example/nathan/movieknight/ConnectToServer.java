@@ -13,7 +13,7 @@ public class ConnectToServer extends AsyncTask<Void, Void, ClientListener> {
     private MovieKnightAppli application;
     protected ClientListener doInBackground(Void... voids) {
         try {
-            c = new ClientListener(new Socket("10.0.2.2", 5000), application);
+            c = new ClientListener(new Socket("192.168.43.30", 5000), application);
 
             return c;
         } catch (IOException ioe) {

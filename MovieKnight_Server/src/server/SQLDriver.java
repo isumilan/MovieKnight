@@ -148,8 +148,9 @@ public class SQLDriver {
 				event.setOwner(result.getString(2));
 				event.setGoingToWatch(result.getInt(3));
 				event.setDescription(result.getString(4));
-				event.setMovieTime(result.getString(5));
-				event.setTheater(result.getString(6));
+				event.setPublic_private(result.getBoolean(5));
+				event.setMovieTime(result.getString(6));
+				event.setTheater(result.getString(7));
 				event.setInvited(getEventParticipants(eventID, false));
 				event.setParticipants(getEventParticipants(eventID, true));
 			}
@@ -208,7 +209,10 @@ public class SQLDriver {
 				ps3.setString(3, participant);
 				ps3.executeUpdate();
 			}
-		 
+			ps3.setString(1, event.getEventID());
+			ps3.setBoolean(2, true);
+			ps3.setString(3, event.getOwner());
+			ps3.executeUpdate();
 			log.write("Made event with ID: " + event.getEventID());
 			return event;
 		} catch (SQLException e) {
@@ -300,21 +304,13 @@ public class SQLDriver {
 	
 	public boolean AddToList(String list_type, int movieID, String name) {
 		try {
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM  movielists WHERE list_type=? AND username=? AND movieID=?");
+			PreparedStatement ps= con.prepareStatement(addMovieToList);
+			System.out.println(list_type+" "+movieID+" "+name);
 			ps.setString(1, list_type);
 			ps.setString(2, name);
 			ps.setInt(3, movieID);
-			ResultSet rs = ps.executeQuery();
-			if(!rs.next()){			
-				ps = con.prepareStatement(addMovieToList);
-				System.out.println(list_type+" "+movieID+" "+name);
-				ps.setString(1, UUID.randomUUID().toString());
-				ps.setString(2, list_type);
-				ps.setString(3, name);
-				ps.setInt(4, movieID);
-				ps.executeUpdate();
-				log.write(movieID + " added to " + list_type + " list of " + name);
-			}
+			ps.executeUpdate();
+			log.write(movieID + " added to " + list_type + " list of " + name);
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

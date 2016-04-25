@@ -2,11 +2,17 @@ package com.example.nathan.movieknight;
 
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 
+import com.example.nathan.movieknight.activities.EventListActivity;
+import com.example.nathan.movieknight.activities.FriendRequestsActivity;
 import com.example.nathan.movieknight.activities.LoginActivity;
+import com.example.nathan.movieknight.activities.MakeEventActivity;
 import com.example.nathan.movieknight.activities.NavigationDrawer;
+import com.example.nathan.movieknight.activities.ProfileMovieListActivity;
 import com.example.nathan.movieknight.tmdb.TmdbConnector;
 import com.example.nathan.movieknight.tmdb.TmdbService;
 import com.example.nathan.movieknight.models.*;
@@ -128,34 +134,17 @@ public class MovieKnightAppli extends Application {
         return userProfile;
     }
     public void FriendRequestPopUp(){
-        AlertDialog.Builder helpBuilder = new AlertDialog.Builder((LoginActivity) context);
-        helpBuilder.setTitle("Friend Request");
-        helpBuilder.setMessage("You received a friend request!");
-        helpBuilder.setPositiveButton("Ok",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing but close the dialog
-                    }
-                });
+        Intent intent =new Intent(getApplicationContext(), FriendRequestsActivity.class);
+             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
-        // Remember, create doesn't show the dialog
-        AlertDialog helpDialog = helpBuilder.create();
-        helpDialog.show();
+
     }
     public void EventInvitedPopUp(){
-        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(context);
-        helpBuilder.setTitle("Event Invite");
-        helpBuilder.setMessage("You received an invitation to an event!");
-        helpBuilder.setPositiveButton("Ok",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing but close the dialog
-                    }
-                });
+        Intent intent =new Intent(getApplicationContext(), MakeEventActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
-        // Remember, create doesn't show the dialog
-        AlertDialog helpDialog = helpBuilder.create();
-        helpDialog.show();
     }
     public void setCurrentContext(Context context){
         this.context = context;

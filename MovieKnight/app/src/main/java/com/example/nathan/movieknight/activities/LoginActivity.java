@@ -48,7 +48,7 @@ public class LoginActivity extends Activity  {
 
         MovieKnightAppli application = (MovieKnightAppli)getApplication();
      //   application.getClisten().start();
-     //   application.setCurrentContext(this);
+      application.setCurrentContext(this);
         // Set up the login form.
         mUsername = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -80,7 +80,7 @@ public class LoginActivity extends Activity  {
                             application.setUserProfile(prof);
                             application.setUserName(username);
                             setupUser();
-                        //    cl.start();
+                             cl.start();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         } else{
@@ -124,10 +124,14 @@ public class LoginActivity extends Activity  {
         Profile prof = ((MovieKnightAppli)getApplication()).getUserProfile();
         Vector<Integer> movieID = prof.getWatched();
         for (Integer i : movieID)
-            getMovieInfo(i, true);
+            getMovieInfo(i, 0);
         movieID = prof.getToWatch();
         for (Integer i : movieID)
-            getMovieInfo(i, false);
+            getMovieInfo(i, 1);
+        movieID = prof.getLiked();
+        for(Integer i : movieID)
+            getMovieInfo(i,2);
+
     }
     public void FriendRequestPopUp(){
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
@@ -145,7 +149,7 @@ public class LoginActivity extends Activity  {
         helpDialog.show();
     }
 
-    private void getMovieInfo(int id, final boolean w) {
+    private void getMovieInfo(int id, final int w) {
         TmdbService movieService = ((MovieKnightAppli)getApplication()).getMovieService();
 //        Log.d("movieID is", ""+id);
 
@@ -156,7 +160,7 @@ public class LoginActivity extends Activity  {
             public void onResponse(Response<MovieInfo> response) {
                 MovieInfo info = response.body();
                 if(info != null) {
-                    if (w) {
+                    if (w == 0) {
                         Vector<String> s = ((MovieKnightAppli) getApplication()).getUserProfile().getWatchedName();
                         if (s == null) {
                             Vector<String> t = new Vector<String>();
@@ -166,12 +170,21 @@ public class LoginActivity extends Activity  {
                         else
                             s.add(info.getTitle());
                     }
-                    else {
+                    else if(w==1){
                         Vector<String> s = ((MovieKnightAppli) getApplication()).getUserProfile().getToWatchName();
                         if (s == null) {
                             Vector<String> t = new Vector<String>();
                             t.add(info.getTitle());
                             ((MovieKnightAppli) getApplication()).getUserProfile().setToWatchName(t);
+                        }
+                        else
+                            s.add(info.getTitle());
+                    } else{
+                        Vector<String> s = ((MovieKnightAppli) getApplication()).getUserProfile().getLikedName();
+                        if (s == null) {
+                            Vector<String> t = new Vector<String>();
+                            t.add(info.getTitle());
+                            ((MovieKnightAppli) getApplication()).getUserProfile().setLikedName(t);
                         }
                         else
                             s.add(info.getTitle());

@@ -8,9 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.models.FriendRequestsList;
+import com.example.nathan.movieknight.models.Profile;
 
 import java.util.Vector;
 
@@ -29,9 +31,14 @@ public class FriendRequestsActivity extends NavigationDrawer {
         application.setCurrentContext(this);
         setContentView(R.layout.activity_friend_requests);
         lv = (ListView)findViewById(R.id.listView);
-
+        Object[] objects ={"Profile Request", application.getUserName()};
+        ClientListener cl= application.getClisten();
+        Profile prof = null;
+        if(cl!= null){
+            prof = (Profile) cl.clientRequest(objects);
+        }
         friendsList = new Vector<String>();
-        friendsList = ((MovieKnightAppli)getApplication()).getUserProfile().getFriendRequests();
+        friendsList = prof.getFriendRequests();
         imageId = new Integer[friendsList.size()];
         for (int i = 0; i < friendsList.size(); i++) {
             imageId[i] = R.drawable.dango;
