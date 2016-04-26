@@ -345,6 +345,11 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name=".activities.PopUpActivity"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
