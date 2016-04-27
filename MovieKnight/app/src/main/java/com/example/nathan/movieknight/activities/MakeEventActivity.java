@@ -133,7 +133,7 @@ public class MakeEventActivity extends NavigationDrawer {
                                 b.putString("eventID", eid);
                                 in.putExtras(b);
                                 startActivity(in);
-                                finish();
+                               // finish();
                             }
                         }
 

@@ -66,7 +66,6 @@ public class ClientListener extends Thread {
                 Thread.sleep(5000);
                 try {
                    if(HasSeenRequestsRequest(username)){
-                       Log.d("friend", "friend");
                        application.FriendRequestPopUp();
                    }
 
@@ -79,11 +78,6 @@ public class ClientListener extends Thread {
                 } catch (IOException ie) {
                     ie.printStackTrace();
                 }
-                //TODO: refresh new requests and invites
-
-
-
-
             }
         } catch (InterruptedException ie) {
             ie.printStackTrace();
@@ -175,6 +169,10 @@ public class ClientListener extends Thread {
         sendObject(HasSeenInvitesDialogue(username));
         return (boolean)ois.readObject();
     }
+    synchronized public Vector<String> GetPublicEventsRequest() throws ClassNotFoundException, IOException{
+        sendObject(GetPublicEventsDialogue());
+        return (Vector<String>)ois.readObject();
+    }
     
    /* public ServerClientDialogue MovieRequest(String title){
     	return new ServerClientDialogue(MovieConstants.MovieRequest, title);
@@ -249,6 +247,9 @@ public class ClientListener extends Thread {
     }
     private ServerClientDialogue HasSeenInvitesDialogue(String name) {
         return new ServerClientDialogue(MovieConstants.HasSeenInvitesRequest,name);
+    }
+    private ServerClientDialogue GetPublicEventsDialogue(){
+        return new ServerClientDialogue(MovieConstants.GetPublicEventsRequest,"");
     }
     class ClientRequest extends AsyncTask<Object, Void, Object>{
         protected Object doInBackground(Object... objects) {
@@ -389,6 +390,24 @@ public class ClientListener extends Thread {
                     ie.printStackTrace();
                 }
 
+            } else if(code.equals("Get Public Events Request")){
+                try{
+                    return GetPublicEventsRequest();
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+            } else if (code.equals("Edit Movie Request")) {
+             MovieEvent me = (MovieEvent)objects[1];
+                try {
+                    Log.d("Edit", "Edit");
+                   return EditMovieEventRequest(me);
+                } catch (ClassNotFoundException cne) {
+                    cne.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
             }
             return null;
         }

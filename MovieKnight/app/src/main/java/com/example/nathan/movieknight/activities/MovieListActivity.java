@@ -111,11 +111,7 @@ public class MovieListActivity extends NavigationDrawer {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String text) {
-
-                    //newt
-
                     displayProgressMessage();
-                    Log.d("movies", text);
                     getMovieResults(text);
 
                     Intent in = new Intent(getApplicationContext(), MoviesSearchActivity.class);
@@ -135,8 +131,6 @@ public class MovieListActivity extends NavigationDrawer {
 
                 @Override
                 public boolean onQueryTextChange(String text) {
-                //    filterText = text;
-                 //   updateAdapters();
                     return false;
                 }
             });
@@ -169,7 +163,6 @@ public class MovieListActivity extends NavigationDrawer {
                     setUpDetails(results);
                 } else {
                     Toast.makeText(getApplicationContext(), "No results found", Toast.LENGTH_SHORT).show();
-                    Log.d("MovieSearch","failed");
                 }
             }
 
@@ -185,12 +178,8 @@ public class MovieListActivity extends NavigationDrawer {
 
         if(moviesFound.size() == 0) {
             Toast.makeText(getApplicationContext(), "No results found!", Toast.LENGTH_LONG).show();
-            Log.d("MovieSearch", "Zero length");
-
         } else {
             String works = moviesFound.get(0).getTitle();
-            Log.d("MovieSearch",works);
-
             //populating movies Arraylists
             for (int i = 0; i < moviesFound.size(); i++) {
                 movieNames.add(moviesFound.get(i).getTitle());
@@ -202,7 +191,6 @@ public class MovieListActivity extends NavigationDrawer {
 
     private void displayProgressMessage() {
         progress_dialog = new ProgressDialog(MovieListActivity.this);
-
         progress_dialog.setMessage("Loading..");
         progress_dialog.show();
     }

@@ -80,8 +80,6 @@ public class EventList extends ArrayAdapter<String> implements Filterable {
                 // No filter implemented we return all the list
                 results.values = oldeventNames;
                 results.count = oldeventNames.size();
-
-
             }
             else {
                 noMatch = true;
@@ -119,10 +117,7 @@ public class EventList extends ArrayAdapter<String> implements Filterable {
             else {
                 clear();
                 eventNames = (Vector<String>) results.values;
-
                 addAll(eventNames);
-
-
                 notifyDataSetChanged();
 
             }

@@ -74,7 +74,7 @@ public class WatchedFragment  extends Fragment  {
                         b.putInt("movieID", movieID.get(position));
                         in.putExtras(b);
                         startActivity(in);
-                        profileMovieListActivity.finish();
+                   //  profileMovieListActivity.finish();
                     }
                 });
             }

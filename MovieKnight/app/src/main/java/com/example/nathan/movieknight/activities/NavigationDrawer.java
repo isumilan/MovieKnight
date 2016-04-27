@@ -56,11 +56,11 @@ public class NavigationDrawer extends AppCompatActivity
         if (id == R.id.nav_home) {
 
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
+       //     finish();
             // Handle the camera action
         }else if(id == R.id.nav_search){
             startActivity(new Intent(getApplicationContext(), SearchActivity.class));
-            finish();
+        //    finish();
         } else if (id == R.id.nav_profile) {
             MovieKnightAppli application = (MovieKnightAppli)getApplication();
             if(application.isGuest()){
@@ -73,15 +73,21 @@ public class NavigationDrawer extends AppCompatActivity
                 Intent in = new Intent(getApplicationContext(), ProfileActivity.class);
                 in.putExtras(b);
                 startActivity(in);
-                finish();
+          //      finish();
             }
 
         } else if (id == R.id.nav_movies) {
             startActivity(new Intent(getApplicationContext(), MovieListActivity.class));
-            finish();
+          //  finish();
         } else if (id == R.id.nav_events) {
-            startActivity(new Intent(getApplicationContext(), EventListActivity.class));
-            finish();
+            MovieKnightAppli application = (MovieKnightAppli)getApplication();
+            if(application.isGuest()){
+                PopUp();
+            }else {
+                startActivity(new Intent(getApplicationContext(), EventListActivity.class));
+         //      finish();
+            }
+
         }  else if(id == R.id.nav_friend_requests){
             MovieKnightAppli application = (MovieKnightAppli)getApplication();
             if(application.isGuest()){
@@ -89,8 +95,11 @@ public class NavigationDrawer extends AppCompatActivity
 
             }else {
                 startActivity(new Intent(getApplicationContext(), FriendRequestsActivity.class));
-                finish();
+         //       finish();
             }
+        } else if(id == R.id.nav_public_events){
+            startActivity(new Intent(getApplicationContext(), PublicEventsActivity.class));
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -100,7 +109,7 @@ public class NavigationDrawer extends AppCompatActivity
     void PopUp(){
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
         helpBuilder.setTitle("YOU ARE A GUEST");
-        helpBuilder.setMessage("Cannot access as guest. Buy our app for $4.99");
+        helpBuilder.setMessage("Cannot access as guest. Please log in first.");
         helpBuilder.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

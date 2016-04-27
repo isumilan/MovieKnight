@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +19,10 @@ import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.EventActivity;
 import com.example.nathan.movieknight.activities.EventListActivity;
 import com.example.nathan.movieknight.models.MovieEvent;
-import com.example.nathan.movieknight.models.MovieInfo;
-import com.example.nathan.movieknight.tmdb.TmdbConnector;
-import com.example.nathan.movieknight.tmdb.TmdbService;
-import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Vector;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+
 
 /**
  * Created by Nathan on 3/17/2016.
@@ -43,7 +33,6 @@ public class InvitedFragment  extends Fragment  {
     Vector<String> eventIDs;
     final EventListActivity eventListActivity;
 
-    Vector<String> eventMovieTitles;
     Vector<String> eventDates;
     Vector<String> eventTheaters;
     @SuppressLint("ValidFragment")
@@ -70,8 +59,6 @@ public class InvitedFragment  extends Fragment  {
         MovieKnightAppli application = (MovieKnightAppli)eventListActivity.getApplication();
         application.setCurrentContext(inflater.getContext());
         for(String id: eventIDs){
-
-
             Object[] objects = {"Movie Event Request", id};
             ClientListener cl = application.getClisten();
             if (cl != null) {
@@ -107,7 +94,7 @@ public class InvitedFragment  extends Fragment  {
                         b.putString("eventID", eventIDs.get(position));
                         in.putExtras(b);
                         startActivity(in);
-                        eventListActivity.finish();
+                //        eventListActivity.finish();
                     }
                 });
             }

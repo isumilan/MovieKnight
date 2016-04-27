@@ -80,7 +80,7 @@ public class TopRatedFragment  extends Fragment  {
                         bundle.putInt("movieID", movieID.get(position));
                         in.putExtras(bundle);
                         startActivity(in);
-                        movieListActivity.finish();
+                 //       movieListActivity.finish();
                     }
                 });
             }

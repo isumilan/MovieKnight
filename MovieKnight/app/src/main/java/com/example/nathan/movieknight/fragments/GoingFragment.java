@@ -107,7 +107,7 @@ public class GoingFragment  extends Fragment  {
                         b.putString("eventID", eventIDs.get(position));
                         in.putExtras(b);
                         startActivity(in);
-                        eventListActivity.finish();
+              //          eventListActivity.finish();
                     }
                 });
             }

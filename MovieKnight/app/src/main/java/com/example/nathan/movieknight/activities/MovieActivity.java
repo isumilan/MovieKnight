@@ -87,7 +87,7 @@ public class MovieActivity extends NavigationDrawer {
                             Intent in = new Intent(getApplicationContext(), MakeEventActivity.class);
                             in.putExtras(b);
                             startActivity(in);
-                            finish();
+                        //    finish();
                         }
 
                     }
@@ -116,7 +116,7 @@ public class MovieActivity extends NavigationDrawer {
                             Intent in = new Intent(getApplicationContext(), ProfileActivity.class);
                             in.putExtras(b);
                             startActivity(in);
-                            finish();
+                        //    finish();
                         }
                     }
                 }
@@ -181,7 +181,7 @@ public class MovieActivity extends NavigationDrawer {
     void PopUp(){
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
         helpBuilder.setTitle("YOU ARE A GUEST");
-        helpBuilder.setMessage("Cannot access as guest. Buy our app for $4.99");
+        helpBuilder.setMessage("Cannot access as guest. Please log in first.");
         helpBuilder.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

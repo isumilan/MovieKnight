@@ -64,7 +64,7 @@ public class FriendListActivity extends AppCompatActivity {
                     b.putBoolean("user", false);
                     in.putExtras(b);
                     startActivity(in);
-                    finish();
+                   // finish();
                 }
             });
         }
