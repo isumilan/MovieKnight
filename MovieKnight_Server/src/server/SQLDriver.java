@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.UUID;
 import java.util.Vector;
 
 import com.example.nathan.movieknight.models.MovieEvent;
@@ -209,10 +210,7 @@ public class SQLDriver {
 				ps3.setString(3, participant);
 				ps3.executeUpdate();
 			}
-			ps3.setString(1, event.getEventID());
-			ps3.setBoolean(2, true);
-			ps3.setString(3, event.getOwner());
-			ps3.executeUpdate();
+		 
 			log.write("Made event with ID: " + event.getEventID());
 			return event;
 		} catch (SQLException e) {
@@ -224,23 +222,30 @@ public class SQLDriver {
 
 	public boolean FriendRequest(String sender, String receiver) {
 		try {
-			PreparedStatement ps = con.prepareStatement(sendFriendRequest);
-			ps.setBoolean(1, false);
-			ps.setString(2, sender);
-			ps.setString(3, receiver);
-			ps.executeUpdate();
-			
-			PreparedStatement ps2 = con.prepareStatement(setHasNewRequest);
-			ps2.setBoolean(1, true);
-			ps2.setString(2, receiver);
-			ps2.executeUpdate();
-			
-			log.write("Sent friend request from " + sender + " to " + receiver);
-			return true;
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM  friends WHERE sender=? AND receiver=?");
+ 			ps.setString(1, sender);
+ 			ps.setString(2, receiver);
+			ResultSet rs = ps.executeQuery();
+			if(!rs.next()){
+				ps = con.prepareStatement(sendFriendRequest);
+				ps.setBoolean(1, false);
+				ps.setString(2, sender);
+				ps.setString(3, receiver);
+				ps.executeUpdate();
+				
+				PreparedStatement ps2 = con.prepareStatement(setHasNewRequest);
+				ps2.setBoolean(1, true);
+				ps2.setString(2, receiver);
+				ps2.executeUpdate();
+				
+				log.write("Sent friend request from " + sender + " to " + receiver);
+				return true;
+			}
 		} catch (SQLException e) {
 			log.write("Failed to send friend request");
 			return false;
 		}
+		return false;
 	}
 	
 	public boolean AcceptFriend(String sender, String receiver, boolean reply){
@@ -303,17 +308,25 @@ public class SQLDriver {
 	}
 	
 	public boolean AddToList(String list_type, int movieID, String name) {
-		try {
-			PreparedStatement ps= con.prepareStatement(addMovieToList);
-			System.out.println(list_type+" "+movieID+" "+name);
-			ps.setString(1, list_type);
-			ps.setString(2, name);
-			ps.setInt(3, movieID);
-			ps.executeUpdate();
-			log.write(movieID + " added to " + list_type + " list of " + name);
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
+ 		try {
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM  movielists WHERE list_type=? AND username=? AND movieID=?");
+ 			ps.setString(1, list_type);
+ 			ps.setString(2, name);
+ 			ps.setInt(3, movieID);
+			ResultSet rs = ps.executeQuery();
+			if(!rs.next()){			
+				ps = con.prepareStatement(addMovieToList);
+				System.out.println(list_type+" "+movieID+" "+name);
+				ps.setString(1, UUID.randomUUID().toString());
+				ps.setString(2, list_type);
+				ps.setString(3, name);
+				ps.setInt(4, movieID);
+				ps.executeUpdate();
+				log.write(movieID + " added to " + list_type + " list of " + name);
+			}
+ 			return true;
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
 			log.write("Failed to add movie to list");
 			return false;
 		}
@@ -353,19 +366,19 @@ public class SQLDriver {
 		try {
 			boolean thereIs = false;
 			PreparedStatement ps = con.prepareStatement(selectName);
+			ps.setString(1,username);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
 				thereIs = rs.getBoolean("hasNewRequest");
 			}
-			log.write("Check if " + username + " has new friend requests");
 			ps = con.prepareStatement(setHasNewRequest);
 			ps.setBoolean(1, false);
 			ps.setString(2, username);
 			ps.executeUpdate();
-			log.write("Changed requests to seen");
 			return thereIs;
 		} catch (SQLException e) {
 			log.write("Failed to change requests to seen");
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -374,16 +387,15 @@ public class SQLDriver {
 		try {
 			boolean thereIs = false;
 			PreparedStatement ps = con.prepareStatement(selectName);
+			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
 				thereIs = rs.getBoolean("hasNewInvite");
 			}
-			log.write("Check if " + username + " has new event invite");
 			ps = con.prepareStatement(setHasNewInvite);
 			ps.setBoolean(1, false);
 			ps.setString(2, username);
 			ps.executeUpdate();
-			log.write("Changed invites to seen");
 			return thereIs;
 		} catch (SQLException e) {
 			log.write("Failed to change requests to seen");

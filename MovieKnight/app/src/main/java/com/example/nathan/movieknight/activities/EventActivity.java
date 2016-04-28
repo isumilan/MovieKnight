@@ -93,8 +93,7 @@ public class EventActivity extends NavigationDrawer {
                         Object[] objects = {"Event Reply Request", eventID, application.getUserName(),true};
                         ClientListener cl= application.getClisten();
                         cl.clientRequest(objects);
-                        if(!going.contains(application.getUserName()))
-                            going.add(application.getUserName());
+
                         invited.remove(application.getUserName());
                         goingAdapter.notifyDataSetChanged();
                         invitedAdapter.notifyDataSetChanged();
@@ -150,12 +149,7 @@ public class EventActivity extends NavigationDrawer {
                     if(!application.getUserName().equals(owner.getText().toString().substring(7))){
                         editbutton.setVisibility(View.GONE);
 
-                    }else{
-                        if(!going.contains(application.getUserName())){
-                            going.add(application.getUserName());
-                        }
                     }
-
 
                      goingAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, going);
                     goingList.setAdapter(goingAdapter);

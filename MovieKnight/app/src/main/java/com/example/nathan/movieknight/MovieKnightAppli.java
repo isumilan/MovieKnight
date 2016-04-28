@@ -1,21 +1,15 @@
 package com.example.nathan.movieknight;
 
-import android.app.AlertDialog;
 import android.app.Application;
-import android.content.ClipData;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 
-import com.example.nathan.movieknight.activities.EventListActivity;
-import com.example.nathan.movieknight.activities.FriendRequestsActivity;
-import com.example.nathan.movieknight.activities.LoginActivity;
-import com.example.nathan.movieknight.activities.MakeEventActivity;
-import com.example.nathan.movieknight.activities.NavigationDrawer;
-import com.example.nathan.movieknight.activities.ProfileMovieListActivity;
+import com.example.nathan.movieknight.activities.PopUpActivity;
+import com.example.nathan.movieknight.models.Profile;
 import com.example.nathan.movieknight.tmdb.TmdbConnector;
 import com.example.nathan.movieknight.tmdb.TmdbService;
-import com.example.nathan.movieknight.models.*;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -134,14 +128,20 @@ public class MovieKnightAppli extends Application {
         return userProfile;
     }
     public void FriendRequestPopUp(){
-        Intent intent =new Intent(getApplicationContext(), FriendRequestsActivity.class);
-             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle b = new Bundle();
+        b.putBoolean("popup", true);
+        Intent intent =new Intent(getApplicationContext(), PopUpActivity.class);
+        intent.putExtras(b);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
 
     }
     public void EventInvitedPopUp(){
-        Intent intent =new Intent(getApplicationContext(), MakeEventActivity.class);
+        Bundle b = new Bundle();
+        b.putBoolean("popup", false);
+        Intent intent =new Intent(getApplicationContext(),PopUpActivity.class);
+        intent.putExtras(b);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
