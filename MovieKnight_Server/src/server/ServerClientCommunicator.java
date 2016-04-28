@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Iterator;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.Vector;
 
 import com.example.nathan.movieknight.ServerClientDialogue;
 import com.example.nathan.movieknight.models.MovieEvent;
@@ -52,8 +48,10 @@ public class ServerClientCommunicator extends Thread {
 					String input = (String) scd.getDialogueContent();
 					String[] inArray = input.split("\b");
 					sendObject(driver.RegisterRequest(inArray[0], inArray[1], Integer.parseInt(inArray[2])));
-				} else if (scd.getRequestType() == MovieConstants.MakeEventRequest || scd.getRequestType() == MovieConstants.EditMovieEventRequest) {
+				} else if (scd.getRequestType() == MovieConstants.MakeEventRequest) {
 					sendObject(driver.MakeMovieEvent((MovieEvent) scd.getDialogueContent()));
+				} else if(scd.getRequestType() == MovieConstants.EditMovieEventRequest){
+					sendObject(driver.EditMovieEvent((MovieEvent) scd.getDialogueContent()));
 				} else if (scd.getRequestType() == MovieConstants.FriendRequestRequest) {
 					String input = (String) scd.getDialogueContent();
 					String[] inArray = input.split("\b");
@@ -71,38 +69,29 @@ public class ServerClientCommunicator extends Thread {
 				} else if (scd.getRequestType() == MovieConstants.AddToToWatchListRequest) {
 					String input = (String) scd.getDialogueContent();
 					String[] inArray = input.split("\b");
-					sendObject(driver.AddToList("towatch", Integer.parseInt(inArray[0]), inArray[1]));
+					sendObject(driver.AddToList("towatch", Integer.parseInt(inArray[0]), inArray[1], inArray[2]));
 				} else if (scd.getRequestType() == MovieConstants.AddToLikedListRequest) {
 					String input = (String) scd.getDialogueContent();
 					String[] inArray = input.split("\b");
-					sendObject(driver.AddToList("liked", Integer.parseInt(inArray[0]), inArray[1]));
+					sendObject(driver.AddToList("liked", Integer.parseInt(inArray[0]), inArray[1], inArray[2]));
 				} else if (scd.getRequestType() == MovieConstants.AddToWatchedListRequest) {
 					String input = (String) scd.getDialogueContent();
 					String[] inArray = input.split("\b");
-					sendObject(driver.AddToList("watched", Integer.parseInt(inArray[0]), inArray[1]));
+					sendObject(driver.AddToList("watched", Integer.parseInt(inArray[0]), inArray[1], inArray[2]));
 				} else if (scd.getRequestType() == MovieConstants.UpdatePersonalDescriptionRequest) {
 					String input = (String) scd.getDialogueContent();
 					String[] inArray = input.split("\b");
 					sendObject(driver.EditDescription(inArray[0], inArray[1]));
 				} else if (scd.getRequestType() == MovieConstants.ListAllUsersRequest){
-					Set<String> usernames = driver.ListAllUsers();
-					Iterator<String> it = usernames.iterator();
-					Vector<String> list = new Vector<String>();
-					PriorityQueue<String> sortUser = new PriorityQueue<String>(); 
-					while(it.hasNext()){
-						sortUser.add(it.next());
-					}
-					it = sortUser.iterator();
-					while(it.hasNext()){
-						list.add(it.next());
-					}
-					sendObject(list);
+					sendObject(driver.ListAllUsers());
 				} else if (scd.getRequestType() == MovieConstants.HasSeenRequestsRequest) {
 					String input = (String) scd.getDialogueContent();
 					sendObject(driver.HasSeenRequests(input));
 				} else if (scd.getRequestType() == MovieConstants.HasSeenInvitesRequest) {
 					String input = (String) scd.getDialogueContent();
 					sendObject(driver.HasSeenInvites(input));
+				} else if(scd.getRequestType() == MovieConstants.GetPublicEventsRequest){
+					sendObject(driver.GetPublicEvents());
 				}
 			}
 		} catch (IOException ioe) {

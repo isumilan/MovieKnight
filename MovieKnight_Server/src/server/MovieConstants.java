@@ -19,4 +19,5 @@ public class MovieConstants {
     public static int ListAllUsersRequest = 16;
 	public static int HasSeenRequestsRequest = 17;
 	public static int HasSeenInvitesRequest = 18;
+	public static int GetPublicEventsRequest = 19;
 }
