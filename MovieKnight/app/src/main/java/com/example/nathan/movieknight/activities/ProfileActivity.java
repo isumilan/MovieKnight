@@ -141,10 +141,8 @@ public class ProfileActivity extends NavigationDrawer {
 
         //checks if it's the user
         if(isUser){
-
-            if(prof != null && prof.getUsername().equals(username.getText().toString())) {
+            if(prof != null) {
                 application.setUserProfile(prof);
-                Log.d("prof", prof.getUsername());
             }
             userProfile = application.getUserProfile();
             username.setText(userProfile.getUsername());
@@ -152,6 +150,7 @@ public class ProfileActivity extends NavigationDrawer {
             addfriendbutton.setVisibility(View.GONE);
             ListView favList = (ListView)findViewById(R.id.favMoviesList);
             Vector<String> favoriteMoviesNames = userProfile.getLikedName();
+
             final Vector<Integer> favoriteMovieIDs = userProfile.getLiked();
             if(favoriteMoviesNames== null){
                 favoriteMoviesNames = new Vector<String>();

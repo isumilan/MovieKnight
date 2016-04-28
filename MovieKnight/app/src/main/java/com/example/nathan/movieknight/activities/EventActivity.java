@@ -200,6 +200,7 @@ public class EventActivity extends NavigationDrawer {
                         cl.clientRequest(objects);
                         //update lists
                         invited.remove(application.getUserName());
+                        going.add(application.getUserName());
                         goingAdapter.notifyDataSetChanged();
                         invitedAdapter.notifyDataSetChanged();
                     }

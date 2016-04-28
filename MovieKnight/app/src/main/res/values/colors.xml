@@ -8,5 +8,5 @@
     <color name="white">#FFF</color>
     <color name ="grey">#e8e8e7</color>
     <color name = "red">#dd1122</color>
-    <color name = "darkgrey">#e5c100</color>
+    <color name = "darkgrey">#666666</color>
 </resources>

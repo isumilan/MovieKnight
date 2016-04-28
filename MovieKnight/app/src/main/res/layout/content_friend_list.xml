@@ -12,7 +12,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_friend_list"
     tools:context=".activities.FriendListActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background = "@color/grey">
 
 
     <SearchView
