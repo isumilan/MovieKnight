@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Vector;
 
@@ -87,6 +88,11 @@ public class ServerClientCommunicator extends Thread {
 					Set<String> usernames = driver.ListAllUsers();
 					Iterator<String> it = usernames.iterator();
 					Vector<String> list = new Vector<String>();
+					PriorityQueue<String> sortUser = new PriorityQueue<String>(); 
+					while(it.hasNext()){
+						sortUser.add(it.next());
+					}
+					it = sortUser.iterator();
 					while(it.hasNext()){
 						list.add(it.next());
 					}
