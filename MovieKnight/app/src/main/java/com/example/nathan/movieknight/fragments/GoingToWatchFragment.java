@@ -5,27 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ArrayAdapter;
 
 import com.example.nathan.movieknight.MovieKnightAppli;
 import com.example.nathan.movieknight.R;
 import com.example.nathan.movieknight.activities.MovieActivity;
 import com.example.nathan.movieknight.activities.ProfileMovieListActivity;
-import com.example.nathan.movieknight.models.MovieInfo;
-import com.example.nathan.movieknight.models.MovieList;
-import com.example.nathan.movieknight.tmdb.TmdbConnector;
-import com.example.nathan.movieknight.tmdb.TmdbService;
-
 import java.util.Vector;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
 
 /**
  * Created by Nathan on 3/17/2016.
@@ -34,7 +26,6 @@ public class GoingToWatchFragment  extends Fragment  {
     ListView list;
     Vector<Integer> movieID;
     Vector<String> movieList;
-    Vector<String> movieImages;
     final ProfileMovieListActivity profileMovieListActivity;
     @SuppressLint("ValidFragment")
     public GoingToWatchFragment(ProfileMovieListActivity ea){
@@ -58,9 +49,10 @@ public class GoingToWatchFragment  extends Fragment  {
         if (movieID == null){
             movieID = new Vector<Integer>();
         }
-        movieImages = new Vector<String>();
-        MovieList adapter = new
-                MovieList(profileMovieListActivity, movieList, movieImages);
+
+
+        ArrayAdapter<String> adapter = new
+                ArrayAdapter<String>(profileMovieListActivity, android.R.layout.simple_list_item_1,movieList);
 
 
         list = (ListView) view.findViewById(R.id.intheaterslistView);
@@ -83,7 +75,7 @@ public class GoingToWatchFragment  extends Fragment  {
                         b.putInt("movieID", movieID.get(position));
                         in.putExtras(b);
                         startActivity(in);
-                        profileMovieListActivity.finish();
+                    //    profileMovieListActivity.finish();
                     }
                 });
             }

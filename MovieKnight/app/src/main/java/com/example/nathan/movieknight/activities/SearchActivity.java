@@ -29,7 +29,7 @@ public class SearchActivity extends NavigationDrawer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        MovieKnightAppli application = (MovieKnightAppli)getApplication();
+        final MovieKnightAppli application = (MovieKnightAppli)getApplication();
         application.setCurrentContext(this);
         lv = (ListView)findViewById(R.id.listView);
         sv = (SearchView)findViewById(R.id.searchView2);
@@ -63,11 +63,17 @@ public class SearchActivity extends NavigationDrawer {
                 Bundle b = new Bundle();
                 Intent in;
                 in = new Intent(getApplicationContext(), ProfileActivity.class);
-                b.putString("friend", friendAdapter.getItem(position));
-                b.putBoolean("user", false);
+                String name = friendAdapter.getItem(position);
+                if(name.equals(application.getUserName())){
+                    b.putBoolean("user", true);
+                } else{
+                    b.putString("friend", friendAdapter.getItem(position));
+                    b.putBoolean("user", false);
+                }
+
                 in.putExtras(b);
                 startActivity(in);
-                finish();
+            //    finish();
             }
         });
 

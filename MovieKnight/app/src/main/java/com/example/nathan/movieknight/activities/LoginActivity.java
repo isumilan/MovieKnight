@@ -5,13 +5,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.TextView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.nathan.movieknight.ClientListener;
 import com.example.nathan.movieknight.MovieKnightAppli;
@@ -79,9 +78,12 @@ public class LoginActivity extends Activity  {
                         if(prof != null){
                             application.setUserProfile(prof);
                             application.setUserName(username);
+
+
                             setupUser();
-                             cl.start();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            if(!cl.isAlive())
+                                cl.start();
+                            startActivity(new Intent(getApplicationContext(), MovieListActivity.class));
                             finish();
                         } else{
                             errorText.setText("Log in failed");

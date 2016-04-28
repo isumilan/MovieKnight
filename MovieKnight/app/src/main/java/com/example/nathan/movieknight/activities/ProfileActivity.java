@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.nathan.movieknight.ClientListener;
@@ -53,9 +52,6 @@ public class ProfileActivity extends NavigationDrawer {
         if(b != null){
             isUser = b.getBoolean("user");
         }
-
-
-
         username = (TextView) findViewById(R.id.profile_name);
         description = (EditText) findViewById(R.id.profile_description);
         description.setFocusable(false);
@@ -85,18 +81,11 @@ public class ProfileActivity extends NavigationDrawer {
         editbutton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        //open up some kind of editing interface
-                        //stuff to edit: (in order of priority)
-                        //Profile Description
-                        //Favorite Movies
-                        //Profile Image
                         description.setTextIsSelectable(true);
                         description.setFocusableInTouchMode(true);
-
                         if(editbutton.getText().equals("Edit"))
                         {
                             description.setFocusable(true);
-
                                description.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -104,7 +93,6 @@ public class ProfileActivity extends NavigationDrawer {
                                     imm.toggleSoftInputFromWindow(description.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
                                 }
                             });
-
                             editbutton.setText("Finish Editing");
                         }
                         else{
@@ -144,7 +132,7 @@ public class ProfileActivity extends NavigationDrawer {
                     }
                 }
         );
-        Object[] objects ={"Profile Request", username.getText().toString()};
+        Object[] objects ={"Profile Request", application.getUserName()};
         ClientListener cl= application.getClisten();
         Profile prof = null;
         if(cl!= null){
@@ -163,9 +151,6 @@ public class ProfileActivity extends NavigationDrawer {
             description.setText(userProfile.getDescription());
             addfriendbutton.setVisibility(View.GONE);
             ListView favList = (ListView)findViewById(R.id.favMoviesList);
-
-
-
             Vector<String> favoriteMoviesNames = userProfile.getLikedName();
             final Vector<Integer> favoriteMovieIDs = userProfile.getLiked();
             if(favoriteMoviesNames== null){
@@ -185,12 +170,10 @@ public class ProfileActivity extends NavigationDrawer {
                         bundle.putInt("movieID", favoriteMovieIDs.get(position));
                         in.putExtras(bundle);
                         startActivity(in);
-                        finish();
+                      //  finish();
                     }
                 });
             }
-
-
         } else{
             editbutton.setVisibility(View.GONE);
             //change this once we get movie list names on server side
@@ -199,10 +182,15 @@ public class ProfileActivity extends NavigationDrawer {
             if(b!= null){
                 String friendUsername = b.getString("friend");
                 //make add friend button invisible
-                Vector<String> friends = application.getUserProfile().getFriends();
-                if(friends.contains(friendUsername)){
+                if(application.isGuest()){
                     addfriendbutton.setVisibility(View.GONE);
+                } else {
+                    Vector<String> friends = application.getUserProfile().getFriends();
+                    if(friends.contains(friendUsername)){
+                        addfriendbutton.setVisibility(View.GONE);
+                    }
                 }
+
                 Object[] objects2 = { "Profile Request", friendUsername };
                 userProfile = (Profile)mka.getClisten().clientRequest(objects2);
                 username.setText(userProfile.getUsername());

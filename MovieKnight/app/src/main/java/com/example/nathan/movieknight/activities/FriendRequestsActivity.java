@@ -41,7 +41,7 @@ public class FriendRequestsActivity extends NavigationDrawer {
         friendsList = prof.getFriendRequests();
         imageId = new Integer[friendsList.size()];
         for (int i = 0; i < friendsList.size(); i++) {
-            imageId[i] = R.drawable.dango;
+            imageId[i] = R.drawable.movieknight;
         }
         if (imageId != null && friendsList != null) {
             FriendRequestsList adapter = new FriendRequestsList(this, friendsList, imageId);

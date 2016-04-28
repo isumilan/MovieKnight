@@ -78,7 +78,7 @@ public class MakeEventActivity extends NavigationDrawer {
         friendList = prof.getFriends();
         imageId = new Integer[friendList.size()];
         for(int i = 0; i < friendList.size();i++){
-            imageId[i] = R.drawable.dango;
+            imageId[i] = R.drawable.movieknight;
         }
 
         final InvitedFriendList adapter = new
@@ -133,7 +133,7 @@ public class MakeEventActivity extends NavigationDrawer {
                                 b.putString("eventID", eid);
                                 in.putExtras(b);
                                 startActivity(in);
-                                finish();
+                               // finish();
                             }
                         }
 

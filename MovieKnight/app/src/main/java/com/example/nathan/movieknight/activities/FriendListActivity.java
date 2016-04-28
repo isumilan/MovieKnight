@@ -48,7 +48,7 @@ public class FriendListActivity extends AppCompatActivity {
         friendsList = prof.getFriends();
         imageId = new Integer[friendsList.size()];
         for (int i = 0; i < friendsList.size(); i++) {
-            imageId[i] = R.drawable.dango;
+            imageId[i] = R.drawable.movieknight;
         }
         if (friendsList != null && imageId != null) {
             friendAdapter = new FriendList(this, friendsList, imageId);
@@ -64,7 +64,7 @@ public class FriendListActivity extends AppCompatActivity {
                     b.putBoolean("user", false);
                     in.putExtras(b);
                     startActivity(in);
-                    finish();
+                   // finish();
                 }
             });
         }

@@ -65,7 +65,7 @@ public class MovieKnightAppli extends Application {
         movieList_upcoming = new ArrayList<String>();
         movieImages_upcoming = new ArrayList<String>();
         movieID_upcoming = new ArrayList<Integer>();
-
+        userName = "";
         //getting the information for different class objects
 
     }

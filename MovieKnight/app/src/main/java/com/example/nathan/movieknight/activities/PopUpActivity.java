@@ -28,16 +28,16 @@ public class PopUpActivity extends Activity {
 
     private void FriendRequestPopUp(){
         AlertDialog.Builder movielistBuilder = new AlertDialog.Builder(this);
-        movielistBuilder.setTitle("Add Movie As...");
-        movielistBuilder.setPositiveButton("Watched",
+        movielistBuilder.setTitle("Someone add you as a friend!");
+        movielistBuilder.setPositiveButton("Go to Friend Requests",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         startActivity(new Intent(getApplicationContext(), FriendRequestsActivity.class));
-                        finish();
+                        //finish();
                     }
                 });
-        movielistBuilder.setNegativeButton("To Watch",
+        movielistBuilder.setNegativeButton("Go back",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -49,15 +49,15 @@ public class PopUpActivity extends Activity {
     }
     private void EventListPopUp(){
         AlertDialog.Builder movielistBuilder = new AlertDialog.Builder(this);
-        movielistBuilder.setTitle("Add Movie As...");
-        movielistBuilder.setPositiveButton("Watched",
+        movielistBuilder.setTitle("Someone invited you to an event!");
+        movielistBuilder.setPositiveButton("Go to Events Page",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(getApplicationContext(), MakeEventActivity.class));
+                        startActivity(new Intent(getApplicationContext(), EventListActivity.class));
                     }
                 });
-        movielistBuilder.setNegativeButton("To Watch",
+        movielistBuilder.setNegativeButton("Go Back",
                 new DialogInterface.OnClickListener() {
                     @Override
 
