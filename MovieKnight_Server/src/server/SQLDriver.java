@@ -5,11 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -32,11 +27,13 @@ public class SQLDriver {
 	private final static String sendEventInvite = "INSERT INTO EVENTPARTICIPANTS(EVENTID,ACCEPTED,USERNAME) VALUES(?,?,?)";
 	private final static String acceptEventInvite = "UPDATE EVENTPARTICIPANTS SET ACCEPTED=? WHERE EVENTID=? AND USERNAME=?";
 	private final static String denyEventInvite = "DELETE FROM EVENTPARTICIPANTS WHERE EVENTID=? AND USERNAME=?";
-	private final static String addMovieToList = "INSERT INTO MOVIELISTS(LIST_TYPE,USERNAME,MOVIEID) VALUES(?,?,?)";
+	private final static String addMovieToList = "INSERT INTO MOVIELISTS(LIST_TYPE,USERNAME,MOVIEID,MOVIENAME) VALUES(?,?,?,?)";
 	private final static String editDescription = "UPDATE USERS SET DESCRIPTION=? WHERE USERNAME=?";
 	private final static String allUsers = "SELECT * FROM USERS";
 	private final static String setHasNewRequest = "UPDATE USERS SET HASNEWREQUEST=? WHERE USERNAME=?";
 	private final static String setHasNewInvite = "UPDATE USERS SET HASNEWINVITE=? WHERE USERNAME=?";
+	private final static String getPublicEvents = "SELECT * FROM MOVIEEVENTS WHERE PUBLIC_PRIVATE=1"; 
+	private final static String updateEvent = "UPDATE MOVIEEVENTS SET MOVIETIME=?,THEATER=? WHERE EVENTID=?";
 	
 	private Connection con;
 	private ServerLog log;
@@ -129,17 +126,14 @@ public class SQLDriver {
 				user.setDescription(result.getString(4));
 				user.setZipcode(result.getInt(5));
 			}
-			Queue<String> friendsTemp = this.getFriendsList(username);
-			Iterator<String> it = friendsTemp.iterator();
-			Vector<String> friends = new Vector<String>();
-			while(it.hasNext()){
-				friends.add(it.next());
-			}
-			user.setFriends(friends);
+			user.setFriends(this.getFriendsList(username));
 			user.setFriendRequests(this.getFriendsRequestList(username));
-			user.setToWatch(this.getMovieList("towatch", username));
-			user.setWatched(this.getMovieList("watched", username));
-			user.setLiked(this.getMovieList("liked", username));
+			user.setToWatch(this.getMovieListID("towatch", username));
+			user.setWatched(this.getMovieListID("watched", username));
+			user.setLiked(this.getMovieListID("liked", username));
+			user.setToWatchName(this.getMovieList("towatch", username));
+			user.setWatchedName(this.getMovieList("watched", username));
+			user.setLikedName(this.getMovieList("liked", username));
 			user.setEvents(this.getParticipatingEvents(username));
 			user.setEventRequests(this.getInvitedEvents(username));
 		} catch (SQLException e) {
@@ -221,6 +215,11 @@ public class SQLDriver {
 				ps3.setString(3, participant);
 				ps3.executeUpdate();
 			}
+			PreparedStatement ps4 = con.prepareStatement(addParticipants);
+			ps4.setString(1, event.getEventID());
+			ps4.setBoolean(2, true);
+			ps4.setString(3, event.getOwner());
+			ps4.executeUpdate();
 		 
 			log.write("Made event with ID: " + event.getEventID());
 			return event;
@@ -229,6 +228,22 @@ public class SQLDriver {
 			log.write("Failed to make event with ID: " + event.getEventID());
 			return null;
 		}
+	}
+	
+	public boolean EditMovieEvent(MovieEvent event) {
+		try {
+			PreparedStatement ps = con.prepareStatement(updateEvent);
+			ps.setString(1, event.getMovieTime());
+			ps.setString(2, event.getTheater());
+			ps.setString(3, event.getEventID());
+			ps.executeUpdate();
+			log.write("Edited event with ID: " + event.getEventID());
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			log.write("Failed to edit event with ID: " + event.getEventID());
+		}
+		return false;
 	}
 
 	public boolean FriendRequest(String sender, String receiver) {
@@ -318,20 +333,21 @@ public class SQLDriver {
 		}
 	}
 	
-	public boolean AddToList(String list_type, int movieID, String name) {
+	public boolean AddToList(String list_type, int movieID, String name, String movieName) {
  		try {
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM  movielists WHERE list_type=? AND username=? AND movieID=?");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM  movielists WHERE list_type=? AND username=? AND movieID=? AND movieName=?");
  			ps.setString(1, list_type);
  			ps.setString(2, name);
  			ps.setInt(3, movieID);
+ 			ps.setString(4, movieName);
 			ResultSet rs = ps.executeQuery();
 			if(!rs.next()){			
 				ps = con.prepareStatement(addMovieToList);
 				System.out.println(list_type+" "+movieID+" "+name);
-				ps.setString(1, UUID.randomUUID().toString());
-				ps.setString(2, list_type);
-				ps.setString(3, name);
-				ps.setInt(4, movieID);
+				ps.setString(1, list_type);
+				ps.setString(2, name);
+				ps.setInt(3, movieID);
+				ps.setString(4, movieName);
 				ps.executeUpdate();
 				log.write(movieID + " added to " + list_type + " list of " + name);
 			}
@@ -357,8 +373,8 @@ public class SQLDriver {
 		}
 	}
 	
-	public Set<String> ListAllUsers(){
-		Set<String> names = new HashSet<String>();
+	public Vector<String> ListAllUsers(){
+		Vector<String> names = new Vector<String>();
 		try {
 			PreparedStatement ps = con.prepareStatement(allUsers);
 			ResultSet rs = ps.executeQuery();
@@ -414,8 +430,8 @@ public class SQLDriver {
 		}
 	}
 	
-	private Queue<String> getFriendsList(String username){
-		Queue<String> friends = new LinkedList<String>();
+	private Vector<String> getFriendsList(String username){
+		Vector<String> friends = new Vector<String>();
 		try {
 			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends "
 					+ "WHERE accepted=1 AND (sender=? OR receiver=?)");
@@ -453,7 +469,7 @@ public class SQLDriver {
 		return friends;
 	}
 	
-	private Vector<Integer> getMovieList(String listType, String username){
+	private Vector<Integer> getMovieListID(String listType, String username){
 		Vector<Integer> movies = new Vector<Integer>();
 		try {
 			PreparedStatement ps= con.prepareStatement("SELECT * FROM movielists "
@@ -469,6 +485,23 @@ public class SQLDriver {
 			e.printStackTrace();
 		}
 		return movies;
+	}
+	private Vector<String> getMovieList(String listType, String username){
+		Vector<String> movieNames = new Vector<String>();
+		try {
+			PreparedStatement ps= con.prepareStatement("SELECT * FROM movielists "
+					+ "WHERE username=? AND list_type=?");
+			ps.setString(1, username);
+			ps.setString(2, listType);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				movieNames.add(rs.getString("movieName"));
+			}
+			return movieNames;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return movieNames;
 	}
 	
 	private Vector<String> getParticipatingEvents(String username){
@@ -503,5 +536,19 @@ public class SQLDriver {
 			e.printStackTrace();
 		}
 		return events;
+	}
+	public Vector<String> GetPublicEvents(){
+		Vector<String> eventIDs = new Vector<String>();
+		try{
+			PreparedStatement ps = con.prepareStatement(getPublicEvents);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				eventIDs.add(rs.getString("eventID"));
+			}
+			return eventIDs;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return eventIDs;
 	}
 }
