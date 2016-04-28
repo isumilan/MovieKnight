@@ -5,6 +5,11 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -124,7 +129,13 @@ public class SQLDriver {
 				user.setDescription(result.getString(4));
 				user.setZipcode(result.getInt(5));
 			}
-			user.setFriends(this.getFriendsList(username));
+			Queue<String> friendsTemp = this.getFriendsList(username);
+			Iterator<String> it = friendsTemp.iterator();
+			Vector<String> friends = new Vector<String>();
+			while(it.hasNext()){
+				friends.add(it.next());
+			}
+			user.setFriends(friends);
 			user.setFriendRequests(this.getFriendsRequestList(username));
 			user.setToWatch(this.getMovieList("towatch", username));
 			user.setWatched(this.getMovieList("watched", username));
@@ -346,8 +357,8 @@ public class SQLDriver {
 		}
 	}
 	
-	public Vector<String> ListAllUsers(){
-		Vector<String> names = new Vector<String>();
+	public Set<String> ListAllUsers(){
+		Set<String> names = new HashSet<String>();
 		try {
 			PreparedStatement ps = con.prepareStatement(allUsers);
 			ResultSet rs = ps.executeQuery();
@@ -403,8 +414,8 @@ public class SQLDriver {
 		}
 	}
 	
-	private Vector<String> getFriendsList(String username){
-		Vector<String> friends = new Vector<String>();
+	private Queue<String> getFriendsList(String username){
+		Queue<String> friends = new LinkedList<String>();
 		try {
 			PreparedStatement ps= con.prepareStatement("SELECT * FROM friends "
 					+ "WHERE accepted=1 AND (sender=? OR receiver=?)");
