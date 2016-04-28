@@ -132,7 +132,8 @@
         android:layout_height="wrap_content"
         android:text="Make Event"
         android:id="@+id/makeEventButton"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+      />
 
 
 </LinearLayout>

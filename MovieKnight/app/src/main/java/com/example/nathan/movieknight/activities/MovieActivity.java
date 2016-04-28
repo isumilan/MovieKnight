@@ -103,7 +103,7 @@ public class MovieActivity extends NavigationDrawer {
                             PopUp();
                         } else {
                             MovieKnightAppli mka = ((MovieKnightAppli)getApplication());
-                            Object[] objects = { "Add To Liked", movieID, mka.getUserName()};
+                            Object[] objects = { "Add To Liked", movieID, mka.getUserName(), movieNameString};
                             mka.getClisten().clientRequest(objects);
                             mka.getUserProfile().getLiked().add(movieID);
                             if (mka.getUserProfile().getLikedName() != null)
@@ -145,7 +145,7 @@ public class MovieActivity extends NavigationDrawer {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MovieKnightAppli mka = ((MovieKnightAppli)getApplication());
-                        Object[] objects = { "Add To Watched", movieID, mka.getUserName()};
+                        Object[] objects = { "Add To Watched", movieID, mka.getUserName(), movieNameString};
                         mka.getClisten().clientRequest(objects);
                         mka.getUserProfile().getWatched().add(movieID);
                         if (mka.getUserProfile().getWatchedName() != null)
@@ -163,7 +163,7 @@ public class MovieActivity extends NavigationDrawer {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MovieKnightAppli mka = ((MovieKnightAppli)getApplication());
-                        Object[] objects = { "Add To To Watch", movieID, mka.getUserName()};
+                        Object[] objects = { "Add To To Watch", movieID, mka.getUserName(), movieNameString};
                         mka.getClisten().clientRequest(objects);
                         mka.getUserProfile().getToWatch().add(movieID);
                         if (mka.getUserProfile().getToWatchName() != null)

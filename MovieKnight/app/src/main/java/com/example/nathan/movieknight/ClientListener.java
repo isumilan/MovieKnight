@@ -137,16 +137,16 @@ public class ClientListener extends Thread {
     	sendObject(EventReplyRequestDialogue(eventID, username, reply));
     	return (boolean)ois.readObject();
     }
-    synchronized public boolean AddToToWatchListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
-    	sendObject(AddToToWatchListRequestDialogue(movieID, username));
+    synchronized public boolean AddToToWatchListRequest(int movieID, String username, String movieName) throws IOException, ClassNotFoundException{
+    	sendObject(AddToToWatchListRequestDialogue(movieID, username, movieName));
     	return (boolean)ois.readObject();
     }
-    synchronized public boolean AddToLikedListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
-    	sendObject(AddToLikedListRequestDialogue(movieID, username));
+    synchronized public boolean AddToLikedListRequest(int movieID, String username, String movieName) throws IOException, ClassNotFoundException{
+    	sendObject(AddToLikedListRequestDialogue(movieID, username, movieName));
     	return (boolean)ois.readObject();
     }
-    synchronized public boolean AddToWatchedListRequest(int movieID, String username) throws IOException, ClassNotFoundException{
-    	sendObject(AddToWatchedListRequestDialogue(movieID, username));
+    synchronized public boolean AddToWatchedListRequest(int movieID, String username, String movieName) throws IOException, ClassNotFoundException{
+    	sendObject(AddToWatchedListRequestDialogue(movieID, username, movieName));
     	return (boolean)ois.readObject();
     }
     synchronized public boolean UpdatePersonalDescriptionRequest(String description, String username) throws IOException, ClassNotFoundException{
@@ -219,17 +219,17 @@ public class ClientListener extends Thread {
     	return new ServerClientDialogue(MovieConstants.EventReplyRequest
     			, eventID+"\b"+name+"\b"+reply);
     }
-    private ServerClientDialogue AddToToWatchListRequestDialogue(int movieID, String name){
+    private ServerClientDialogue AddToToWatchListRequestDialogue(int movieID, String name, String movieName){
     	return new ServerClientDialogue(MovieConstants.AddToToWatchListRequest
-    			, movieID+"\b"+name);
+    			, movieID+"\b"+name+"\b"+movieName);
     }
-    private ServerClientDialogue AddToLikedListRequestDialogue(int movieID, String name){
+    private ServerClientDialogue AddToLikedListRequestDialogue(int movieID, String name, String movieName){
     	return new ServerClientDialogue(MovieConstants.AddToLikedListRequest
-    			, movieID+"\b"+name);
+    			, movieID+"\b"+name+"\b"+movieName);
     }
-    private ServerClientDialogue AddToWatchedListRequestDialogue(int movieID, String name){
+    private ServerClientDialogue AddToWatchedListRequestDialogue(int movieID, String name, String movieName){
     	return new ServerClientDialogue(MovieConstants.AddToWatchedListRequest
-    			, movieID+"\b"+name);
+    			, movieID+"\b"+name+"\b"+movieName);
     }
     private ServerClientDialogue UpdatePersonalDescriptionRequestDialogue(String description, String name){
     	return new ServerClientDialogue(MovieConstants.UpdatePersonalDescriptionRequest
@@ -341,8 +341,9 @@ public class ClientListener extends Thread {
             } else if(code.equals("Add To To Watch")) {
                 int movieID = (Integer) objects[1];
                 String username = (String) objects[2];
+                String movieName = (String) objects[3];
                 try {
-                    return AddToToWatchListRequest(movieID, username);
+                    return AddToToWatchListRequest(movieID, username, movieName);
                 } catch (ClassNotFoundException cne) {
                     cne.printStackTrace();
                 } catch (IOException ie) {
@@ -351,8 +352,9 @@ public class ClientListener extends Thread {
             } else if(code.equals("Add To Watched")) {
                 int movieID = (Integer) objects[1];
                 String username = (String) objects[2];
+                String movieName = (String) objects[3];
                 try {
-                    return AddToToWatchListRequest(movieID, username);
+                    return AddToToWatchListRequest(movieID, username, movieName);
                 } catch (ClassNotFoundException cne) {
                     cne.printStackTrace();
                 } catch (IOException ie) {
@@ -361,8 +363,9 @@ public class ClientListener extends Thread {
             } else if(code.equals("Add To Liked")) {
                 int movieID = (Integer) objects[1];
                 String username = (String) objects[2];
+                String movieName = (String) objects[3];
                 try {
-                    return AddToLikedListRequest(movieID, username);
+                    return AddToLikedListRequest(movieID, username, movieName);
                 } catch (ClassNotFoundException cne) {
                     cne.printStackTrace();
                 } catch (IOException ie) {

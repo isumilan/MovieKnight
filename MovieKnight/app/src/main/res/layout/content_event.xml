@@ -13,7 +13,8 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_event"
-    tools:context=".activities.EventActivity">
+    tools:context=".activities.EventActivity"
+    android:background = "@color/grey">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -133,7 +134,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Going"
-                android:id="@+id/goingText" />
+                android:id="@+id/goingText"
+                android:textStyle = "bold"/>
 
             <ListView
                 android:layout_width="match_parent"
@@ -149,7 +151,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Invited"
-                android:id="@+id/invitedText" />
+                android:id="@+id/invitedText"
+                android:textStyle = "bold"/>
 
             <ListView
                 android:layout_width="match_parent"

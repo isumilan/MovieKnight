@@ -25,7 +25,8 @@ CREATE TABLE MovieLists (
 	P_Id int(12) primary key not null auto_increment,
 	list_type varchar(50) not null,
     username varchar(50) not null,
-    movieID int not null
+    movieID int not null,
+    movieName varchar(50) not null
 );
 
 CREATE TABLE MovieEvents (

@@ -99,7 +99,7 @@ public class LoginActivity extends Activity  {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
-                finish();
+
             }
         });
 
@@ -108,7 +108,7 @@ public class LoginActivity extends Activity  {
             @Override
             public void onClick(View v) {
                 ((MovieKnightAppli) getApplication()).setIsGuest(true);
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), MovieListActivity.class));
                 finish();
             }
         });

@@ -12,7 +12,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_event_list"
     tools:context=".activities.EventListActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background = "@color/grey">
 
     <ListView
         android:layout_width="match_parent"
