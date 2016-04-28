@@ -132,7 +132,7 @@ public class ProfileActivity extends NavigationDrawer {
                     }
                 }
         );
-        Object[] objects ={"Profile Request", username.getText().toString()};
+        Object[] objects ={"Profile Request", application.getUserName()};
         ClientListener cl= application.getClisten();
         Profile prof = null;
         if(cl!= null){
@@ -151,9 +151,6 @@ public class ProfileActivity extends NavigationDrawer {
             description.setText(userProfile.getDescription());
             addfriendbutton.setVisibility(View.GONE);
             ListView favList = (ListView)findViewById(R.id.favMoviesList);
-
-
-
             Vector<String> favoriteMoviesNames = userProfile.getLikedName();
             final Vector<Integer> favoriteMovieIDs = userProfile.getLiked();
             if(favoriteMoviesNames== null){

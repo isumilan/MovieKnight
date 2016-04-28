@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.nathan.movieknight.MovieKnightAppli;
@@ -48,18 +49,17 @@ public class WatchedFragment  extends Fragment  {
         View view =  inflater.inflate(R.layout.in_theaters_layout,null);
         movieID = ((MovieKnightAppli)profileMovieListActivity.getApplication()).getUserProfile().getWatched();
         movieList = ((MovieKnightAppli)profileMovieListActivity.getApplication()).getUserProfile().getWatchedName();
-        movieImages = new Vector<String>();
         if(movieList == null){
             movieList = new Vector<String>();
         }
-       MovieList adapter = new MovieList(profileMovieListActivity, movieList, movieImages);
+        ArrayAdapter<String> adapter = new
+                ArrayAdapter<String>(profileMovieListActivity, android.R.layout.simple_list_item_1,movieList);
         MovieKnightAppli application = (MovieKnightAppli)profileMovieListActivity.getApplication();
         application.setCurrentContext(inflater.getContext());
 
         list=(ListView)view.findViewById(R.id.intheaterslistView);
         profileMovieListActivity.setGoingToWatchAdapter((adapter));
-        //list not showing
-        //  list=(ListView) LayoutInflater.from(getApplication()).inflate(R.layout.coming_soon_layout, null);
+
         if(list != null) {
 
             if (adapter != null) {

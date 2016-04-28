@@ -89,8 +89,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 if(prof != null){
                                     application.setUserProfile(prof);
                                     application.setUserName(dname);
-                                    cl.start();
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    if(!cl.isAlive())
+                                        cl.start();
+                                    startActivity(new Intent(getApplicationContext(), MovieListActivity.class));
                                     finish();
                                 } else{
                                     Error.setText("Username already taken");

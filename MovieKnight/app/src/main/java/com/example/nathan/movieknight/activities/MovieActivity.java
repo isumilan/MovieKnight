@@ -86,7 +86,9 @@ public class MovieActivity extends NavigationDrawer {
                             b.putString("movieName", movieNameString);
                             Intent in = new Intent(getApplicationContext(), MakeEventActivity.class);
                             in.putExtras(b);
+
                             startActivity(in);
+
                         //    finish();
                         }
 
