@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Vector;
 
 import com.example.nathan.movieknight.ServerClientDialogue;
 import com.example.nathan.movieknight.models.MovieEvent;
@@ -81,7 +84,13 @@ public class ServerClientCommunicator extends Thread {
 					String[] inArray = input.split("\b");
 					sendObject(driver.EditDescription(inArray[0], inArray[1]));
 				} else if (scd.getRequestType() == MovieConstants.ListAllUsersRequest){
-					sendObject(driver.ListAllUsers());
+					Set<String> usernames = driver.ListAllUsers();
+					Iterator<String> it = usernames.iterator();
+					Vector<String> list = new Vector<String>();
+					while(it.hasNext()){
+						list.add(it.next());
+					}
+					sendObject(list);
 				} else if (scd.getRequestType() == MovieConstants.HasSeenRequestsRequest) {
 					String input = (String) scd.getDialogueContent();
 					sendObject(driver.HasSeenRequests(input));
